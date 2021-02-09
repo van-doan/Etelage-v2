@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "exhibits",
+  "info": {
+    "name": "Exhibits",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "artworkIds": {
+      "type": "string"
+    },
+    "exhibit_likes": {
+      "type": "integer"
+    },
+    "timestamp": {
+      "type": "datetime"
+    }
+  }
+}

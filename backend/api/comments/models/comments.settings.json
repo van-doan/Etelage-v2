@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "comments",
+  "info": {
+    "name": "Comments"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user": {
+      "via": "comments",
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "content": {
+      "type": "string"
+    },
+    "exhibitId": {
+      "model": "exhibits"
+    },
+    "comment_likes": {
+      "type": "integer"
+    },
+    "comment_timestamp": {
+      "type": "datetime"
+    }
+  }
+}
