@@ -1,0 +1,57 @@
+@import 'colors';
+@import 'keyframes';
+@import 'mixins';
+@import 'constants';
+
+$h4-header: #6f6f6f;
+$h4-subtext: #afafaf;
+
+$primary-background-color: white;
+$secondary-background-color: #111111;
+$primary-border-color:#e1e1e1;
+$success-color: #4c9e4c;
+
+@mixin border($border-style){
+  border-style: $border-style;
+  border-width: 1px;
+  border-color: $primary-border-color;
+}
+
+@mixin scale-max-content-width(){
+  width:100%;
+  max-width: 1400px;
+}
+
+@mixin number-font(){
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+$highlighted-text: $teal;
+$highlighted-background: rgba(86, 183, 180, 0.52);
+
+$error-color: rgb(84, 164, 161);
+
+$primary-button-bg-color: $orange;
+$primary-button-text-color: white;
+
+@mixin box-shadow-1(){
+  @include box-shadow(1px 1px 10px 0 rgba(0,0,0,0.08));
+  z-index: $z-index-raised;
+}
+
+@mixin box-shadow-2(){
+  @include box-shadow((0 7px 14px rgba(50, 50, 93, .1), 0 3px 6px rgba(0, 0, 0, .08)));
+  z-index: $z-index-raised;
+}
+
+@mixin box-shadow-3(){
+  @include box-shadow(0 2px 4px 0 rgba(14, 30, 37, .24))
+}
+
+@mixin box-shadow-4(){
+  @include box-shadow((0 7px 14px rgba(50, 50, 93, .1), 0 3px 6px rgba(0, 0, 0, .03)));
+  z-index: $z-index-raised;
+}
+
+
+

@@ -1,0 +1,104 @@
+@import '../../../../global/scss/config';
+
+.reset-password-form-wrapper {
+  @include max-size;
+  @include flex(column, center, center);
+  position: relative;
+  border-radius: 5px;
+  max-width: 450px;
+
+  .no-account {
+    @include flex(row, center, center);
+    @include font(14px, 500, 0, $medium-gray);
+    margin-top: 24px;
+
+    & span {
+      color: $light-blue;
+      margin-left: 4px;
+
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .invitation-success {
+    @include pad-box(24px);
+    background: white;
+    border-radius: 5px;
+
+    .top {
+      @include font(24px, 600, 0, $green);
+    }
+
+    .bottom {
+      @include font(14px, 500, 0, $dark-gray);
+    }
+  }
+
+  .auth-footer {
+    @include flex-center(column);
+    @include font(14px, 500, 0, $medium-gray);
+    width: 100%;
+    margin-top: 12px;
+    white-space: nowrap;
+
+    & span {
+      color: $light-blue;
+
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .send-password-reset-button {
+    @include pad-box(12px);
+    margin-top: 24px;
+    width: 100%;
+    line-height: initial;
+    overflow: hidden;
+
+  }
+
+  .reset-password-form {
+    width: 100%;
+
+    .signup-button {
+      @include pad-box(12px);
+      white-space: nowrap;
+      min-width: 100px;
+      margin-left: 12px;
+    }
+
+
+    .bottom-actions {
+      @include flex(row, space-between, center);
+      width: 100%;
+      margin: 18px 0 9px 0;
+
+      & > span {
+        color: $light-blue;
+
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .ant-form-item-control {
+      line-height: 1em !important;
+    }
+
+    .ant-form-item {
+      margin-bottom: 18px;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

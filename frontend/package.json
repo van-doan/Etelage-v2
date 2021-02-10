@@ -1,27 +1,53 @@
 {
-  "name": "frontend",
+  "name": "etelage-v2",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^12.6.3",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "4.0.2",
-    "web-vitals": "^1.1.0"
+    "@ant-design/icons": "^4.4.0",
+    "@antv/g2plot": "^1.1.11",
+    "@craco/craco": "^5.6.4",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/classnames": "^2.2.10",
+    "@types/jest": "^24.0.0",
+    "@types/jwt-decode": "^2.2.1",
+    "@types/lodash": "^4.14.159",
+    "@types/node": "^12.0.0",
+    "@types/qs": "^6.9.4",
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/yup": "^0.29.7",
+    "antd": "^4.6.2",
+    "axios": "^0.19.2",
+    "classnames": "^2.2.6",
+    "craco-antd": "^1.18.1",
+    "framer-motion": "^1.11.1",
+    "interactjs": "^1.9.19",
+    "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.20",
+    "mobx": "^5.15.4",
+    "mobx-react": "^6.2.2",
+    "moment": "^2.27.0",
+    "node-sass": "^4.14.1",
+    "qs": "^6.9.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
+    "typescript": "~3.8.0",
+    "yup": "^0.29.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "craco start",
+    "build": "craco build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && aws --profile m3 s3 sync build/ s3://m3-maintenance-tracker --acl public-read"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": "react-app"
   },
   "browserslist": {
     "production": [

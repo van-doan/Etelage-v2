@@ -1,0 +1,181 @@
+@import '../../../../global/scss/config';
+
+.app-header {
+  @include flex(row, center, center);
+  @include pad-box(0 48px);
+  height: initial;
+  line-height: 1em;
+  background-color: rgb(0, 0, 0);
+
+  @media screen and (max-width: $screen-md-min) {
+    display: block;
+    @include pad-box(0 12px);
+  }
+
+  .content {
+    @include flex(row, space-between, center);
+    @include pad-box(24px 0);
+    @include scale-max-content-width;
+
+    @media screen and (max-width: $screen-md-min) {
+      @include pad-box(14px 0);
+    }
+
+    .app-header-right {
+      @include flex(row, flex-start, center);
+
+      .icon {
+        display: flex;
+        margin-right: 12px;
+        color: #6c90b5;
+      }
+
+
+      .user-container {
+        @include flex(row, flex-start, center);
+        border: rgb(136, 135, 135);
+        border-width: thin;
+        border-style: solid;
+        padding: 8px 8px;
+        border-radius: 5px;
+
+
+        &:hover {
+          cursor: pointer;
+        }
+        .user {
+          @include flex(column, flex-start, flex-start);
+          @include font(15px, 500, 0, white);
+          margin: 0 12px;
+          border-radius: 5px;
+          transition: all 0.2s;
+
+          & > span {
+            margin-left: 0;
+          }
+
+          .name {
+            @include font(14px, 600, 0, white!important);
+            margin-bottom: 3px;
+            transition: all 0.2s;
+            @media screen and (max-width: $screen-md-min) {
+              display: none;
+              @include pad-box(14px 0);
+            }
+          }
+
+          .email {
+            @include font(13px, 500, 0, $medium-gray);
+          }
+        }
+      }
+    }
+
+    .full-width-menu {
+      @include flex(row, flex-start, center);
+
+      margin-left: 24px;
+      background: transparent;
+      border: none;
+
+      @media screen and (max-width: $screen-md-min) {
+        display: none;
+      }
+
+      .single-menu-item {
+        @include flex(row, flex-start, center);
+        @include pad-box(9px 18px);
+        @include font(14px, 500, 0, #66809a);
+        margin-right: 6px;
+        border-radius: 5px;
+        transition: all 0.4s;
+
+        &:hover {
+          &:not(.selected) {
+            border:none;
+            transform: translate(0, -2px);
+          }
+
+          cursor: pointer;
+        }
+
+        &.selected {
+          background: #364356;
+          color: white;
+
+          .custom-icon {
+            font-size: 22px;
+            color: white;
+          }
+        }
+
+        .custom-icon {
+          font-size: 22px;
+          margin-right:8px;
+
+        }
+
+        &:last-of-type {
+          margin-right: 0;
+        }
+
+        i {
+          font-size: 22px !important;
+          margin-right: 9px;
+        }
+      }
+    }
+
+    .app-header-left {
+      @include flex(row, flex-start, center);
+      .logo {
+        @include flex(row, flex-start, center);
+        @include font(18px, 500, 0, $dark-blue);
+        line-height: 1em;
+
+        &-text {
+          @include flex(column, flex-start, flex-start);
+          &-top {
+            @include font(11px, 600, 0, $light-gray);
+            //font-family: Ubuntu, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+          }
+          &-bottom {
+            @include font(32px, 100, 0, rgb(255, 255, 255));
+            margin-left: 16px;
+          }
+        }
+
+        #path14 {
+          fill:transparent !important;
+        }
+
+        #path16 {
+          fill:white !important;
+        }
+
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        & img {
+          width: 35px;
+          height: 35px;
+          margin-right: 12px;
+        }
+
+        @media screen and (max-width: $screen-md-min) {
+          @include font(16px, 500, 0, white);
+          & svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 6px;
+          }
+        }
+
+      }
+    }
+  }
+}

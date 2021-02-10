@@ -1,0 +1,41 @@
+@import '../../../global/scss/config';
+
+.auth-page {
+  @include flex-center(column);
+  @include max-size;
+  min-height:100vh;
+
+  .content {
+    @include flex-center(row);
+    @include max-size;
+    background: #111111;
+    min-height:100vh;
+
+    .right {
+      @include flex(column, flex-start, center);
+      @include pad-box(24px);
+      flex: 1 1 60%;
+      height: 100%;
+
+      .title {
+        @include font(40px, 600, 0, $dark-gray);
+        margin-bottom:24px;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        .subtitle {
+          @include font(40px, 500, 0, #fff);
+          @include flex(row, center, center);
+          text-transform: uppercase;
+          letter-spacing: 0.15em;
+          & img {
+            width:16px;
+            margin-right: 9px;
+          }
+        }
+      }
+    }
+  }
+}

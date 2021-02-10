@@ -1,0 +1,27 @@
+@import "../../global/scss/config";
+
+.assessment-builder-container {
+  @include max-size;
+  @include flex(column, flex-start, center);
+
+  &-tabs {
+    width: 100%;
+
+    .ant-tabs-content {
+      @include pad-box(24px);
+    }
+
+    .ant-tabs-tabpane {
+      @include flex(row, center, center);
+    }
+
+    .ant-tabs-nav {
+      @include flex(row, center, flex-start);
+      @include pad-box(16px 24px 0 24px);
+      &-wrap {
+        max-width:1400px;
+      }
+    }
+
+  }
+}

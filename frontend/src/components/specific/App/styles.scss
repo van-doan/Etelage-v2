@@ -1,0 +1,271 @@
+@import '../../../global/scss/config';
+
+.app {
+  background: #111111;
+
+  &-content {
+    @include flex(column, center, flex-start);
+  }
+  &-header {
+
+    &-account-menu {
+      .single-action {
+        @include pad-box(12px 18px);
+        @include font(12px, 500, 0, $medium-gray);
+        @include flex(row, flex-start, center);
+        border-radius: 5px;
+
+        transition: all 0.2s;
+
+        .left {
+          color: $light-blue;
+        }
+
+        .right {
+          margin-left: 12px;
+
+          .title {
+            @include font(14px, 500, 0, $medium-gray);
+          }
+
+          .description {
+            @include font(14px, 500, 0, $light-gray);
+          }
+        }
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        &:hover {
+          background-color: $secondary-background-color;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .content {
+      @include flex(row, flex-start, center);
+      @include pad-box(14px 0);
+
+      width: 100%;
+
+      .logo {
+        @include flex(row, flex-start, center);
+        line-height: 1em;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        & > span {
+          @include font(24px, 500, 0, $dark-gray);
+        }
+      }
+
+      .alerts {
+        margin-left: auto;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .avatar {
+        margin-left: 24px;
+
+        &-container {
+          @include flex(row, flex-start, center);
+          //@include pad-box(9px 12px);
+          transition: all 0.2s;
+          border-radius: 5px;
+
+          &:hover {
+            background: $secondary-background-color;
+            cursor: pointer;
+          }
+
+          .username {
+            @include font(14px, 600, 0, $medium-gray);
+            margin-left: 12px;
+          }
+
+          &.collapsed {
+            @include flex(row, center, center);
+
+            .username {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-sidebar {
+    @include border(none solid none none);
+
+    .ant-menu {
+      @include border(none);
+
+      &-item {
+        @include flex(row, flex-start, center);
+        color: $light-gray;
+
+        &-group {
+          @include border(solid none none none);
+          @include pad-box(12px 0);
+
+          .group-title {
+            @include font(12px, 600, 0.05em, $medium-gray);
+            text-transform: uppercase;
+          }
+        }
+
+        &-selected {
+          background-color: transparent !important;
+        }
+
+        &:not(:last-child) {
+          margin-bottom: 18px !important;
+        }
+
+        &-selected {
+          color: $light-blue;
+        }
+
+        & > svg {
+          margin-right: 18px;
+        }
+
+        & > span {
+          @include font(15px, 500, 0, inherit);
+        }
+      }
+
+      &.ant-menu-inline-collapsed {
+        width: initial;
+
+        .ant-menu-item {
+          @include flex(column, center, center);
+          line-height: 1em;
+
+          &-group {
+            @include border(none none solid none);
+            @include pad-box(12px 0);
+
+            .group-title {
+              display: none;
+            }
+          }
+
+          & > svg {
+            margin-right: 0;
+          }
+
+          & > span {
+            display: none;
+          }
+        }
+      }
+    }
+
+    &.ant-layout-sider-collapsed {
+      .ant-layout-sider-trigger {
+        @include flex(row, center, center);
+        @include pad-box(0);
+
+        & > svg {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    .ant-layout-sider-trigger {
+      @include flex(row, flex-end, center);
+      @include border(solid solid none none);
+      @include pad-box(0 24px 0 0);
+      transition: all 0.2s;
+    }
+  }
+  .dashboard-override {
+      margin-top:18px !important;
+      &.collapsed {
+        @include border(none none solid none);
+        padding-bottom:18px !important;
+        margin-bottom: 0 !important;
+      }
+    }
+}
+
+.loading-app {
+  @include flex-center(column);
+  @include size(100vw, 100vh);
+  background:$secondary-background-color;
+
+  .text {
+    @include font(24px, 500, 0, $dark-gray)
+  }
+
+  .loading-text {
+    @include flex(row, flex-start, center);
+    @include font(14px, 500, 0, $dark-gray);
+    margin-top:9px;
+    span {
+      margin-right:12px;
+      font-size: 16px;
+      color: $light-blue;
+    }
+  }
+
+  .bounce {
+    animation: bounce 0.7s infinite alternate;
+    -webkit-animation: bounce 0.7s infinite alternate;
+  }
+
+  .initialization-strings {
+    @include flex(column, flex-start, flex-start);
+    //@include pad-box(24px 48px);
+    @include box-shadow-4;
+    overflow:hidden;
+    border-radius:3px;
+    background:white;
+    .header {
+      @include pad-box(9px 48px);
+      @include font(30px, 600, 0, $dark-gray);
+      background:$secondary-background-color;
+      width:100%;
+      margin-bottom:12px;
+    }
+    .single-init-container {
+      @include flex(row, flex-start, center);
+      @include pad-box(9px 48px);
+      width:100%;
+      //margin-bottom: 9px;
+
+      &:last-of-type {
+        margin-bottom: 12px;
+      }
+      .string {
+        @include font(16px, 500, 0, $dark-gray);
+        margin-right: auto;
+      }
+
+      &.retrieving {
+        .string {
+          color: $medium-gray;
+        }
+      }
+
+      & > svg {
+        color: $success-color;
+      }
+    }
+  }
+
+  .app-indeterminate-loader {
+    max-width: 300px;
+  }
+}
+
+
+

@@ -1,0 +1,27 @@
+@import '../../global/scss/config';
+
+.dashboard {
+  @include flex(column, flex-start, center);
+  @include pad-box(36px 48px);
+  width:100%;
+
+  &-content {
+    @include scale-max-content-width;
+
+    .assessment-section {
+      &-title {
+        @include font(48px, 500, 0, white);
+        margin-bottom:18px;
+        line-height: 1em;
+      }
+      &-text {
+        &-1{
+          @include font(20px, 300, 0, white);
+        }
+        &-2{
+          @include font(20px, 300, 0, white);
+        }
+      }
+    }
+  }
+}

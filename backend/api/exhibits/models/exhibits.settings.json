@@ -14,7 +14,7 @@
     "title": {
       "type": "string"
     },
-    "artworkIds": {
+    "artwork_ids": {
       "type": "string"
     },
     "exhibit_likes": {

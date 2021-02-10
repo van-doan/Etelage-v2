@@ -1,0 +1,303 @@
+@import 'global/scss/config';
+@import '~antd/dist/antd.css';
+
+body {
+  margin: 0;
+  padding: 0;
+
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "segoe ui", Roboto, Helvetica, Arial, sans-serif;
+  font-weight:500;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.bounce {
+  animation: bounce 0.7s infinite alternate;
+  -webkit-animation: bounce 0.7s infinite alternate;
+}
+
+.ant-notification-notice {
+
+  position:relative;
+  border-radius:8px !important;
+
+  &::before {
+    width: 100%;
+    content: '';
+    position: absolute;
+    //background-image: url("");
+    background-repeat: no-repeat;
+    background-position: right center;
+    height: 100%;
+    top: 0;
+    opacity: 0.4;
+  }
+
+  .ant-notification-notice-message {
+    @include font(24px, 600, 0, $dark-gray);
+  }
+}
+
+.ant-drawer-body {
+  @include pad-box(0 !important);
+}
+
+.ant-menu-item {
+  margin-top:0 !important;
+  margin-bottom:0 !important;
+}
+
+.ant-modal-body {
+  @include pad-box(0 !important);
+}
+
+.ant-modal-confirm-body {
+  @include pad-box(12px);
+  @include flex(row, flex-start, flex-start);
+  @include font(14px, 500, 0, $dark-gray);
+  .ant-modal-confirm-content {
+    margin-top:0 !important;
+
+  }
+}
+.ant-modal-confirm-btns {
+  @include pad-box(12px);
+  margin-top: 12px !important;
+}
+
+.ant-form-explain {
+  margin-top:6px !important;
+}
+
+.ant-form-item-no-colon {
+  &::after {
+    display:none;
+  }
+}
+
+.ant-custom-dropdown-menu-item-group {
+  .ant-dropdown-menu-item-group {
+    &-list {
+      padding-left: 0;
+    }
+  }
+
+}
+
+// TODO: Remove this when AntD fixes their auto-row generation for Lists...
+.ant-row > div {
+  flex: 1 1 auto;
+}
+
+.ant-result-title-override {
+ @include font(16px, 500, 0, $dark-gray);
+}
+
+.ant-custom-menu-override {
+  border: solid thin white;
+  border-radius: 5px;
+  
+  .single-action {
+    @include pad-box(9px 18px);
+    @include font(14px, 500, 0, white);
+    @include flex(row, center, center);
+
+    transition: all 0.2s;
+
+    & > span {
+      @include flex(row, flex-start, center);
+    }
+
+    &.red {
+      & span {
+        color:$error-color;
+      }
+    }
+
+    & > svg {
+      color: $light-blue;
+    }
+
+    .right {
+      margin-left: 12px;
+
+      .title {
+        @include font(14px, 500, 0, white);
+      }
+
+      .description {
+        @include font(14px, 500, 0, $light-gray);
+      }
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      background-color: $secondary-background-color;
+      cursor: pointer;
+    }
+    &.ant-dropdown-menu-item-disabled {
+      .anticon {
+        color: $medium-gray;
+      }
+      .title {
+        color: $medium-gray !important;
+      }
+      &:hover {
+        background-color: transparent;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.ant-dropdown-menu {
+  background: transparent !important;
+}
+
+.ant-alert {
+  background-color: #eaeaea !important;
+  border-width:0 !important;
+  position:relative;
+  overflow:hidden;
+  padding: 16px 16px 16px 20px !important;
+
+  &-message {
+    @include font(16px, 600, 0, $dark-gray);
+  }
+  &-description{
+    @include font(14px, 500, 0, #5a5a5a);
+  }
+
+  &:before {
+    position:absolute;
+    left:0;
+    top:0;
+    content:'';
+    height:100%;
+    width:5px;
+    background:$primary-background-color;
+  }
+
+  &-info {
+    &:before{
+      background:$primary-button-bg-color;
+    }
+  }
+  &-warning {
+    &:before{
+      background:$error-color;
+    }
+  }
+}
+
+.ant-form-item-label {
+  margin-bottom: 6px;
+  line-height: initial !important;
+  & > label {
+    @include font(14px, 500, 0, $medium-gray !important);
+  }
+}
+
+.popup-override {
+  left: -151px !important;
+  bottom: 33px !important;
+
+  .header {
+    @include font(24px, 900, 0, #505050);
+    @include pad-box(12px);
+    @include border(none none solid none);
+    width:100%;
+
+  }
+
+  & > .leaflet-popup-content-wrapper {
+
+    border-radius: 5px;
+
+    & > .leaflet-popup-content {
+      @include flex-center(column);
+      width:300px !important;
+      margin: 0 !important;
+    }
+  }
+
+  & > .leaflet-popup-close-button {
+    padding: 8px 8px 0 0 !important;
+  }
+
+  .img-wrapper {
+    @include pad-box(12px);
+    & > img {
+      width:100%;
+    }
+  }
+
+  .action-wrapper {
+    @include pad-box(12px);
+    @include border(solid none none none);
+    width: 100%;
+
+    .action-button {
+      width: 100%;
+    }
+  }
+}
+
+.anticon-check-circle > svg {
+  color:$green;
+}
+
+.ant-dropdown {
+  @include box-shadow-4;
+  //@include border(solid);
+  border-color: #e6e6e6;
+  padding:0 !important;
+  overflow:hidden;
+  border-radius: 5px;
+
+  &-menu {
+    padding: 0 !important;
+    border-radius:0 !important;
+  }
+
+}
+
+.ant-input {
+  //border:none !important;
+  //background:#f5f5f5 !important;
+}
+
+.ant-select-dropdown {
+  @include border(solid);
+  border-color: #e6e6e6;
+}
+
+.ant-select-selection {
+  //border:none !important;
+  //background:#f5f5f5 !important;
+}
+
+.ant-empty {
+
+  &-description {
+    @include font(16px, 500, 0, $dark-gray);
+    margin-top:24px !important;
+  }
+  &-image {
+    height:200px !important;
+  }
+
+}
+.ant-drawer-close {
+  z-index:1000 !important;
+}
+
