@@ -179,3 +179,25 @@
     }
   }
 }
+
+.ant-drawer-close {
+  color: white !important;
+  font-size: 50px !important;
+
+}
+.ant-drawer-content {
+  background-color: rgba(0,0,0,.9) !important;
+  &-wrapper {
+    background-color: transparent;
+    width: 100% !important;
+  }
+}
+.ant-drawer-body {
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+  .ant-menu {
+    background-color: transparent;
+  }
+}

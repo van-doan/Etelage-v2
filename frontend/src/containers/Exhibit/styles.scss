@@ -1,6 +1,6 @@
 @import '../../global/scss/config';
 
-.exhibit {
+.explore {
     @include flex(column, flex-start, center);
     @include pad-box(36px 48px);
     width:100%;
@@ -8,7 +8,7 @@
     &-content {
       @include scale-max-content-width;
   
-      .exhibit-section {
+      .explore-section {
         &-title {
           @include font(48px, 500, 0, white);
           margin-bottom:18px;
@@ -21,85 +21,3 @@
       }
     }
   
-    .dashboard-module {
-      padding: 85px !important;
-      background: transparent;
-      &-logo {
-        padding: 16px 0 0 0;
-        font-family: "Playfair Display", "Times New Roman", Times, serif;
-        font-size: 40px;
-      }
-      &-hr {
-        border-color: white;
-        width: 80%;
-      }
-      &-menu {
-        @include font(14px, 500, 0, rgb(68, 68, 68));
-        background: transparent;
-        text-align: center;
-        margin: 20px 0;
-
-        &-item {
-          &:after{
-            border-right: 3px solid $teal !important;
-          }
-        }
-      }
-      .ant-layout-sider{
-        background: linear-gradient(0deg, rgba(208,214,221,0.5) 0%, rgba(255,250,250,0.7) 50%, rgba(208,214,221,0.5) 100%,);
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-      }
-      &-pane {
-        background: linear-gradient(0deg, rgba(208,214,221,0.5) 0%, rgba(255,250,250,0.2) 50%, rgba(208,214,221,0.5) 100%);
-        &-header {
-          background: transparent;
-        }
-      }
-    }
-
-// Ant Design Overrides
-
-.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-  background-color: rgba(208,214,221,0.4) !important;
-}
-
-.ant-menu-item-selected {
-  color: rgb(68, 68, 68);
-  font-weight:800;
-}
-
-.ant-tabs {
-  &-nav {
-    &-list {
-      padding:30px;
-      align-items: center;
-    }
-    &-wrap{
-      background: linear-gradient(0deg, rgba(208,214,221,0.5) 0%, rgba(255,250,250,0.7) 50%, rgba(208,214,221,0.5) 100%,);
-      border-top-left-radius: 5px;
-      border-bottom-left-radius: 5px;
-    }
-  }
-}
-
-.ant-tabs-tab:hover {
-  color: #60ebe6 !important;
-}
-
-.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-  color: $teal;
-}
-
-.ant-tabs-ink-bar-animated {
-  background: $teal !important;
-}
-
-.ant-tabs-ink-bar {
-  background: $teal !important;
-}
-
-.ant-tabs-content-holder {
-  padding: 16px;
-  background: linear-gradient(0deg, rgba(208,214,221,0.5) 0%, rgba(255,250,250,0.2) 50%, rgba(208,214,221,0.5) 100%);
-}

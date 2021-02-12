@@ -1,7 +1,7 @@
-import { UserSwitchOutlined } from "@ant-design/icons";
+// import { UserSwitchOutlined } from "@ant-design/icons";
 import axios from "axios";
 import {TUser} from "../stores/App/Types";
-import { UserSettingsValidationSchema } from "../stores/App/ValidationSchemas";
+// import { UserSettingsValidationSchema } from "../stores/App/ValidationSchemas";
 
 export default class DashboardActions {
 

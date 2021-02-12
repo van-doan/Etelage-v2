@@ -1,154 +1,160 @@
-import React, {useState} from 'react';
-import { Tabs, Input, Form, Modal, Card, Upload, Button, Avatar } from 'antd';
-import { EditOutlined, SettingOutlined, UploadOutlined } from '@ant-design/icons';
-import {TUser} from "../../stores/App/Types";
-
-import './styles.scss';
+import React, {useState, useEffect} from 'react';
+import { Layout, Tabs, Upload, Button, Input, Form, Row, Col } from 'antd';
+import {UploadOutlined} from '@ant-design/icons';
 
 import AppStore from "../../stores/App/AppStore";
 import DashboardActions from "../../actions/DashboardActions"
 
-const { TabPane } = Tabs;
+import './styles.scss'
+
 const { TextArea } = Input;
-const { Meta } = Card;
+const { TabPane } = Tabs;
 
 interface Props {
-    userId: any,
-    file: any,
+  userId: any,
+  file: any,
 }
 
 export default (props: Props) => {
-    const [form] = Form.useForm();
-    const [modal1Visibility, setModal1Visibility] = useState(false);
-    const [modal2Visibility, setModal2Visibility] = useState(false);
-    const [userData, setUserData] = useState();
-    const [submittingUserData, setSubmittingUserData] = useState(false);
-    const {file, userId} = props;
+  const [width, setWidth] = useState(window.innerWidth);
+  const mobileBreakpoint = 400;
+  const [submittingUserData, setSubmittingUserData] = useState(false);
+  const {file, userId} = props;
+  const [form] = Form.useForm();
 
-    async function onSubmitData() {
-        setSubmittingUserData(true);
-        let curAssessment = await DashboardActions.uploadFilesForUser(file, userId);
-        setSubmittingUserData(false);
+  // Form Functions
 
+  const onReset = () => {
+    form.resetFields();
+  };
+
+  async function onSubmitData() {
+    setSubmittingUserData(true);
+    let curAssessment = await DashboardActions.uploadFilesForUser(file, userId);
+    setSubmittingUserData(false);
+}
+
+  const normFile = (e:any) => {
+    console.log('Upload event:', e);
+
+    if (Array.isArray(e)) {
+      return e;
     }
 
-    const normFile = (e:any) => {
-        console.log('Upload event:', e);
-      
-        if (Array.isArray(e)) {
-          return e;
-        }
-      
-        return e && e.fileList;
-      };
+    return e && e.fileList;
+  };
 
-    const ProfileUpdate = () => {
-    const onFinish = (values:any) => {
-        console.log('Received values of form: ', values);
-    };
-}
+  useEffect(() => {
+    const handleWindowResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleWindowResize);
+    return () => window.removeEventListener('resize', handleWindowResize);
+}, []);
 
     return (
-        <div className='dashboard'>
-            <div className='dashboard-content'>
-                    <Tabs defaultActiveKey="1" 
-                    tabBarGutter={100}
-                    centered>
-                        <TabPane tab="Feed" key="1" style={{textAlign: 'center'}}>
-                        <Card
-                            className="parent-prof-card">
-                                Feed Content goes here
-                        </Card>
-                        </TabPane>
-                        <TabPane className="profile-tab" tab="Profile" key="2" style={{color: 'white', textAlign: 'center'}}>
-                            <Modal
-                                className="editSettings"
-                                title="Settings"
-                                centered
-                                visible={modal1Visibility}
-                                onCancel={()=>setModal1Visibility(false)}
-                                footer={null}>
-                                    No User Settings yet. Coming soon!
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                            </Modal>
-                            <Modal
-                                className="editProfile"
-                                title="Profile"
-                                centered
-                                visible={modal2Visibility}
-                                onCancel={()=>setModal2Visibility(false)}
-                                footer={null}>
-                            <Form>
-                                <Form.Item label="Username">
-                                    <Input placeholder={AppStore.user?.username}/>
-                                </Form.Item>
-                                <Form.Item label="Bio">
-                                    <TextArea rows={4} placeholder="I'm an influencer based out of LA and have a passion for art."/>
-                                </Form.Item>
-                                <Form.Item
-                                    name="upload"
-                                    label="Profile Picture"
-                                    valuePropName="fileList"
-                                    getValueFromEvent= {normFile}>
-                                    <Upload name="logo" listType="picture">
-                                    <Button icon={<UploadOutlined />}>Click to upload</Button>
-                                    </Upload>
-                                </Form.Item>
+        <Layout className="dashboard-module">
+          <div className="dashboard-module-logo">DASHBOARD</div>
+          <Tabs tabPosition={width > mobileBreakpoint ? "left" : "top"} 
+          className="dashboard-module-menu" 
+          defaultActiveKey={'1'}
+          centered>
+            <TabPane className="dashboard-module-menu-item" tab="Feed" key="1">
+              Feed goes here
+            </TabPane>
+            <TabPane className="dashboard-module-menu-item" tab="Profile" key="2">
+              <Row className="dashboard-module-profile">
+                <div className="dashboard-module-profile-section">
+                  {AppStore.user?.username}
+                </div>
+              </Row>
+              <Row className="dashboard-module-profile-stats">
+                <Col className="dashboard-module-profile-stats-col">
+                  <div className="dashboard-module-profile-stats-col-label">
+                    Exhibits
+                  </div>
+                  <div className="dashboard-module-profile-stats-col-num">
+                    800
+                  </div>
+                </Col>
+                <Col className="dashboard-module-profile-stats-col">
+                  <div className="dashboard-module-profile-stats-col-label">
+                    Following
+                  </div>
+                  <div className="dashboard-module-profile-stats-col-num">
+                    3
+                  </div>
+                </Col>
+                <Col className="dashboard-module-profile-stats-col">
+                  <div className="dashboard-module-profile-stats-col-label">
+                    Followers
+                  </div>
+                  <div className="dashboard-module-profile-stats-col-num">
+                    10m
+                  </div>
+                </Col>
+              </Row>
+            </TabPane>
+            <TabPane className="dashboard-module-menu-item" tab="Notifications" key="3">
+              Notifications go here
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              More Stuff to Test
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              <br/>
+              Testing boiiii
+            </TabPane>
+            <TabPane className="dashboard-module-menu-item" tab="Settings" key="4">
+              <Form form={form} className="dashboard-module-menu-item-form">
+                <Form.Item className="dashboard-module-menu-item-form-item" label="Username">
+                    <Input placeholder={AppStore.user?.username}/>
+                </Form.Item>
+                <Form.Item
+                     className="dashboard-module-menu-item-form-item"
+                    label="About Me">
+                    <TextArea rows={4} placeholder="I'm an influencer based out of LA and have a passion for art."/>
+                </Form.Item>
+                <Form.Item
+                    className="dashboard-module-menu-item-form-item"
+                    name="upload"
+                    label="Profile Picture"
+                    valuePropName="fileList"
+                    getValueFromEvent= {normFile}>
+                    <Upload name="logo" listType="picture">
+                    <Button icon={<UploadOutlined />}>Click to upload</Button>
+                    </Upload>
+                </Form.Item>
+                <hr className="dashboard-module-menu-item-form-hr"/>
+                <Form.Item
+                    className="dashboard-module-menu-item-form-item"
+                    >
+                    <div className="prof-edit-form-buttons">
+                    <Button className="dashboard-module-menu-item-form-btn" key="reset" color="clear" onClick={onReset}>
+                        Reset
+                    </Button> 
+                    <Button className="dashboard-module-menu-item-form-btn" key="submit" onClick={onSubmitData} loading={submittingUserData} type="primary" >
+                        Submit
+                    </Button> 
+                    </div>
+                </Form.Item>
+              </Form>
+            </TabPane>
+          </Tabs>
+      </Layout>
+    );
+  }
 
-                                <Form.Item
-                                    wrapperCol={{
-                                    span: 12,
-                                    offset: 6,
-                                }}>
-                                    <div className="prof-edit-form-buttons">
-                                    <Button key="cancel" onClick={()=> {setModal2Visibility(false)}} color="clear" >
-                                        Cancel
-                                    </Button> 
-                                    <Button key="submit" onClick={onSubmitData} loading={submittingUserData} type="primary" >
-                                        Submit
-                                    </Button> 
-                                    </div>
-                                </Form.Item>
-                            </Form>
-                            </Modal>
-                            <Card
-                                className="parent-prof-card"
-                                >
-                                <Card
-                                className="inner-prof-card"
-                                bordered={false}>
-                                    <Meta 
-                                        avatar={""}
-                                        title={AppStore.user?.username}
-                                        description="User description goes here" 
-                                    />
-                                </Card>
-                                <Card
-                                    className="inner-prof-card"
-                                    bordered={false}
-                                    actions={[
-                                        <SettingOutlined key="setting" onClick={() => setModal1Visibility(true)} />,
-                                        <EditOutlined key="edit" onClick={() => setModal2Visibility(true)} />,
-                                    ]}>
-                                </Card>
-                                <Card
-                                    className="inner-prof-card"
-                                    bordered={false}>
-                                    User's exhibits go here
-                                    
-                                </Card>
-                            </Card>
-                        </TabPane>
-                        <TabPane tab="Notifications" key="3" style={{textAlign: 'center'}}>
-                        <Card
-                            className="parent-prof-card">
-                                Notifications go here
-                        </Card>
-                        </TabPane>
-                    </Tabs>
-            </div>
-        </div>
-    )
-}
