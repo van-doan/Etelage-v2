@@ -78,7 +78,7 @@ const RegisterForm = (props:Props) => {
                 onClick={() => BrowserRouter.push(BrowserRoutes.login)}>Log in here</span>.
             </div>
             <div className='auth-footer'>
-            <div>©ETELAGE, {new Date().getFullYear()}. All Rights Reserved</div>
+            <div>©ETELAGE {new Date().getFullYear()} – All Rights Reserved</div>
             </div>
         </div>
     )

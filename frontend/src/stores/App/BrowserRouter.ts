@@ -47,14 +47,24 @@ export class BrowserRoutes {
     static SIGNUP = 'signup';
     static ADMIN = 'admin';
     static DASHBOARD = 'dashboard';
+    static HOME = 'home';
     static EXHIBITS = 'exhibits';
+    static EXPLORE = 'explore';
 
     static get debugger(){
         return `${BrowserRoutes.BASE}/${BrowserRoutes.DEBUGGER}`;
     }
-
     static get home(){
+        return `${BrowserRoutes.BASE}/${BrowserRoutes.HOME}`;
+    }
+    static get dashboard(){
         return `${BrowserRoutes.BASE}/${BrowserRoutes.DASHBOARD}`;
+    }
+    static get exhibits(){
+        return `${BrowserRoutes.BASE}/${BrowserRoutes.EXHIBITS}`;
+    }
+    static get explore(){
+        return `${BrowserRoutes.BASE}/${BrowserRoutes.EXPLORE}`;
     }
     static get admin(){
         return `${BrowserRoutes.BASE}/${BrowserRoutes.ADMIN}`;
@@ -80,15 +90,11 @@ export class BrowserRoutes {
     static get passwordReset(){
         return `${BrowserRoutes.BASE}/${BrowserRoutes.PASSWORD_RESET}`;
     }
-
-    static get exhibits(){
-        return `${BrowserRoutes.BASE}/${BrowserRoutes.EXHIBITS}`;
-    }
     static get exhibitsByIdParam(){
         return `${BrowserRoutes.BASE}/${BrowserRoutes.EXHIBITS}/:exhibitId`;
     }
 
     static getExhibitById(exhibitId:number){
-        return `${BrowserRoutes.exhibits}/${exhibitId}`;
+        return `${BrowserRoutes.EXHIBITS}/${exhibitId}`;
     }
 }

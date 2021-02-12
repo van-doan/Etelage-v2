@@ -10,6 +10,8 @@ export interface TUser {
     role: TUserRole,
     user_group: number,
     username: string,
+    profile_img: any,
+    user_bio: string,
 }
 
 export interface TVendor {
@@ -107,4 +109,4 @@ export interface TSignupResponse {
     user: TUser,
 }
 
-export const LSAuthTokenKey = 'corl_jwt';
+export const LSAuthTokenKey = 'etelage_jwt';

@@ -1,11 +1,11 @@
 @import '../../../global/scss/config';
 
 .app {
-  background: #111111;
+  background-image: url('../../../assets/images/etelage-bg.jpg');
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
-  &-content {
-    @include flex(column, center, flex-start);
-  }
   &-header {
 
     &-account-menu {

@@ -75,6 +75,9 @@
     },
     "exhibits": {
       "collection": "exhibits"
+    },
+    "user_bio": {
+      "type": "text"
     }
   }
 }

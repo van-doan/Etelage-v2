@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React, {Component} from "react";
 import {RouteComponentProps, withRouter} from "react-router";
-import {Layout, Avatar, Dropdown, Menu} from 'antd';
+import {Layout, Avatar, Drawer, Menu} from 'antd';
 import {SmileOutlined, CaretDownOutlined} from '@ant-design/icons';
 import {observer} from "mobx-react";
 
@@ -23,6 +23,9 @@ interface Props extends RouteComponentProps {
 interface State {
     collapsed:boolean,
     showMobileMenu:boolean,
+    visible: boolean,
+    placement: string,
+    closable: boolean,
 }
 
 class AppHeader extends Component<Props, any> {
@@ -30,7 +33,22 @@ class AppHeader extends Component<Props, any> {
     state:State = {
       collapsed:false,
         showMobileMenu:false,
+        visible: false,
+        placement: 'right',
+        closable: true,
     };
+
+    showDrawer = () => {
+        this.setState({
+            visible: true,
+        });
+    };
+
+    onClose = () => {
+        this.setState({
+            visible: false,
+        }) 
+    }
 
     get selectedKey() {
         for (let key in AppRoutesPathReference){
@@ -54,32 +72,38 @@ class AppHeader extends Component<Props, any> {
     }
     get menu(){
         return (
-            <Menu className='ant-custom-menu-override'>
-                <Menu.Item className='single-action'>
-                    <div className='right'>
-                        <div className='title'>HOME</div>
-                    </div>
-                </Menu.Item>
-                <Menu.Item className='single-action'>
-                    <div className='right'>
-                        <div className='title'>EXHIBITS</div>
-                    </div>
-                </Menu.Item>
-                <Menu.Item className='single-action'>
-                    <div className='right'>
-                        <div className='title'>EXPLORE</div>
-                    </div>
-                </Menu.Item>
-                <Menu.Item className='single-action' onClick={AppActions.logout}>
-                    <div className='right'>
-                        <div className='title'>LOGOUT</div>
-                    </div>
-                </Menu.Item>
-            </Menu>
+                <Menu className='ant-custom-menu-override'>
+                    <Menu.Item className='single-action' onClick={() => BrowserRouter.push(BrowserRoutes.home)}>
+                        <div className='right'>
+                            <div className='title' onClick={this.onClose}>HOME</div>
+                        </div>
+                    </Menu.Item>
+                    <Menu.Item className='single-action' onClick={() => BrowserRouter.push(BrowserRoutes.dashboard)}>
+                        <div className='right'>
+                            <div className='title' onClick={this.onClose}>DASHBOARD</div>
+                        </div>
+                    </Menu.Item>
+                    <Menu.Item className='single-action' onClick={() => BrowserRouter.push(BrowserRoutes.exhibits)}>
+                        <div className='right'>
+                            <div className='title' onClick={this.onClose}>EXHIBITS</div>
+                        </div>
+                    </Menu.Item>
+                    <Menu.Item className='single-action' onClick={() => BrowserRouter.push(BrowserRoutes.explore)}>
+                        <div className='right'>
+                            <div className='title' onClick={this.onClose}>EXPLORE</div>
+                        </div>
+                    </Menu.Item>
+                    <Menu.Item className='single-action' onClick={AppActions.logout}>
+                        <div className='right'>
+                            <div className='title' onClick={this.onClose}>LOGOUT</div>
+                        </div>
+                    </Menu.Item>
+                </Menu>
         )
     }
 
     render() {
+        const { placement, visible } = this.state;
         return (
             <Header className='app-header'>
                 <div className='content'>
@@ -90,20 +114,25 @@ class AppHeader extends Component<Props, any> {
                         </div>
                     </div>
                     <div className='full-width-menu'>
-                        {this.menuItems}
+                        <Drawer
+                            className="menu-nav"
+                            closable={true}
+                            onClose={this.onClose}
+                            visible={visible}
+                            key={placement}>
+                        {this.menu}
+                        </Drawer>
                     </div>
 
                     <div className='app-header-right'>
-                        <Dropdown overlay={this.menu} trigger={['click']}>
-                            <div className='user-container'>
+                            <div className='user-container' onClick={this.showDrawer}>
                             <Avatar style={{backgroundColor: '#16c784'}} icon={<SmileOutlined />}/>
                             <div className='user'>
                                 <div className='name'>{AppStore.user?.username}</div>
                                 <div className='email'>{AppStore.user?.email}</div>
                             </div>
-                            <CaretDownOutlined style={{color:'white'}}/>
+                            <CaretDownOutlined style={{color:'grey'}}/>
                         </div>
-                        </Dropdown>
                     </div>
                 </div>
             </Header>

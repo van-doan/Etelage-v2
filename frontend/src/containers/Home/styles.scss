@@ -1,0 +1,31 @@
+@import '../../global/scss/config';
+
+.app-content {
+  .home {
+    @include pad-box(36px 48px);
+    top: 40%;
+    position: absolute;
+    width:100%;
+
+    &-content {
+      @include scale-max-content-width;
+
+      .home-section {
+        &-title {
+          @include font(60px, 500, 0, rgb(68, 68, 68));
+          font-family: "Playfair Display", "Times New Roman", Times, serif;
+          margin-bottom:18px;
+          line-height: 1em;
+        }
+        &-text {
+          &-1{
+            @include font(17px, 400, 0, rgb(68, 68, 68));
+          }
+          &-2{
+            @include font(17px, 400, 0, rgb(68, 68, 68));
+          }
+        }
+      }
+    }
+  }
+}

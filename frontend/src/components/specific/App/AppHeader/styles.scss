@@ -5,7 +5,7 @@
   @include pad-box(0 48px);
   height: initial;
   line-height: 1em;
-  background-color: rgb(0, 0, 0);
+  background-color: transparent;
 
   @media screen and (max-width: $screen-md-min) {
     display: block;
@@ -33,7 +33,7 @@
 
       .user-container {
         @include flex(row, flex-start, center);
-        border: rgb(136, 135, 135);
+        border: rgb(192, 192, 192);
         border-width: thin;
         border-style: solid;
         padding: 8px 8px;
@@ -45,7 +45,7 @@
         }
         .user {
           @include flex(column, flex-start, flex-start);
-          @include font(15px, 500, 0, white);
+          @include font(15px, 500, 0, rgb(68, 68, 68));
           margin: 0 12px;
           border-radius: 5px;
           transition: all 0.2s;
@@ -55,7 +55,7 @@
           }
 
           .name {
-            @include font(14px, 600, 0, white!important);
+            @include font(14px, 600, 0, rgb(68, 68, 68)!important);
             margin-bottom: 3px;
             transition: all 0.2s;
             @media screen and (max-width: $screen-md-min) {
@@ -101,7 +101,7 @@
 
         &.selected {
           background: #364356;
-          color: white;
+          color: #343434;
 
           .custom-icon {
             font-size: 22px;

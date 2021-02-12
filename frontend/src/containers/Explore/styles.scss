@@ -1,0 +1,23 @@
+@import '../../global/scss/config';
+
+.explore {
+    @include flex(column, flex-start, center);
+    @include pad-box(36px 48px);
+    width:100%;
+  
+    &-content {
+      @include scale-max-content-width;
+  
+      .explore-section {
+        &-title {
+          @include font(48px, 500, 0, white);
+          margin-bottom:18px;
+          line-height: 1em;
+        }
+        &-text {
+            @include font(20px, 300, 0, white);
+          }
+        }
+      }
+    }
+  

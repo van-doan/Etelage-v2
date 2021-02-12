@@ -40,7 +40,7 @@ class Protected extends Component<RouteComponentProps, any> {
         return (
             <>
                 <HAppHeader/>
-                <Layout style={{background: '#000'}}>
+                <Layout style={{background: 'transparent'}}>
                     <Content className='app-content'>
                         <Switch>
                             <Redirect exact from={BrowserRoutes.login} to={BrowserRoutes.home}/>

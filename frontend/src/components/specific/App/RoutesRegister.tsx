@@ -31,7 +31,6 @@ function getAppRoutesHeaders(routesObject:AppRoutesObject):AppRouteHeader[]{
 
 export const AppRoutesRenders = [
     getAppRoutesRenders(AppRoutesObject),
-    //This must go last since there's a / path here
 ];
 
 export const AppHeaderItemsMap:AppRouteHeader[] = [
