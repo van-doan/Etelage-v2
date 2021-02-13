@@ -4,15 +4,40 @@
     @include flex(column, flex-start, center);
     @include pad-box(36px 48px);
     width:100%;
-  
+
+    &-query {
+      margin-bottom: 12px;
+    }
+
+    &-img {
+      width:100%;
+    }
     &-content {
       @include scale-max-content-width;
   
       .explore-section {
+        &-content{
+          @media screen and (max-width: $screen-sm-min) {
+            margin-top: 20px;
+          }
+          &-label{
+
+          }
+          &-results {
+            @media screen and (max-width: $screen-sm-min) {
+              
+            }
+          }
+        }
         &-title {
-          @include font(48px, 500, 0, white);
+          font-family: "Playfair Display", "Times New Roman", Times, serif;
+          color: rgb(68, 68, 68);
+          font-size: 40px;
           margin-bottom:18px;
           line-height: 1em;
+          @media screen and (max-width: $screen-sm-min) {
+            text-align: center;
+          }
         }
         &-text {
             @include font(20px, 300, 0, white);
