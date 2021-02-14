@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { XAPP_TOKEN } from './config/key';
-import { IArtsyArtworkApiResponse } from '../containers/Explore/Types'
+import { IArtsyArtworkApiResponse } from '../containers/Explore/Types';
 
 export default class ExploreActions {
     

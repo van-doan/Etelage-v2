@@ -25,7 +25,7 @@
           }
           &-results {
             @media screen and (max-width: $screen-sm-min) {
-              
+
             }
           }
         }
@@ -45,4 +45,35 @@
         }
       }
     }
+
+    // Exhibit Modal Form
+
+    .modal-art{
+      &-title {
+        margin: 18px 0 0;
+      }
+      &-form {
+
+      }
+      &-container {
+        text-align: center;
+        &-btn {
+          margin: 0 8px;
+        }
+
+      }
+    }
   
+
+    // Ant Design Overrides
+
+    .ant-modal {
+      &-content {
+        border-radius: 5px;
+      }
+
+      &-body{
+        padding: 24px;
+      }
+
+    }

@@ -63,10 +63,6 @@ code {
   background-color: grey !important;
 }
 
-.ant-modal-body {
-  @include pad-box(0 !important);
-}
-
 .ant-modal-confirm-body {
   @include pad-box(12px);
   @include flex(row, flex-start, flex-start);

@@ -35,7 +35,7 @@ export default (props:Props) => {
 
     function renderSearchResults () {
         if(loading) {
-          return "Loading..."
+          return <div className="art-loading" style={{textAlign: "center", margin: "12px 0"}}>Loading...</div>
         } else if (data) {
           return data._embedded.results.map((artwork, index) => (
             <ExploreResults key={index} data={artwork} />
@@ -50,12 +50,12 @@ export default (props:Props) => {
                     <div className="explore-section-title">EXPLORE</div>
                         <Form className='explore-section-form'>
                             <Input className='explore-query' type='text' name='value' placeholder="art, contemporary, Banksy..." value={value} onChange={handleChange}></Input>
-                            <Input className='explore-search' type='submit' value='search' onClick={handleSubmit} disabled={!isEnabled}></Input>
+                            <Input className='explore-search' type='submit' value='Search' onClick={handleSubmit} disabled={!isEnabled}></Input>
                         </Form>
                     </div>
                     <div className='explore-section-content'>
                         {data ? 
-                        <div className='explore-section-content-label'>Showing search results for ...</div> :
+                        <div className='explore-section-content-label'>Showing search results for "{data.q}"... </div> :
                         <span className='explore-section-content-results'>Don't see any results? Use the search bar above.</span>}
                         {renderSearchResults()}
                     </div>

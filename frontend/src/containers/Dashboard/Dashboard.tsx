@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import { Layout, Tabs, Upload, Button, Input, Form, Row, Col } from 'antd';
+import { Layout, Tabs, Upload, Button, Input, Form, Divider } from 'antd';
 import {UploadOutlined} from '@ant-design/icons';
 
 import AppStore from "../../stores/App/AppStore";
 import DashboardActions from "../../actions/DashboardActions"
+
+import DashboardProfile from '../Dashboard/DashboardProfile';
+import DashboardUserExhibits from '../Dashboard/DashboardUserExhibits';
 
 import './styles.scss'
 
@@ -61,37 +64,9 @@ export default (props: Props) => {
               Feed goes here
             </TabPane>
             <TabPane className="dashboard-module-menu-item" tab="Profile" key="2">
-              <Row className="dashboard-module-profile">
-                <div className="dashboard-module-profile-section">
-                  {AppStore.user?.username}
-                </div>
-              </Row>
-              <Row className="dashboard-module-profile-stats">
-                <Col className="dashboard-module-profile-stats-col">
-                  <div className="dashboard-module-profile-stats-col-label">
-                    Exhibits
-                  </div>
-                  <div className="dashboard-module-profile-stats-col-num">
-                    800
-                  </div>
-                </Col>
-                <Col className="dashboard-module-profile-stats-col">
-                  <div className="dashboard-module-profile-stats-col-label">
-                    Following
-                  </div>
-                  <div className="dashboard-module-profile-stats-col-num">
-                    3
-                  </div>
-                </Col>
-                <Col className="dashboard-module-profile-stats-col">
-                  <div className="dashboard-module-profile-stats-col-label">
-                    Followers
-                  </div>
-                  <div className="dashboard-module-profile-stats-col-num">
-                    10m
-                  </div>
-                </Col>
-              </Row>
+              <DashboardProfile/>
+              <Divider className="dashboard-module-divider"></Divider>
+              <DashboardUserExhibits/>
             </TabPane>
             <TabPane className="dashboard-module-menu-item" tab="Notifications" key="3">
               Notifications go here

@@ -10,72 +10,51 @@ export interface TUser {
     role: TUserRole,
     user_group: number,
     username: string,
-    profile_img: any,
+    profile_img: TStrapiMediaFile,
     user_bio: string,
 }
 
-export interface TVendor {
-    id: number,
-    name: string,
-}
-
-export interface TClient {
-    id: number,
-    name: string,
-}
-
-export interface TControl {
-    id: number,
-    question: string,
-    type: EControlType,
-    category: EControlCategory,
-    depends_on:object
-}
-
-export interface TAssessmentTemplate {
-    name:string,
-    controls:TControl[],
-    id:number,
-}
-
-export interface TStrapiFile {
+export interface TStrapiMediaFile {
     alternativeText: string,
     caption: string,
     created_at: string,
     ext: string,
-    formats: string[],
+    formats: {
+        small: TStrapiMediaFileFormat,
+        thumbnail: TStrapiMediaFileFormat,
+    }
     hash: string,
     height: number,
     id: number,
-    mime: MimeType,
-    name: string
-    previewUrl: null
-    provider: string
-    provider_metadata: any
-    size: number
-    updated_at: string
-    url: string
-    width: number
+    mime: string,
+    name: string,
+    previewUrl: null,
+    provider: string,
+    provider_metadata: null,
+    size:  number,
+    updated_at: string,
+    url: string,
+    width: number,
 }
 
-export interface TControlResponse {
-    id: number,
-    control: TControl,
-    comments: string,
-    artifacts: any,
-    assessment: TAssessment,
-    answer: string,
+export interface TStrapiMediaFileFormat {
+    ext: string,
+    hash: string,
+    height: number,
+    mime: string,
+    name: string,
+    path: null,
+    size: number,
+    url: string,
+    width: number,
 }
 
-export interface TAssessment {
-    id: number,
+export interface TExhibits {
     title: string,
-    vendor: TVendor,
-    client: TClient,
-    controls: TControl[],
-    status: EAssessmentStatus,
-    control_responses: TControlResponse[],
-    due_date:string,
+    description: string,
+    artwork_ids: any,
+    exhibit_likes: number,
+    user: TUser,
 }
 
 export interface TSignupValues {
