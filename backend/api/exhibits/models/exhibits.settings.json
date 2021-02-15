@@ -15,13 +15,18 @@
       "type": "string"
     },
     "artwork_ids": {
-      "type": "string"
+      "type": "text"
     },
     "exhibit_likes": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     },
-    "timestamp": {
-      "type": "datetime"
+    "description": {
+      "type": "text"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
     }
   }
 }

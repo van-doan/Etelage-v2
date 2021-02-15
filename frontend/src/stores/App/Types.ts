@@ -1,5 +1,3 @@
-import {EAssessmentStatus, EControlCategory, EControlType} from "./ModelEnums";
-
 export interface TUser {
     activated: number,
     blocked: boolean | null,

@@ -1,23 +1,22 @@
 import axios from 'axios';
-import { TExhibits, TUser } from '../stores/App/Types';
+import { TExhibit } from '../containers/Explore/Types';
 
 export default class ExhibitActions {
 
     static async getOwnExhibits(){
-        try {
-            let res = await axios.get('http://localhost:1337/exhibits');
-            return res.data;
-        } catch (e){
-            console.log('Could not get user data', e.message);
-            return undefined;
-        }
+            let res = await axios.get(
+                'http://localhost:1337/exhibits'
+                );
+            let exhibitData = res.data
+            console.log(exhibitData)
+        return exhibitData as TExhibit[];
     }
 
-    static async saveExhibit(exhibitId:number, values: { title: string, description: string, artwork_ids: string} ){
-        if (exhibitId){
+    static async saveExhibit(values: { id:number, title: string, description: string, artwork_ids: string} ){
+        if (values.id){
             try {
-                let res= await axios.put(`http://localhost:1337/exhibits/${exhibitId}`, values.artwork_ids);
-                return res.data as TExhibits;
+                let res= await axios.patch(`http://localhost:1337/exhibits/${values.id}`, values.artwork_ids && values.id );
+                return res.data as TExhibit;
             } catch (e){
                 console.error('Could not update exhibit at this time', e.message);
                 return undefined
@@ -25,8 +24,8 @@ export default class ExhibitActions {
     } else {
             try {
                 let exhibitValues = {...values}
-                let res = await axios.post('http://localhost:1337/exhibits', values);
-                return res.data as TExhibits;
+                let res = await axios.post('http://localhost:1337/exhibits', exhibitValues);
+                return res.data as TExhibit;
             } catch (e) {
                 console.log('Could not create exhibit', e.message);
                 return undefined;

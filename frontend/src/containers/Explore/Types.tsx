@@ -1,3 +1,4 @@
+import {TUser} from '../../stores/App/Types'
 // Interface is just static typing to declare variables
 
 // "T" => Type; 'I' => info/interface
@@ -6,7 +7,6 @@ export interface IArtsyArtworkLink {
 }
 
 export interface IArtsyArtwork {
-    index:number,
         description: string,
         og_type: string,
         title: string,
@@ -33,4 +33,13 @@ export interface IArtsyApiResponse<I> {
 }
 
 export interface IArtsyArtworkApiResponse extends IArtsyApiResponse<IArtsyArtwork> {
+}
+
+export interface TExhibit {
+        id: number,
+        title: string,
+        description: string,
+        artwork_ids: string[],
+        exhibit_likes: number,
+        user: TUser,
 }

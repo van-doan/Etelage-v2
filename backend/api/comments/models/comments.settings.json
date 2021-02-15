@@ -18,10 +18,12 @@
       "model": "exhibits"
     },
     "comment_likes": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     },
-    "comment_timestamp": {
-      "type": "datetime"
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
     }
   }
 }

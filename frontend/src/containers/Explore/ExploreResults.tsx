@@ -1,25 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Modal, Form, Button, Input, Select, Divider } from 'antd';
-import { IArtsyArtwork } from './Types'
-import { TExhibits } from '../../stores/App/Types'
+import { IArtsyArtwork, TExhibit } from './Types'
+// import { TExhibits } from '../../stores/App/Types'
 // import moment from 'moment';
 import './styles.scss'
 
 import ExhibitActions from '../../actions/ExhibitActions'
+import Exhibit from '../Exhibit/Exhibit';
+import { ConsoleSqlOutlined } from '@ant-design/icons';
 
-const { Option } = Select;
+const { Option, OptGroup } = Select;
 
 interface Props {
     data: IArtsyArtwork,
-    // exhibitData: TExhibits,
+    exhibits?: TExhibit[],
 }
 
 export default (props:Props) => {
     const [form] = Form.useForm();
+    // const [loading, setLoading] = useState(false)
     const [showModal, setShow] = useState(false);
     const [selectedValue, setSelectedValue] = useState<string>('newExhibit');
-    const [data, setData] = useState<IArtsyArtwork | undefined>();
-    const [exhibitData, setExhibitData] = useState<TExhibits | undefined>();
+    // const [data, setData] = useState<IArtsyArtwork | undefined>();
+    const [exhibitData, setExhibitData] = useState<TExhibit[] | undefined>();
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -27,26 +30,39 @@ export default (props:Props) => {
         setSelectedValue(selectedValue)
     }
     
+
+
     async function handleSubmit(e:any) {
+        // setLoading(true);
         e.preventDefault();
-        let exhibitInfo = await ExhibitActions.getOwnExhibits();
-        console.log(exhibitInfo);
-        let values = await form.getFieldsValue(['title','description','artwork_ids']);
-        console.log(values);
+        let exhibitId = form.getFieldValue('exhibitSelect')
+        let foundExhibitId = props.exhibits?.map((exhibit) => (exhibit.id))
+        // TODO - the above return an array of exhibit IDs - we'll need to make sure we're matching
+        // the value of each index to the selected value so we can properly update/add artwork
+        // to the specific exhibit
+        console.log('this returns an array of exhibit IDs', foundExhibitId);
+        // if (exhibitId !== foundExhibitId) {
+        //     let values = await form.getFieldsValue(['title','description','artwork_ids']);
+        //     await ExhibitActions.saveExhibit(values)
+        //     console.log('submitted values', values)
+        // } else if (exhibitId === foundExhibitId) {
+        //     let values = await form.getFieldsValue(['exhibitSelect', 'artwork_ids'])
+        //     await ExhibitActions.saveExhibit(values)
+        //     console.log('submitted values', values)
+        // }
+
+        // let values = await form.getFieldsValue(['exhibitSelect', 'title','description','artwork_ids']);
+        // await ExhibitActions.saveExhibit(values)
+        // console.log('submitted values', values)
         setShow(false);
     }
-    
+
     if(!props.data) return null
     const getLargeImage = () =>  {
       let url = props.data._links.thumbnail.href
       return url.replace("square", "large")
     }
-        // if(!undefined){
-        //     let exData = await ExhibitActions.saveExhibit(, values);
-
-        // }
-        // setData(exData)
-        // console.log(artworkData)
+  
 
   return (
     <div className="explore-div">
@@ -80,7 +96,9 @@ export default (props:Props) => {
                 >
                     <Select onChange={handleChange} value={selectedValue}>
                         <Option value="newExhibit">New Exhibit</Option>
-                        <Option value="existingExhibit">Existing Exhibit</Option>
+                        <OptGroup label="Your Exhibits">
+                        {props.exhibits?.map((exhibit) => ( <Option value={exhibit.id}>{exhibit.title}</Option>))}
+                        </OptGroup>
                         {/* Existing Exhibit values will need to be replaced by existing user exhibits */}
                     </Select>
                 </Form.Item>
@@ -93,7 +111,7 @@ export default (props:Props) => {
                     //   value={addExhibit.title}
                 >                    
                     <Input type="text" 
-                        disabled={selectedValue == 'newExhibit' ? false : true } 
+                        disabled={selectedValue === 'newExhibit' ? false : true } 
                         allowClear 
                         placeholder="Exhibit Title" />
                 </Form.Item>
@@ -105,7 +123,7 @@ export default (props:Props) => {
                     //   value={addExhibit.title}
                 >
                     <Input type="text" 
-                        disabled={selectedValue == 'newExhibit' ? false : true }  
+                        disabled={selectedValue === 'newExhibit' ? false : true }  
                         allowClear 
                         placeholder="Exhibit Description" />
                 </Form.Item>
