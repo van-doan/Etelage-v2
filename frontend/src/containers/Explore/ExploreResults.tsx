@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Form, Button, Input, Select, Divider } from 'antd';
+import { Modal, Form, Button, Input, Select, Divider, message } from 'antd';
 import { IArtsyArtwork, TExhibit } from './Types'
 // import { TExhibits } from '../../stores/App/Types'
 // import moment from 'moment';
@@ -7,6 +7,7 @@ import './styles.scss'
 
 import ExhibitActions from '../../actions/ExhibitActions'
 import Exhibit from '../Exhibit/Exhibit';
+import AppStore from '../../stores/App/AppStore'
 import { ConsoleSqlOutlined } from '@ant-design/icons';
 
 const { Option, OptGroup } = Select;
@@ -29,33 +30,35 @@ export default (props:Props) => {
     const handleChange = (selectedValue:any) => {
         setSelectedValue(selectedValue)
     }
-    
+    const success = () => {message.success('Artwork has been added to your exhibit!', 3)}
 
 
     async function handleSubmit(e:any) {
         // setLoading(true);
         e.preventDefault();
         let exhibitId = form.getFieldValue('exhibitSelect')
-        let foundExhibitId = props.exhibits?.map((exhibit) => (exhibit.id))
-        // TODO - the above return an array of exhibit IDs - we'll need to make sure we're matching
-        // the value of each index to the selected value so we can properly update/add artwork
-        // to the specific exhibit
-        console.log('this returns an array of exhibit IDs', foundExhibitId);
-        // if (exhibitId !== foundExhibitId) {
-        //     let values = await form.getFieldsValue(['title','description','artwork_ids']);
-        //     await ExhibitActions.saveExhibit(values)
-        //     console.log('submitted values', values)
-        // } else if (exhibitId === foundExhibitId) {
-        //     let values = await form.getFieldsValue(['exhibitSelect', 'artwork_ids'])
-        //     await ExhibitActions.saveExhibit(values)
-        //     console.log('submitted values', values)
-        // }
+        let foundExhibit = props.exhibits?.filter((exhibit) => (exhibit.id === exhibitId)) 
+        // ^ This gives us the array of exhibit ids
+        // ^ This function looks for a matching id to the value selected in the options list
+            console.log('this returns the matchingId if found in exhibit array', foundExhibit?.[0]);
 
-        // let values = await form.getFieldsValue(['exhibitSelect', 'title','description','artwork_ids']);
-        // await ExhibitActions.saveExhibit(values)
-        // console.log('submitted values', values)
+        if (exhibitId !== foundExhibit?.[0].id) {
+            let values = await form.getFieldsValue(['title','description','artwork_ids']);
+            await ExhibitActions.saveExhibit(values)
+            // , AppStore.user?.id for above ^ ??
+            success();
+            console.log('New Exhibit Values:', values)
+        } else if (exhibitId === foundExhibit?.[0].id) {
+            let values = await form.getFieldsValue(['artwork_ids'])
+            await ExhibitActions.saveExhibit(values, foundExhibit?.[0])
+            console.log('Updates Exhibit Values', values)
+            success();
+        }
         setShow(false);
     }
+
+    // TODO: To show exhibits (and its artwork) on the user's dashboard, we'll need to split the
+    // artwork strings and put them into an array and access them that way.
 
     if(!props.data) return null
     const getLargeImage = () =>  {
