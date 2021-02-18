@@ -3,10 +3,9 @@ import { TExhibit } from '../containers/Explore/Types';
 import { TUser } from '../stores/App/Types'
 
 export default class ExhibitActions {
-
     static async getOwnExhibits(){
             let res = await axios.get(
-                'http://localhost:1337/exhibits'
+                `http://localhost:1337/exhibits`
                 );
             let exhibitData = res.data
             console.log(exhibitData)
@@ -14,7 +13,7 @@ export default class ExhibitActions {
     }
 
     static async saveExhibit(values: { id:number, title: string, description: string, artwork_ids: string, user: TUser}, exhibit?:any ){
-        if (exhibit.id){
+        if (exhibit) {
             try {
                 let initialArtworkIds = exhibit.artwork_ids + ", "
                 let newArtworkId = values.artwork_ids
@@ -28,7 +27,7 @@ export default class ExhibitActions {
     } else {
             try {
                 let exhibitValues = {...values}
-                let res = await axios.post('http://localhost:1337/exhibits', exhibit && exhibitValues);
+                let res = await axios.post('http://localhost:1337/exhibits', exhibitValues);
                 return res.data as TExhibit;
             } catch (e) {
                 console.log('Could not create exhibit', e.message);
@@ -38,3 +37,4 @@ export default class ExhibitActions {
     }
 
 }
+

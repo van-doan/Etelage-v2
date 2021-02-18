@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { Modal, Form, Button, Input, Select, Divider, message } from 'antd';
 import { IArtsyArtwork, TExhibit } from './Types'
+import AppStore from '../../stores/App/AppStore'
 // import { TExhibits } from '../../stores/App/Types'
 // import moment from 'moment';
 import './styles.scss'
 
 import ExhibitActions from '../../actions/ExhibitActions'
-import Exhibit from '../Exhibit/Exhibit';
-import AppStore from '../../stores/App/AppStore'
-import { ConsoleSqlOutlined } from '@ant-design/icons';
+// import Exhibit from '../Exhibit/Exhibit';
 
 const { Option, OptGroup } = Select;
 
@@ -23,7 +22,7 @@ export default (props:Props) => {
     const [showModal, setShow] = useState(false);
     const [selectedValue, setSelectedValue] = useState<string>('newExhibit');
     // const [data, setData] = useState<IArtsyArtwork | undefined>();
-    const [exhibitData, setExhibitData] = useState<TExhibit[] | undefined>();
+    // const [exhibitData, setExhibitData] = useState<TExhibit[] | undefined>();
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -37,24 +36,24 @@ export default (props:Props) => {
         // setLoading(true);
         e.preventDefault();
         let exhibitId = form.getFieldValue('exhibitSelect')
+        console.log('This is the current id selected', exhibitId)
         let foundExhibit = props.exhibits?.filter((exhibit) => (exhibit.id === exhibitId)) 
         // ^ This gives us the array of exhibit ids
-        // ^ This function looks for a matching id to the value selected in the options list
-            console.log('this returns the matchingId if found in exhibit array', foundExhibit?.[0]);
-
-        if (exhibitId !== foundExhibit?.[0].id) {
-            let values = await form.getFieldsValue(['title','description','artwork_ids']);
-            await ExhibitActions.saveExhibit(values)
-            // , AppStore.user?.id for above ^ ??
-            success();
-            console.log('New Exhibit Values:', values)
-        } else if (exhibitId === foundExhibit?.[0].id) {
+            console.log('this returns the foundExhibitId if found in exhibit array', foundExhibit?.[0]);
+        if (typeof foundExhibit?.[0] !== 'undefined') {
             let values = await form.getFieldsValue(['artwork_ids'])
             await ExhibitActions.saveExhibit(values, foundExhibit?.[0])
             console.log('Updates Exhibit Values', values)
-            success();
+            setShow(false);
+            return success();
+        } else {
+            let values = await form.getFieldsValue(['title','description','artwork_ids', 'user']);
+            await ExhibitActions.saveExhibit(values)
+            // , AppStore.user?.id for above ^ ??
+            console.log('New Exhibit Values:', values)
+            setShow(false);
+            return success();
         }
-        setShow(false);
     }
 
     // TODO: To show exhibits (and its artwork) on the user's dashboard, we'll need to split the
@@ -135,6 +134,13 @@ export default (props:Props) => {
                     initialValue={props.data._links.thumbnail.href}
                     >
                     <Input type="text" style={{visibility: 'hidden'}}/> 
+                </Form.Item>
+                <Form.Item
+                    name="user"
+                    initialValue={AppStore.user}
+                    hidden
+                    >
+                    <Input type="text"/> 
                 </Form.Item>
           </Form>
           <div className="modal-art-container">

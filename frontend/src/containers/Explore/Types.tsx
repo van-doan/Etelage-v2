@@ -39,7 +39,7 @@ export interface TExhibit {
         id: number,
         title: string,
         description: string,
-        artwork_ids: string[],
+        artwork_ids: string,
         exhibit_likes: number,
         user: TUser,
 }

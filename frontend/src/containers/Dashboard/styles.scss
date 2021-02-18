@@ -21,6 +21,8 @@
       }
     }
   
+
+
     .dashboard-module {
       padding: 85px !important;
       background: transparent;
@@ -31,6 +33,17 @@
 
       &-profile {
         text-align: left;
+        
+        &-exhibits {
+          
+          &-gallery{
+
+            &-img {
+              height: 100px;
+              object-fit: cover;
+            }
+          }
+        }
         &-section{
           &-left {
             display: flex;

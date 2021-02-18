@@ -5,7 +5,9 @@ import ExploreActions from '../../actions/ExploreActions'
 import ExhibitActions from '../../actions/ExhibitActions'
 import ExploreResults from './ExploreResults'
 
-import { IArtsyArtwork, IArtsyArtworkApiResponse, TExhibit } from './Types'
+import AppStore from "../../stores/App/AppStore";
+
+import { IArtsyArtworkApiResponse, TExhibit } from './Types'
 
 import './styles.scss';
 

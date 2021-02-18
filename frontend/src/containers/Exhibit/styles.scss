@@ -1,23 +1,39 @@
 @import '../../global/scss/config';
 
-.explore {
+.exhibit {
     @include flex(column, flex-start, center);
     @include pad-box(36px 48px);
     width:100%;
-  
-    &-content {
-      @include scale-max-content-width;
-  
-      .explore-section {
-        &-title {
-          @include font(48px, 500, 0, white);
-          margin-bottom:18px;
-          line-height: 1em;
-        }
-        &-text {
-            @include font(20px, 300, 0, white);
+
+    &-display {
+
+      &-content{
+        @include scale-max-content-width;
+        &-first {
+          align-items: center;
+          height: 250px;
+          background: url('https://source.unsplash.com/featured/?louvre');
+          background-size: cover;
+          display: flex;
+          justify-content: center;
+          z-index: 0;
+
+          @media screen and (max-width: $screen-sm-min){
+            height: 200px;
+          }
+          ;
+
+          &-logo {
+            z-index: 2;
+            font-family: "Playfair Display", "Times New Roman", Times, serif;
+            font-size: 40px;
+            filter: invert(50%);
+            mix-blend-mode: difference;
+            @media screen and (max-width: $screen-sm-min) {
+              text-align: center;
+            }
           }
         }
       }
     }
-  
+  }

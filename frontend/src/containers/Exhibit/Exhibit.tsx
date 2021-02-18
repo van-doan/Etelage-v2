@@ -1,22 +1,49 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
+import ExhibitDisplayPage from './ExhibitDisplayPage'
+
+import { Layout } from 'antd'
 
 import './styles.scss';
+import ExhibitActions from '../../actions/ExhibitActions';
+import { TExhibit } from '../Explore/Types';
+
+const { Content } = Layout;
+
+// This page will serve as the parent to pass down exhibit props
 
 export default () => {
-    return (
-        <div className='explore'>
-            <div className='explore-content'>
-                <div className='explore-section'>
-                    <div className='explore-section-title'>
-                        You've reached the exhibits page. TODO – include museum api's to search exhibits and other user's featured exhibits.
-                    </div>
-                    {/* <div className='explore-section-text'>
-                        <h3 className="explore-section-text-1">THE PRINCIPLES OF TRUE ART IS NOT TO PORTRAY, BUT TO EVOKE.</h3>
-                        <h3 className="explore-section-text-2">WHAT DOES YOUR AESTHETIC SAY ABOUT YOU?</h3>
-                    </div> */}
+    const [loading, setLoading] = useState(false)
+    const [exhibitData, setExhibitData] = useState<TExhibit[] | undefined>();
+    
+    function renderExhibitResults() {
+        if(loading) {
+            return <div className="exhibits-loading" style={{textAlign: 'center', margin: '12px 0'}}>Loading...</div>
+        } else if (exhibitData) {
+            return exhibitData.map((exhibit, index) => (
+                <ExhibitDisplayPage key={index} data={exhibit}/>
+            ))
+        }
+    }
 
-                </div>
-            </div>
+    const getExhibitData = useCallback(async () => {
+        setLoading(true);
+        let exhibitInfo = await ExhibitActions.getOwnExhibits();
+        setExhibitData(exhibitInfo);
+        setLoading(false)
+    }, [])
+
+    useEffect(() => {
+        getExhibitData()
+    }, [getExhibitData])
+
+    return (
+        <div className='exhibit-display'>
+            <Content className='exhibit-display-content-first'>
+                <div className='exhibit-display-content-first-logo'>
+                    EXHIBITS
+                </div>    
+            </Content>
+                {renderExhibitResults()}
         </div>
     )
 }

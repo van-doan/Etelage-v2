@@ -4,9 +4,11 @@ import {UploadOutlined} from '@ant-design/icons';
 
 import AppStore from "../../stores/App/AppStore";
 import DashboardActions from "../../actions/DashboardActions"
+import ExhibitActions from '../../actions/ExhibitActions';
 
-import DashboardProfile from '../Dashboard/DashboardProfile';
-import DashboardUserExhibits from '../Dashboard/DashboardUserExhibits';
+import DashboardProfile from './DashboardProfile';
+import DashboardProfileExhibits from './DashboardProfileExhibits';
+import { TExhibit } from '../Explore/Types'
 
 import './styles.scss'
 
@@ -24,6 +26,8 @@ export default (props: Props) => {
   const [submittingUserData, setSubmittingUserData] = useState(false);
   const {file, userId} = props;
   const [form] = Form.useForm();
+  const [exhibitData, setExhibitData] = useState<TExhibit[] | undefined>();
+  const [loading, setLoading] = useState(false)
 
   // Form Functions
 
@@ -31,11 +35,31 @@ export default (props: Props) => {
     form.resetFields();
   };
 
-  async function onSubmitData() {
-    setSubmittingUserData(true);
-    let curAssessment = await DashboardActions.uploadFilesForUser(file, userId);
-    setSubmittingUserData(false);
-}
+  async function onTabClick(key:string) {
+    if(key === '2'){
+      setLoading(true)
+      let exhibitInfo = await ExhibitActions.getOwnExhibits();
+      setExhibitData(exhibitInfo);
+      console.log(exhibitInfo)
+      setLoading(false)
+    }
+  }
+
+  function renderExhibitResults () {
+    if(loading) {
+      return <div className="exhibits-loading" style={{textAlign: 'center', margin: '12px 0'}}>Loading...</div>
+    } else if (exhibitData) {
+      return exhibitData.map((exhibit, index) => (
+        <DashboardProfileExhibits key={index} data={exhibit} />
+      ))
+    }
+  }
+
+//   async function onSubmitData() {
+//     setSubmittingUserData(true);
+//     let curAssessment = await DashboardActions.uploadFilesForUser(file, userId);
+//     setSubmittingUserData(false);
+// }
 
   const normFile = (e:any) => {
     console.log('Upload event:', e);
@@ -59,6 +83,7 @@ export default (props: Props) => {
           <Tabs tabPosition={width > mobileBreakpoint ? "left" : "top"} 
           className="dashboard-module-menu" 
           defaultActiveKey={'1'}
+          onTabClick={onTabClick}
           centered>
             <TabPane className="dashboard-module-menu-item" tab="Feed" key="1">
               Feed goes here
@@ -66,7 +91,7 @@ export default (props: Props) => {
             <TabPane className="dashboard-module-menu-item" tab="Profile" key="2">
               <DashboardProfile/>
               <Divider className="dashboard-module-divider"></Divider>
-              <DashboardUserExhibits/>
+              {renderExhibitResults()}
             </TabPane>
             <TabPane className="dashboard-module-menu-item" tab="Notifications" key="3">
               Notifications go here
@@ -101,7 +126,7 @@ export default (props: Props) => {
                 <Form.Item
                      className="dashboard-module-menu-item-form-item"
                     label="About Me">
-                    <TextArea rows={4} placeholder="I'm an influencer based out of LA and have a passion for art."/>
+                    <TextArea rows={4} placeholder={AppStore.user?.user_bio}/>
                 </Form.Item>
                 <Form.Item
                     className="dashboard-module-menu-item-form-item"
@@ -121,7 +146,8 @@ export default (props: Props) => {
                     <Button className="dashboard-module-menu-item-form-btn" key="reset" color="clear" onClick={onReset}>
                         Reset
                     </Button> 
-                    <Button className="dashboard-module-menu-item-form-btn" key="submit" onClick={onSubmitData} loading={submittingUserData} type="primary" >
+                    <Button className="dashboard-module-menu-item-form-btn" key="submit" loading={submittingUserData} type="primary" >
+                    {/* onClick={onSubmitData} */}
                         Submit
                     </Button> 
                     </div>
