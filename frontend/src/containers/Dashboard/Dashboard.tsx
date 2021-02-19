@@ -8,7 +8,7 @@ import ExhibitActions from '../../actions/ExhibitActions';
 
 import DashboardProfile from './DashboardProfile';
 import DashboardProfileExhibits from './DashboardProfileExhibits';
-import { TExhibit } from '../Explore/Types'
+import { TExhibit } from '../../stores/App/Types'
 
 import './styles.scss'
 
@@ -94,29 +94,7 @@ export default (props: Props) => {
               {renderExhibitResults()}
             </TabPane>
             <TabPane className="dashboard-module-menu-item" tab="Notifications" key="3">
-              Notifications go here
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              More Stuff to Test
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              <br/>
-              Testing boiiii
+              Notifications coming soon!
             </TabPane>
             <TabPane className="dashboard-module-menu-item" tab="Settings" key="4">
               <Form form={form} className="dashboard-module-menu-item-form">

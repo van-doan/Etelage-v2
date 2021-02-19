@@ -10,6 +10,7 @@ export interface TUser {
     username: string,
     profile_img: TStrapiMediaFile,
     user_bio: string,
+    exhibits: TExhibit[],
 }
 
 export interface TStrapiMediaFile {
@@ -47,10 +48,11 @@ export interface TStrapiMediaFileFormat {
     width: number,
 }
 
-export interface TExhibits {
+export interface TExhibit {
+    id: number,
     title: string,
     description: string,
-    artwork_ids: any,
+    artwork_ids: string,
     exhibit_likes: number,
     user: TUser,
 }

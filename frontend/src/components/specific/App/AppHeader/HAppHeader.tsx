@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import React, {Component} from "react";
 import {RouteComponentProps, withRouter} from "react-router";
-import {Layout, Avatar, Drawer, Menu} from 'antd';
+import {Layout, Avatar, Drawer, Menu, Image} from 'antd';
 import {SmileOutlined, CaretDownOutlined} from '@ant-design/icons';
 import {observer} from "mobx-react";
 
@@ -12,6 +12,8 @@ import BrowserRouter, { BrowserRoutes } from '../../../../stores/App/BrowserRout
 // import Logo from "../../../../assets/logo.png";
 import AppActions from "../../../../stores/App/AppActions";
 import AppStore from "../../../../stores/App/AppStore";
+
+import logo from "../../../../assets/images/etelage-logo.png"
 
 
 const {Header} = Layout;
@@ -110,6 +112,11 @@ class AppHeader extends Component<Props, any> {
                     <div className='app-header-left'>
                         <div className='logo' onClick={() => BrowserRouter.push(BrowserRoutes.home)}>
                             <div className='logo-text'>
+                                <Image 
+                                    className='logo-img' 
+                                    alt='brand-logo'
+                                    preview={false}
+                                    src={logo}/>
                             </div>
                         </div>
                     </div>
@@ -126,10 +133,10 @@ class AppHeader extends Component<Props, any> {
 
                     <div className='app-header-right'>
                             <div className='user-container' onClick={this.showDrawer}>
-                            <Avatar style={{backgroundColor: '#16c784'}} icon={<SmileOutlined />}/>
                             <div className='user'>
                                 <div className='name'>{AppStore.user?.username}</div>
                                 <div className='email'>{AppStore.user?.email}</div>
+                                <div className='menu'>Menu</div>
                             </div>
                             <CaretDownOutlined style={{color:'grey'}}/>
                         </div>

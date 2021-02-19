@@ -7,7 +7,8 @@ import ExploreResults from './ExploreResults'
 
 import AppStore from "../../stores/App/AppStore";
 
-import { IArtsyArtworkApiResponse, TExhibit } from './Types'
+import { IArtsyArtworkApiResponse} from './Types'
+import { TExhibit } from '../../stores/App/Types'
 
 import './styles.scss';
 

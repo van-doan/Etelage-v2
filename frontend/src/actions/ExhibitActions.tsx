@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { TExhibit } from '../containers/Explore/Types';
-import { TUser } from '../stores/App/Types'
+import { TUser, TExhibit } from '../stores/App/Types'
 
 export default class ExhibitActions {
     static async getOwnExhibits(){
@@ -10,6 +9,16 @@ export default class ExhibitActions {
             let exhibitData = res.data
             console.log(exhibitData)
         return exhibitData as TExhibit[];
+    }
+
+    static async getExhibitById(exhibitId:number){
+        try {
+            let res = await axios.get(`http://localhost:1337/exhibits/${exhibitId}`);
+            return res.data as TExhibit[];
+        } catch (e) {
+            console.log('Could not load exhibit at this time', e.message);
+            return undefined;
+        }
     }
 
     static async saveExhibit(values: { id:number, title: string, description: string, artwork_ids: string, user: TUser}, exhibit?:any ){

@@ -34,12 +34,3 @@ export interface IArtsyApiResponse<I> {
 
 export interface IArtsyArtworkApiResponse extends IArtsyApiResponse<IArtsyArtwork> {
 }
-
-export interface TExhibit {
-        id: number,
-        title: string,
-        description: string,
-        artwork_ids: string,
-        exhibit_likes: number,
-        user: TUser,
-}

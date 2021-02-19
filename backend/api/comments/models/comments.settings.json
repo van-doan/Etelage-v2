@@ -24,6 +24,11 @@
     "user": {
       "plugin": "users-permissions",
       "model": "user"
+    },
+    "users": {
+      "via": "comments",
+      "plugin": "users-permissions",
+      "collection": "user"
     }
   }
 }

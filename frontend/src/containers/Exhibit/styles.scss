@@ -7,9 +7,17 @@
 
     &-display {
 
+      // Exhibit Header Section
       &-content{
         @include scale-max-content-width;
+        &-divider {
+          margin-top: 0;
+          @media screen and (max-width: $screen-sm-min){
+            margin-top: 0;
+          }
+        }
         &-first {
+          margin-top: 40px;
           align-items: center;
           height: 250px;
           background: url('https://source.unsplash.com/featured/?louvre');
@@ -20,6 +28,7 @@
 
           @media screen and (max-width: $screen-sm-min){
             height: 200px;
+            margin-top: 0px;
           }
           ;
 
@@ -34,6 +43,51 @@
             }
           }
         }
+      }
+    }
+    // Exhibit Content Section
+    &-section {
+      &-featured {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      &-all {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+          &-label{
+            margin-bottom: 0;
+          }
+        &-content{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          @media screen and (max-width: $screen-sm-min) {
+            margin: 40px 0 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          }
+          .user-link-btn {
+            background: -webkit-linear-gradient(#a5f5d0, $teal);;
+            border: none;
+            font-size: 18px;
+            font-weight:700;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            box-shadow: none;
+          }
+        }
+      }
+      &-search {
+        display: flex;
+        justify-content: center;
+        align-content: center;
       }
     }
   }

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Row, Col, Input} from 'antd'
-import { TExhibit } from '../Explore/Types'
+import { TExhibit } from '../../stores/App/Types'
 import './styles.scss'
 
 interface Props {

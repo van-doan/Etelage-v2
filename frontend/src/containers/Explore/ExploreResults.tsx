@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Form, Button, Input, Select, Divider, message } from 'antd';
-import { IArtsyArtwork, TExhibit } from './Types'
+import { IArtsyArtwork } from './Types'
+import { TExhibit } from '../../stores/App/Types'
 import AppStore from '../../stores/App/AppStore'
 // import { TExhibits } from '../../stores/App/Types'
 // import moment from 'moment';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col, Input, Avatar, Image, Divider } from 'antd';
 import AppStore from "../../stores/App/AppStore";
-import { TExhibit } from '../Explore/Types'
+import { TExhibit } from '../../stores/App/Types'
 // import Dashboard from './Dashboard'
 
 import './styles.scss'

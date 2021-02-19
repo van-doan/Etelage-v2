@@ -71,12 +71,22 @@
       "required": false
     },
     "comments": {
-      "collection": "comments"
+      "collection": "comments",
+      "via": "users",
+      "dominant": true
     },
     "exhibits": {
-      "collection": "exhibits"
+      "collection": "exhibits",
+      "via": "users",
+      "dominant": true
     },
     "user_bio": {
+      "type": "text"
+    },
+    "followers": {
+      "type": "text"
+    },
+    "following": {
       "type": "text"
     }
   }

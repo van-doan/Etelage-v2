@@ -7,9 +7,11 @@
   line-height: 1em;
   background-color: transparent;
 
-  @media screen and (max-width: $screen-md-min) {
+  @media screen and (max-width: $screen-sm-min) {
     display: block;
     @include pad-box(0 12px);
+    border-bottom-style: double;
+    border-bottom-color: grey;
   }
 
   .content {
@@ -17,8 +19,9 @@
     @include pad-box(24px 0);
     @include scale-max-content-width;
 
-    @media screen and (max-width: $screen-md-min) {
-      @include pad-box(14px 0);
+    @media screen and (max-width: $screen-sm-min) {
+      @include pad-box(14px 0 16px);
+      @include flex(column, space-between, center);
     }
 
     .app-header-right {
@@ -38,7 +41,10 @@
         border-style: solid;
         padding: 8px 8px;
         border-radius: 5px;
-
+        @media screen and (max-width: $screen-sm-min) {
+          border-width: none;
+          border-style: none;
+        }
 
         &:hover {
           cursor: pointer;
@@ -58,14 +64,26 @@
             @include font(14px, 600, 0, rgb(68, 68, 68)!important);
             margin-bottom: 3px;
             transition: all 0.2s;
-            @media screen and (max-width: $screen-md-min) {
+            @media screen and (max-width: $screen-sm-min) {
+              @include pad-box(0 0);
               display: none;
-              @include pad-box(14px 0);
+            }
+          }
+
+          .menu {
+            display: none;
+            @media screen and (max-width: $screen-sm-min) {
+              @include pad-box(0 0);
+              display: flex;
             }
           }
 
           .email {
             @include font(13px, 500, 0, $medium-gray);
+            @media screen and (max-width: $screen-sm-min) {
+              display: none;
+              @include pad-box(14px 0);
+            }
           }
         }
       }
@@ -78,7 +96,7 @@
       background: transparent;
       border: none;
 
-      @media screen and (max-width: $screen-md-min) {
+      @media screen and (max-width: $screen-sm-min) {
         display: none;
       }
 
@@ -128,6 +146,9 @@
 
     .app-header-left {
       @include flex(row, flex-start, center);
+      @media screen and (max-width: $screen-sm-min) {
+        margin-bottom: 20px;
+      }
       .logo {
         @include flex(row, flex-start, center);
         @include font(18px, 500, 0, $dark-blue);
@@ -161,12 +182,17 @@
         }
 
         & img {
-          width: 35px;
-          height: 35px;
+          width: 100px;
+          height: 100px;
           margin-right: 12px;
+          @media screen and (max-width: $screen-sm-min) {
+            width: 69px;
+            height: 69px;
+            margin: 0;
+          }
         }
 
-        @media screen and (max-width: $screen-md-min) {
+        @media screen and (max-width: $screen-sm-min) {
           @include font(16px, 500, 0, white);
           & svg {
             width: 20px;
