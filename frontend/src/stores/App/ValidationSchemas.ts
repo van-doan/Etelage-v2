@@ -7,6 +7,7 @@ export const UserSettingsValidationSchema = {
 
     name: yup.string()
         .matches(/^([\w\s]+)$/, { message:"Allowed characters: [ a-z ], [ 0-9 ], [ Space, -, _ ]", excludeEmptyString:true }),
+    username: yup.string(),
     email: yup.string()
         .email(),
     password: yup.string(),
@@ -16,6 +17,9 @@ export const UserSettingsValidationSchema = {
 export const UserSettingsValidation = {
     name: (rule:any, value:any) => {
         return Validator.asyncYup(UserSettingsValidationSchema.name as any, value);
+    },
+    username: (rule:any, value:any) => {
+        return Validator.asyncYup(UserSettingsValidationSchema.username as any, value);
     },
     email: (rule:any, value:any) => {
         return Validator.asyncYup(UserSettingsValidationSchema.email as any, value);

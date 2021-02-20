@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Layout, Tabs, Upload, Button, Input, Form, Divider } from 'antd';
+import { Layout, Tabs, Upload, Button, Input, Form, Divider, message } from 'antd';
 import {UploadOutlined} from '@ant-design/icons';
 
 import AppStore from "../../stores/App/AppStore";
@@ -23,13 +23,15 @@ interface Props {
 export default (props: Props) => {
   const [width, setWidth] = useState(window.innerWidth);
   const mobileBreakpoint = 400;
-  const [submittingUserData, setSubmittingUserData] = useState(false);
+  // const [submittingUserData, setSubmittingUserData] = useState(false);
   const {file, userId} = props;
   const [form] = Form.useForm();
   const [exhibitData, setExhibitData] = useState<TExhibit[] | undefined>();
   const [loading, setLoading] = useState(false)
 
   // Form Functions
+
+  const success = () => {message.success('Your profile has been updated!', 3)}
 
   const onReset = () => {
     form.resetFields();
@@ -38,10 +40,14 @@ export default (props: Props) => {
   async function onTabClick(key:string) {
     if(key === '2'){
       setLoading(true)
-      let exhibitInfo = await ExhibitActions.getOwnExhibits();
-      setExhibitData(exhibitInfo);
-      console.log(exhibitInfo)
+      let userId = AppStore.user?.id
+      let userInfo = await DashboardActions.getOwnUserData(userId);
+      console.log(userInfo)
+      // let usersExhibits = userInfo.
+      
+      // setExhibitData(exhibitInfo);
       setLoading(false)
+      // console.log(exhibitInfo)
     }
   }
 
@@ -55,11 +61,13 @@ export default (props: Props) => {
     }
   }
 
-//   async function onSubmitData() {
-//     setSubmittingUserData(true);
-//     let curAssessment = await DashboardActions.uploadFilesForUser(file, userId);
-//     setSubmittingUserData(false);
-// }
+  async function onSubmitData() {
+    let userId = AppStore.user?.id
+    let values = form.getFieldsValue(['username', 'user_bio'])
+    await DashboardActions.editUserData(userId, values)
+    success()
+    return window.location.reload()
+}
 
   const normFile = (e:any) => {
     console.log('Upload event:', e);
@@ -98,12 +106,16 @@ export default (props: Props) => {
             </TabPane>
             <TabPane className="dashboard-module-menu-item" tab="Settings" key="4">
               <Form form={form} className="dashboard-module-menu-item-form">
-                <Form.Item className="dashboard-module-menu-item-form-item" label="Username">
+                <Form.Item 
+                  className="dashboard-module-menu-item-form-item" 
+                  label="Username"
+                  name="username">
                     <Input placeholder={AppStore.user?.username}/>
                 </Form.Item>
                 <Form.Item
-                     className="dashboard-module-menu-item-form-item"
-                    label="About Me">
+                    className="dashboard-module-menu-item-form-item"
+                    label="About Me"
+                    name="user_bio">
                     <TextArea rows={4} placeholder={AppStore.user?.user_bio}/>
                 </Form.Item>
                 <Form.Item
@@ -111,7 +123,8 @@ export default (props: Props) => {
                     name="upload"
                     label="Profile Picture"
                     valuePropName="fileList"
-                    getValueFromEvent= {normFile}>
+                    // getValueFromEvent= {normFile}
+                    >
                     <Upload name="logo" listType="picture">
                     <Button icon={<UploadOutlined />}>Click to upload</Button>
                     </Upload>
@@ -124,8 +137,7 @@ export default (props: Props) => {
                     <Button className="dashboard-module-menu-item-form-btn" key="reset" color="clear" onClick={onReset}>
                         Reset
                     </Button> 
-                    <Button className="dashboard-module-menu-item-form-btn" key="submit" loading={submittingUserData} type="primary" >
-                    {/* onClick={onSubmitData} */}
+                    <Button className="dashboard-module-menu-item-form-btn" key="submit" type="primary" onClick={onSubmitData}>
                         Submit
                     </Button> 
                     </div>

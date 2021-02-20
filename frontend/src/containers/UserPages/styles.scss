@@ -5,13 +5,22 @@
     &-profile {
         @media screen and (max-width: $screen-sm-min) {
             margin-top: 30px;
+            padding: 0 16px;
         }
         &-header {
             text-transform: uppercase;
         }
+        &-img {
+            @media screen and (max-width: $screen-sm-min) {
+                margin-right: 12px;
+            }
+        }
         &-section {
             &-left{
                 @include flex(row, space-evenly, center);
+                @media screen and (max-width: $screen-sm-min) {
+                    @include flex(row, space-evenly, center);
+                }
                 .username{
                     font-weight: 700;
                 }

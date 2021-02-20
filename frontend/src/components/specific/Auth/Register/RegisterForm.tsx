@@ -32,8 +32,8 @@ const RegisterForm = (props:Props) => {
         try {
             let values = await form.validateFields() as TSignupValues;
             if (values) {
-                const {email, password} = values;
-                if (email && password) {
+                const {email, username, password} = values;
+                if (email && username && password) {
                     setRegistering(true);
                     let status = await AppActions.signup(values);
                     setRegisterStatus(status);
@@ -53,6 +53,10 @@ const RegisterForm = (props:Props) => {
                     <Input size='large'/>
                 </Form.Item>
                 <Form.Item label='Last Name' name={RegisterFormFields.LastName} validateTrigger={false} rules={[{validator: UserSettingsValidation.name},
+                    {required: true, message: 'This field is required.'}]}>
+                    <Input size='large'/>
+                </Form.Item>
+                <Form.Item label='Username' name={RegisterFormFields.Username} validateTrigger={false} rules={[{validator: UserSettingsValidation.username},
                     {required: true, message: 'This field is required.'}]}>
                     <Input size='large'/>
                 </Form.Item>

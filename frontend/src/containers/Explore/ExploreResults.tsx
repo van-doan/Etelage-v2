@@ -37,6 +37,7 @@ export default (props:Props) => {
         // setLoading(true);
         e.preventDefault();
         let exhibitId = form.getFieldValue('exhibitSelect')
+        let userId = AppStore.user?.id
         console.log('This is the current id selected', exhibitId)
         let foundExhibit = props.exhibits?.filter((exhibit) => (exhibit.id === exhibitId)) 
         // ^ This gives us the array of exhibit ids
@@ -65,6 +66,10 @@ export default (props:Props) => {
       return url.replace("square", "large")
     }
   
+    // function exhibitOptions(){
+    //     props.exhibits?.filter((exhibit) => (exhibit.user.id === AppStore.user?.id)).map((exhibit)=>(<Option value={exhibit.id}>{exhibit.title}</Option>))
+    // }
+    // exhibitOptions()
 
   return (
     <div className="explore-div">
@@ -99,7 +104,8 @@ export default (props:Props) => {
                     <Select onChange={handleChange} value={selectedValue}>
                         <Option value="newExhibit">New Exhibit</Option>
                         <OptGroup label="Your Exhibits">
-                        {props.exhibits?.map((exhibit) => ( <Option value={exhibit.id}>{exhibit.title}</Option>))}
+                        {props.exhibits?.filter((exhibit) => (exhibit.user.id === AppStore.user?.id)).map((exhibit)=>(
+                        <Option value={exhibit.id}>{exhibit.title}</Option>))}
                         </OptGroup>
                         {/* Existing Exhibit values will need to be replaced by existing user exhibits */}
                     </Select>

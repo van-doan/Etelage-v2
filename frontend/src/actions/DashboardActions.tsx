@@ -8,6 +8,7 @@ export default class DashboardActions {
     static async getUserData(){
         try {
             let res = await axios.get('http://localhost:1337/users');
+            console.log(res.data)
             return res.data as TUser[];
         } catch (e){
             console.log('Could not get user data', e.message);
@@ -15,13 +16,29 @@ export default class DashboardActions {
         }
     }
     
-    static async editUserData(userName:string, ){
+    static async getOwnUserData(userId:any){
         try {
-            let res = await axios.post(`http://localhost:1337/users/${userName}`);
-            return res.data as TUser;
+            let res = await axios.get(`http://localhost:1337/users/${userId}`);
+            console.log('This logs your own user data', res.data)
+            return res.data as TUser[];
         } catch (e){
-            console.log('Could not create assessment template', e.message);
-            return undefined;
+            console.log('Could not retrieve your user data... do you exist?', e.message);
+            return null;
+        }
+
+    } 
+
+    static async editUserData(userId:any, values: {username?:string, user_bio?: string} ){
+        if(userId){
+            try {
+                let res = await axios.put(`http://localhost:1337/users/${userId}`, values);
+                console.log('This is the data being passed through from the edit form', res.data)
+                return res.data;
+            } catch (e){
+                console.log('Could not create assessment template', e.message);
+                return undefined;
+            }
+
         }
     }
 

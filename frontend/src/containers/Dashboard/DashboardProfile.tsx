@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Col, Input, Avatar, Image, Divider } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import AppStore from "../../stores/App/AppStore";
 import { TExhibit } from '../../stores/App/Types'
 // import Dashboard from './Dashboard'
@@ -10,15 +11,23 @@ const StrapiDomain = 'http://localhost:1337'
 
 export default () => {
 
+    function renderUserAvatar () {
+        if (AppStore.user?.profile_img.url) {
+            return <Avatar size={64} className="dashboard-module-profile-img" 
+            src={<Image 
+            preview={false}
+            src={`${StrapiDomain}${AppStore.user?.profile_img.url}`}/>}/>
+        } else if (!AppStore.user?.profile_img.url) {
+            return <Avatar size={64} className="dashboard-module-profile-img" icon={UserOutlined}/>
+        }
+    }
+
     return(
         <div>
             <Row className="dashboard-module-profile">
                 <div className="dashboard-module-profile-section">
                     <div className="dashboard-module-profile-section-left">
-                        <Avatar size={64} className="dashboard-module-profile-img" 
-                            src={<Image 
-                            preview={false}
-                            src={`${StrapiDomain}${AppStore.user?.profile_img.url}`}/>}/>
+                        {renderUserAvatar()}
                         <div className="dashboard-module-profile-info">
                             <span className="username">{AppStore.user?.username}</span>
                             <br/>

@@ -11,6 +11,16 @@ export default class ExhibitActions {
         return exhibitData as TExhibit[];
     }
 
+    static async getUserExhibits(userId:any) {
+        try {
+            let res = await axios.get(`http://localhost:1337/users/${userId}/exhibits`)
+            return res.data
+        } catch (e) {
+            console.log('User does not have any exhibits yet', e.message);
+            return null;
+        }
+    }
+
     static async getExhibitById(exhibitId:number){
         try {
             let res = await axios.get(`http://localhost:1337/exhibits/${exhibitId}`);
@@ -36,8 +46,11 @@ export default class ExhibitActions {
     } else {
             try {
                 let exhibitValues = {...values}
-                let res = await axios.post('http://localhost:1337/exhibits', exhibitValues);
-                return res.data as TExhibit;
+                let user = values.user
+                let res = await axios.post('http://localhost:1337/exhibits', exhibitValues)
+                let resTwo = await axios.put(`http://localhost:1337/users/${user.id}`, user.exhibits && exhibitValues)
+                // ^ This needs to be edited to add exhibit to user collection
+                return res.data as TExhibit && resTwo.data;
             } catch (e) {
                 console.log('Could not create exhibit', e.message);
                 return undefined;

@@ -81,6 +81,11 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             box-shadow: none;
+            @media screen and (max-width: $screen-sm-min) {
+              height: 25px;
+              font-size: 12px;
+              padding: 0;
+            }
           }
         }
       }

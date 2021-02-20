@@ -47,7 +47,7 @@ export default class AppActions {
 
     static async signup(values:TSignupValues){
         let signupUrl = `${AppStore.baseUrl}/auth/local/register`;
-        values.username = values.email;
+        values.username = values.username;
         try{
             let res = await axios.post<TSignupResponse>(signupUrl, values);
             AppActions.onUserIsAuthenticated(res.data.jwt, res.data.user);

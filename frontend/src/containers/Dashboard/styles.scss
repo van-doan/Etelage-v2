@@ -33,6 +33,12 @@
 
       &-profile {
         text-align: left;
+
+        &-info{
+          @media screen and (max-width: $screen-sm-min) {
+            margin-left: 20px;
+          }
+        }
         
         &-exhibits {
           
