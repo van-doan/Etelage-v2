@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { Form, Input } from 'antd'
+import { Form, Input, Pagination } from 'antd'
 
 import ExploreActions from '../../actions/ExploreActions'
 import ExhibitActions from '../../actions/ExhibitActions'
 import ExploreResults from './ExploreResults'
-
-import AppStore from "../../stores/App/AppStore";
 
 import { IArtsyArtworkApiResponse} from './Types'
 import { TExhibit } from '../../stores/App/Types'
@@ -46,7 +44,7 @@ export default (props:Props) => {
         } else if (data) {
           return data._embedded.results.map((artwork, index) => (
             <ExploreResults key={index} data={artwork} exhibits={exhibitData} />
-          ))
+            ))
         } 
     }
 

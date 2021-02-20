@@ -9,6 +9,7 @@ import { Layout, Input, Divider, Form, Button } from 'antd'
 
 ///Custom Styling
 import './styles.scss';
+import BrowserRouter, { BrowserRoutes } from '../../stores/App/BrowserRouter';
 
 const { Content, Footer } = Layout;
 
@@ -38,10 +39,10 @@ export default () => {
             return <div className="exhibits-loading" style={{textAlign: 'center', margin: '12px 0'}}>Loading...</div>
         } else if (exhibitData) {
             const handleHidden = (url:any) => {
-                if(url === null) {
-                    return 'none'
-                }
+            if(url === null) {
+                return 'none'
             }
+        }
             return exhibitData.map((exhibit) => (
                 <div className="exhibit-section-all-content">
                     <Input type="image" src={exhibit.artwork_ids} style={{display: handleHidden(exhibit.artwork_ids)}}/>
@@ -51,23 +52,13 @@ export default () => {
                     <h4 className="exhibit-section-all-label" style={{display: handleHidden(exhibit.artwork_ids)}}>
                         curated by 
                     </h4>
-                        <Form
-                            name="user-find"
-                            form={form}
-                            className="exhibit-user-form">
-                            <Form.Item>
-                                <Input 
-                                    hidden
-                                    value={exhibit.user.id}/>
-                                <Button 
-                                    className="user-link-btn"
-                                    block 
-                                    href={`/user/${exhibit.user.id}`}
-                                    htmlType="submit">
-                                        {exhibit.user.username}
-                                </Button>
-                            </Form.Item>
-                        </Form>
+                    <Button 
+                        className="user-link-btn"
+                        block 
+                        onClick={() => BrowserRouter.push(`${BrowserRoutes.users}/${exhibit.user.id}`)}
+                        htmlType="submit">
+                            {exhibit.user.username}
+                    </Button>
                 </div>
             ))
         }

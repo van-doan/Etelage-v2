@@ -83,7 +83,7 @@
     "user_bio": {
       "type": "text"
     },
-    "followers": {
+    "follower": {
       "type": "text"
     },
     "following": {

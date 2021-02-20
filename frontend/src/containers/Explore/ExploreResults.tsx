@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Modal, Form, Button, Input, Select, Divider, message } from 'antd';
-import { IArtsyArtwork } from './Types'
+import { Modal, Form, Button, Input, Select, Divider, message, Pagination } from 'antd';
+import { IArtsyArtwork, IArtsyArtworkApiResponse } from './Types'
 import { TExhibit } from '../../stores/App/Types'
 import AppStore from '../../stores/App/AppStore'
 // import { TExhibits } from '../../stores/App/Types'
@@ -50,7 +50,6 @@ export default (props:Props) => {
         } else {
             let values = await form.getFieldsValue(['title','description','artwork_ids', 'user']);
             await ExhibitActions.saveExhibit(values)
-            // , AppStore.user?.id for above ^ ??
             console.log('New Exhibit Values:', values)
             setShow(false);
             return success();
@@ -71,11 +70,11 @@ export default (props:Props) => {
     <div className="explore-div">
       <input type="image" className="explore-img" alt="" onClick={handleShow} src={getLargeImage()} />
             <div className="explore-overlay">
-            <div className="explore-desc">
-                <h3 className="explore-title">{props.data.title}</h3>
-                <p className="explore-dates">{props.data.description}</p>
+                <div className="explore-desc">
+                    <h3 className="explore-title">{props.data.title}</h3>
+                    <p className="explore-dates">{props.data.description}</p>
+                </div>
             </div>
-        </div>
     <Modal 
         className="modal-art-form"
         visible={showModal} 

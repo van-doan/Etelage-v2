@@ -6,7 +6,9 @@ import { BrowserRoutes } from "../../../stores/App/BrowserRouter";
 import Dashboard from "../../../containers/Dashboard/Dashboard";
 import Home from "../../../containers/Home/Home";
 import Exhibits from "../../../containers/Exhibit/Exhibit";
+import ExhibitById from "../../../containers/Exhibit/ExhibitById";
 import Explore from "../../../containers/Explore/Explore";
+import UserPages from "../../../containers/UserPages/UserPage";
 
 export const AppRoutesObject = {
     'Home': {
@@ -27,6 +29,16 @@ export const AppRoutesObject = {
     'Explore': {
         render: <Route key={3} exact path={BrowserRoutes.explore} component={Explore}/>,
         path: BrowserRoutes.explore,
+        icon: <LayoutOutlined/>
+    },
+    'User by Id': {
+        render: <Route key={4} exact path={BrowserRoutes.userByIdParam} component={UserPages}/>,
+        path: BrowserRoutes.userByIdParam,
+        icon: <LayoutOutlined/>
+    },
+    'Exhibit by Id': {
+        render: <Route key={5} exact path={BrowserRoutes.exhibitsByIdParam} component={ExhibitById}/>,
+        path: BrowserRoutes.exhibitsByIdParam,
         icon: <LayoutOutlined/>
     },
 };

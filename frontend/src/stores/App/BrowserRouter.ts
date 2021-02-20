@@ -50,7 +50,7 @@ export class BrowserRoutes {
     static HOME = 'home';
     static EXHIBITS = 'exhibits';
     static EXPLORE = 'explore';
-    static USER = 'user';
+    static USERS = 'users';
 
     static get debugger(){
         return `${BrowserRoutes.BASE}/${BrowserRoutes.DEBUGGER}`;
@@ -66,6 +66,9 @@ export class BrowserRoutes {
     }
     static get explore(){
         return `${BrowserRoutes.BASE}/${BrowserRoutes.EXPLORE}`;
+    }
+    static get users(){
+        return `${BrowserRoutes.BASE}/${BrowserRoutes.USERS}`;
     }
     static get admin(){
         return `${BrowserRoutes.BASE}/${BrowserRoutes.ADMIN}`;
@@ -95,11 +98,11 @@ export class BrowserRoutes {
         return `${BrowserRoutes.BASE}/${BrowserRoutes.EXHIBITS}/:exhibitId`;
     }
     static get userByIdParam(){
-        return `${BrowserRoutes.BASE}/${BrowserRoutes.USER}/:userId`;
+        return `${BrowserRoutes.BASE}/${BrowserRoutes.USERS}/:userId`;
     }
 
     static getUserById(userId:number){
-        return `${BrowserRoutes.USER}/${userId}`;
+        return `${BrowserRoutes.USERS}/${userId}`;
     }
 
     static getExhibitById(exhibitId:number){

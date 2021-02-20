@@ -1,0 +1,43 @@
+@import '../../global/scss/config';
+
+.user-module {
+
+    &-profile {
+        @media screen and (max-width: $screen-sm-min) {
+            margin-top: 30px;
+        }
+        &-header {
+            text-transform: uppercase;
+        }
+        &-section {
+            &-left{
+                @include flex(row, space-evenly, center);
+                .username{
+                    font-weight: 700;
+                }
+                
+            }
+            &-divider {
+                border: solid thin;
+                border-image-source: linear-gradient(45deg, rgb(0,143,104), rgb(136, 252, 175));
+                border-image-slice: 1;
+                width: 75%;
+                @media screen and (max-width: $screen-sm-min) {
+                    margin-top: 30px;
+                }
+            }
+            &-stats {
+                @include flex(row, center, center);
+                text-align: center;
+                @media screen and (max-width: $screen-sm-min) {
+                    margin-top: 30px;
+                }
+            }
+        }
+        &-stats-col {
+            &-label {
+                font-weight: 700;
+            }
+        }
+    }
+}
