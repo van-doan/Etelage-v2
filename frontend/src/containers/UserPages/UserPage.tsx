@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useCallback} from 'react'
 import {Row, Col, Layout, Avatar, Image, Divider, Input, Button, message} from 'antd'
+import { RouteComponentProps } from 'react-router-dom'
 import AppStore from '../../stores/App/AppStore'
 
 import { TUser } from '../../stores/App/Types'
@@ -12,17 +13,20 @@ const moment = require('moment')
 const { Content } = Layout
 const StrapiDomain = 'http://localhost:1337'
 
-export default () => {
+interface Props extends RouteComponentProps<{userId:string}>{
+
+}
+
+export default (props:Props) => {
     const [loading, setLoading] = useState(false)
     const [userData, setUserData] = useState<TUser | undefined>();
     const [following, setFollowing] = useState(false)
 
     async function onFollow(){
-        let userInfo = await UserActions.getUserById();
-        let userId = stringify(userInfo?.id)
+        let userId = props.match.params.userId
         console.log('After button click, this is the user id', userId)
-        await UserActions.followUser(userId)
-        let success = () => {message.success(`You are now following ${userInfo?.username}`, 3)}
+        await UserActions.followUser(parseInt(userId), AppStore.user?.id)
+        let success = () => {message.success(`You are now following ${userData?.username}`, 3)}
         setFollowing(true)
         return success();
     }
@@ -40,7 +44,8 @@ export default () => {
 
     const getUserData = useCallback(async () => {
         setLoading(true);
-        let userInfo = await UserActions.getUserById();
+        let userId = props.match.params.userId
+        let userInfo = await UserActions.getUserById(parseInt(userId));
         console.log(userInfo)
         setUserData(userInfo);
         setLoading(false)
@@ -79,35 +84,35 @@ export default () => {
                             src={`${StrapiDomain}${userData?.profile_img.formats.thumbnail.url}`}/>}/>
                         <div className="user-module-profile-info">
                             <span className="username">{userData?.username}</span>
-                            <br/>
-                            <span>{userData?.user_bio}</span>
-                            {userData?.id !== AppStore.user?.id ? (
-                                <div>
-                            {following ? (
-                                <Button 
-                                    title="Unfollow" 
-                                    type="ghost" 
-                                    // onClick={()=> onUnfollow()}
-                                    >
-                                    Unfollow
-                                    </Button>
-                            ) : 
-                            (
-                                <Button 
-                                    title="Follow" 
-                                    type="ghost" 
-                                    onClick={()=> onFollow()}>
-                                        Follow
-                                    </Button>
-                            )
-                            }
-                                </div>
-                            ): null}
+                            <span className="user-description">{userData?.user_bio}</span>
                         </div>
                     </div>
                 </div>
             </Row>
-            <hr className="user-module-profile-section-divider" />
+            <Divider className="user-module-profile-section-divider">
+            {userData?.id !== AppStore.user?.id ? (
+                    <div className="follow-btn-container">
+                {following ? (
+                    <Button 
+                        title="Unfollow" 
+                        type="ghost" 
+                        // onClick={()=> onUnfollow()}
+                        >
+                        Unfollow
+                        </Button>
+                ) : 
+                (
+                    <Button 
+                        title="Follow" 
+                        type="ghost" 
+                        onClick={()=> onFollow()}>
+                            Follow
+                    </Button>
+                )
+                }
+                    </div>
+                ): null}
+            </Divider>
             <Row className="user-module-profile-section-stats">
                 <Col className="user-module-profile-stats-col">
                     <div className="user-module-profile-stats-title">

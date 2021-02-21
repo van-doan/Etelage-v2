@@ -50,7 +50,7 @@ export default class ExhibitActions {
                 let res = await axios.post('http://localhost:1337/exhibits', exhibitValues)
                 let resTwo = await axios.put(`http://localhost:1337/users/${user.id}`, user.exhibits && exhibitValues)
                 // ^ This needs to be edited to add exhibit to user collection
-                return res.data as TExhibit && resTwo.data;
+                return res.data as TExhibit && resTwo.data as TUser;
             } catch (e) {
                 console.log('Could not create exhibit', e.message);
                 return undefined;

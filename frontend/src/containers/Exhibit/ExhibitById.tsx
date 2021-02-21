@@ -11,11 +11,11 @@ export default () => {
     const [userData, setUserData] = useState<TUser | undefined>();
 
     const getUserData = useCallback(async () => {
-        setLoading(true);
-        let userInfo = await UserActions.getUserById();
-        console.log(userInfo)
-        setUserData(userInfo);
-        setLoading(false)
+        // setLoading(true);
+        // let userInfo = await UserActions.getUserById(parseInt(userId));
+        // console.log(userInfo)
+        // setUserData(userInfo);
+        // setLoading(false)
     }, [])
 
     // function renderUserData() {

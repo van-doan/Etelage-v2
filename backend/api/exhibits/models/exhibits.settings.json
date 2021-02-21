@@ -25,13 +25,9 @@
       "type": "text"
     },
     "user": {
-      "plugin": "users-permissions",
-      "model": "user"
-    },
-    "users": {
       "via": "exhibits",
       "plugin": "users-permissions",
-      "collection": "user"
+      "model": "user"
     }
   }
 }

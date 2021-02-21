@@ -11,8 +11,8 @@ export interface TUser {
     profile_img: TStrapiMediaFile,
     user_bio: string,
     exhibits: TExhibit[],
-    followers: string,
-    following: string,
+    followees: TUser[],
+    followers: TUser[],
 }
 
 export interface TStrapiMediaFile {

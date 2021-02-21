@@ -11,6 +11,7 @@ interface Props {
 export default (props:Props) => {
     const handleHidden = () => {
         let url = props.data.artwork_ids
+        console.log(url);
         if(url === null){
             return 'none'
         }

@@ -26,30 +26,44 @@ export default (props: Props) => {
   // const [submittingUserData, setSubmittingUserData] = useState(false);
   const {file, userId} = props;
   const [form] = Form.useForm();
-  const [exhibitData, setExhibitData] = useState<TExhibit[] | undefined>();
   const [loading, setLoading] = useState(false)
-
+  const [exhibitData, setExhibitData] = useState<TExhibit[] | undefined>();
+  
   // Form Functions
-
   const success = () => {message.success('Your profile has been updated!', 3)}
-
+  
   const onReset = () => {
     form.resetFields();
   };
-
+  
+  const normFile = (e:any) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  };
+  
   async function onTabClick(key:string) {
     if(key === '2'){
       setLoading(true)
       let userId = AppStore.user?.id
       let userInfo = await DashboardActions.getOwnUserData(userId);
       console.log(userInfo)
-      // let usersExhibits = userInfo.
-      
-      // setExhibitData(exhibitInfo);
+      let usersExhibits = userInfo?.exhibits
+      setExhibitData(usersExhibits);
       setLoading(false)
-      // console.log(exhibitInfo)
+      console.log(usersExhibits)
     }
-  }
+  };
+  
+  async function onSubmitData() {
+    let userId = AppStore.user?.id
+    let values = form.getFieldsValue(['username', 'user_bio'])
+    await DashboardActions.editUserData(userId, values)
+    success()
+    return window.location.reload()
+  };
 
   function renderExhibitResults () {
     if(loading) {
@@ -59,24 +73,6 @@ export default (props: Props) => {
         <DashboardProfileExhibits key={index} data={exhibit} />
       ))
     }
-  }
-
-  async function onSubmitData() {
-    let userId = AppStore.user?.id
-    let values = form.getFieldsValue(['username', 'user_bio'])
-    await DashboardActions.editUserData(userId, values)
-    success()
-    return window.location.reload()
-}
-
-  const normFile = (e:any) => {
-    console.log('Upload event:', e);
-
-    if (Array.isArray(e)) {
-      return e;
-    }
-
-    return e && e.fileList;
   };
 
   useEffect(() => {

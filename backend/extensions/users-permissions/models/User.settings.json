@@ -68,24 +68,27 @@
       "plugin": "upload",
       "required": false
     },
-    "comments": {
-      "collection": "comments",
-      "via": "users",
-      "dominant": true
-    },
-    "exhibits": {
-      "collection": "exhibits",
-      "via": "users",
-      "dominant": true
-    },
     "user_bio": {
       "type": "text"
     },
-    "follower": {
-      "type": "text"
+    "exhibits": {
+      "collection": "exhibits",
+      "via": "user"
     },
-    "following": {
-      "type": "text"
+    "comments": {
+      "collection": "comments",
+      "via": "user"
+    },
+    "followees": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "followers",
+      "dominant": true
+    },
+    "followers": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "followees"
     }
   }
 }

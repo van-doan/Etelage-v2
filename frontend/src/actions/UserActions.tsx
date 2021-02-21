@@ -2,9 +2,8 @@ import axios from 'axios';
 import { TUser } from '../stores/App/Types'
 
 export default class UserActions {
-    static async getUserById(){
+    static async getUserById(userId:number){
         try{
-            let userId = window.location.pathname.split('/')[2]
             let res = await axios.get(`http://localhost:1337/users/${userId}`)
             return res.data as TUser
         } catch (e) {
@@ -35,10 +34,9 @@ export default class UserActions {
         }
     }
 
-    static async followUser( userId: string) {
+    static async followUser( followeeId:number, followerId?:number ) {
             try {
-                    let res = await axios.put(`http://localhost:1337/users/follower`, userId)
-
+                    let res = await axios.put(`http://localhost:1337/users/${followerId}`, {followees: [followeeId]})
                     return res.data
                 
             } catch (e){
@@ -47,7 +45,7 @@ export default class UserActions {
             }
 
         }
-    static async unfollowUser( userId: string) {
+    static async unfollowUser( userId:number) {
         try {
             let res = await axios.delete(`http://localhost:1337/users/follower`, {data: { userId }})
             console.log('User has been unfollowed')
