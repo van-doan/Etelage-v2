@@ -1,20 +1,26 @@
 @import '../../global/scss/config';
 
 .user-module {
-
+    &-divider {
+        @media screen and (max-width: $screen-sm-min) {
+        margin: 0 0 24px 0;
+        }
+    }
     &-profile {
         @media screen and (max-width: $screen-sm-min) {
             margin-top: 30px;
             padding: 0 16px;
         }
+        &-header{
+            text-align: center;
+        }
         &-info{
-
+            display: flex;
+            flex-direction: column;
+            margin-left: 30px;
             @media screen and (max-width: $screen-sm-min) {
                 display: flex;
                 flex-direction: column;
-            }
-            .follow-btn-container{
-                
             }
         }
         &-header {
@@ -34,7 +40,7 @@
         }
         &-section {
             &-left{
-                @include flex(row, space-evenly, center);
+                @include flex(row, center, center);
                 @media screen and (max-width: $screen-sm-min) {
                     @include flex(row, space-evenly, center);
                 }
@@ -65,8 +71,38 @@
     }
 }
 
-.user-section-all-content {
-    @media screen and (max-width: $screen-sm-min) {
-        padding: 25px;
+.user-module-profile-exhibits-num {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .user-section-all{
+            &-content {
+                margin: 15px;
+            @media screen and (max-width: $screen-sm-min) {
+                padding: 25px;
+            }
+            &-image {
+                height: 300px;
+                width: 300px;
+                object-fit: cover;
+            }
+        }
     }
+}
+
+h2.user-section-all-label, h4.user-section-all-label {
+    margin:0px;
+    text-align:center;
+}
+
+.follow-btn-container{
+    .follow-btn {
+        background-color: $teal !important;
+        color: white;
+    }
+    .follow-btn:hover {
+        background-color: #b2eceb !important;
+    }
+    
 }

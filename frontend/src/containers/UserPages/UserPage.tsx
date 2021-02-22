@@ -7,7 +7,6 @@ import { TUser } from '../../stores/App/Types'
 import UserActions from '../../actions/UserActions'
 
 import './styles.scss'
-import { stringify } from 'qs'
 
 const moment = require('moment')
 const { Content } = Layout
@@ -21,25 +20,24 @@ export default (props:Props) => {
     const [loading, setLoading] = useState(false)
     const [userData, setUserData] = useState<TUser | undefined>();
     const [following, setFollowing] = useState(false)
-
+    
     async function onFollow(){
         let userId = props.match.params.userId
         console.log('After button click, this is the user id', userId)
         await UserActions.followUser(parseInt(userId), AppStore.user?.id)
         let success = () => {message.success(`You are now following ${userData?.username}`, 3)}
-        setFollowing(true)
-        return success();
+        success();
+        return setFollowing(true)
     }
 
-    // async function onUnfollow(){
-    //     let userInfo = await UserActions.getUserById();
-    //     let userId = stringify(userInfo?.id)
-    //     console.log('After button click, this is the user id', userId)
-    //     await UserActions.followUser(userId)
-    //     let success = () => {message.success(`You are now following ${userInfo?.username}`, 3)}
-    //     setFollowing(true)
-    //     return success(); 
-    // }
+    async function onUnfollow(){
+        let userId = props.match.params.userId
+        console.log('After button click, this is the user id', userId)
+        await UserActions.unfollowUser(parseInt(userId))
+        let success = () => {message.success(`You have unfollowed ${userData?.username}`, 3)}
+        success(); 
+        return setFollowing(false)
+    }
     
 
     const getUserData = useCallback(async () => {
@@ -75,6 +73,7 @@ export default (props:Props) => {
     
     return (
         <div>
+        <Divider className="user-module-divider"/>
         <Row className="user-module-profile">
                 <div className="user-module-profile-section">
                     <div className="user-module-profile-section-left">
@@ -94,15 +93,17 @@ export default (props:Props) => {
                     <div className="follow-btn-container">
                 {following ? (
                     <Button 
+                        className="follow-btn"
                         title="Unfollow" 
                         type="ghost" 
-                        // onClick={()=> onUnfollow()}
+                        onClick={()=> onUnfollow()}
                         >
                         Unfollow
                         </Button>
                 ) : 
                 (
                     <Button 
+                        className="follow-btn"
                         title="Follow" 
                         type="ghost" 
                         onClick={()=> onFollow()}>

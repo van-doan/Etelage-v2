@@ -55,9 +55,20 @@
       }
       &-all {
         display: flex;
-        flex-direction: column;
+        flex-wrap: wrap;
         justify-content: center;
         align-items: center;
+
+        &-title {
+          text-align: center;
+        }
+
+        @media screen and (max-width: $screen-sm-min) {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
           &-label{
             margin-bottom: 0;
           }
@@ -66,6 +77,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            margin: 12px;
           @media screen and (max-width: $screen-sm-min) {
             margin: 40px 0 10px;
             display: flex;
@@ -77,12 +89,13 @@
             background: -webkit-linear-gradient(#a5f5d0, $teal);;
             border: none;
             font-size: 18px;
+            height: 20px;
             font-weight:700;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             box-shadow: none;
             @media screen and (max-width: $screen-sm-min) {
-              height: 25px;
+              height: 27px;
               font-size: 12px;
               padding: 0;
             }
