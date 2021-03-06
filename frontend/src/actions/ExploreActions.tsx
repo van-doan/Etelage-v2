@@ -1,11 +1,16 @@
 import axios from 'axios';
-import { XAPP_TOKEN } from './config/key';
 import { IArtsyArtworkApiResponse } from '../containers/Explore/Types';
+// import { XAPP_TOKEN } from './config/key';
 
 export default class ExploreActions {
-    
     static async getArtwork(value:string){
-        try{
+        // Retrieve XAPP_TOKEN from Artsy API
+            let token = await axios.post(
+                `https://api.artsy.net/api/tokens/xapp_token?client_id=8ef8eadf0157ee092184&client_secret=a8e7d551a1198a319901d988fa9d2f1d`
+            )
+                let XAPP_TOKEN = token.data.token
+                console.log(XAPP_TOKEN);
+        try {    
             let res = await axios.get(
                 `https://api.artsy.net/api/search?q=${value}&type=artwork`,
                 {

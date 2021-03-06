@@ -42,7 +42,7 @@ export default () => {
                         <h4>Exhibits</h4>
                     </div>
                     <div className="dashboard-module-profile-stats-num">
-                        <h5>3</h5>
+                        <h5>{AppStore.user?.exhibits.length}</h5>
                     </div>
                 </Col>
                 <Col className="dashboard-module-profile-stats-col">
@@ -50,7 +50,7 @@ export default () => {
                         <h4>Followers</h4>
                     </div>
                     <div className="dashboard-module-profile-stats-num">
-                        <h5>10.5m</h5>
+                        <h5>{AppStore.user?.followers.length}</h5>
                     </div>
                 </Col>
                 <Col className="dashboard-module-profile-stats-col">
@@ -58,7 +58,7 @@ export default () => {
                         <h4>Following</h4>
                     </div>
                     <div className="dashboard-module-profile-stats-num">
-                        <h5>0</h5>
+                        <h5>{AppStore.user?.followees.length}</h5>
                     </div>
                 </Col>
             </Row>

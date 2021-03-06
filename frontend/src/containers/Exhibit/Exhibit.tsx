@@ -83,10 +83,10 @@ export default () => {
                 The most liked exhibit will be featured here.
             </Content>
             <Divider className='exhibit-section-divider'/>
-            <Content className='exhibit-section-all'>
                 <div className='exhibit-section-all-title'>
                     <h2>All Exhibits</h2>
                 </div>
+            <Content className='exhibit-section-all'>
                 {renderExhibitResults()}
             </Content>
             <Footer className='exhibit-section-search'>

@@ -1,12 +1,33 @@
 @import '../../global/scss/config';
 
 .explore {
+    &-div{
+      @media screen and (min-width: $screen-lg-min) {
+        margin-bottom: 40px;
+        background: rgba(0, 0, 0, 0.03);
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+      @media screen and (max-width: $screen-sm-min) {
+        margin-bottom: 20px;
+        background: rgba(0, 0, 0, 0.03);
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+      .explore-overlay {
+        padding: 10px 10px;
+      }
+    }
     @include flex(column, flex-start, center);
     @include pad-box(36px 48px);
-    width:100%;
+      width:100%;
 
     &-search{
       width: 30%;
+    }
+
+    &-title, &-dates {
+      font-family: 'Spartan';
     }
 
     &-query {
@@ -27,11 +48,20 @@
           }
 
         &-content{
+          @media screen and (min-width: $screen-lg-min) {
+            text-align: center;
+          }
           @media screen and (max-width: $screen-sm-min) {
+            text-align: center;
             margin-top: 20px;
           }
           &-label{
-
+            @media screen and (min-width: $screen-lg-min) {
+              margin: 40px;
+              font-size: 16px;
+              font-weight: 900;
+              font-family: 'Simonetta';
+            }
           }
           &-results {
             @media screen and (max-width: $screen-sm-min) {

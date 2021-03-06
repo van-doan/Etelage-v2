@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { userInfo } from 'os';
 import { TUser } from '../stores/App/Types'
 
 export default class UserActions {
@@ -45,9 +46,14 @@ export default class UserActions {
             }
 
         }
-    static async unfollowUser( userId:number) {
+    static async unfollowUser( followeesId: number, followerId?:number) {
         try {
-            let res = await axios.delete(`http://localhost:1337/users/follower`, {data: { userId }})
+            let followee = {
+                data: {
+                    id: followeesId
+                }
+            }
+            let res = await axios.delete(`http://localhost:1337/users/${followerId}`, followee)
             console.log('User has been unfollowed')
             return res.data
         } catch (e){

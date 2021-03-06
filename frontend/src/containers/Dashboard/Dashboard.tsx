@@ -49,14 +49,12 @@ export default (props: Props) => {
       setLoading(true)
       let userId = AppStore.user?.id
       let userInfo = await DashboardActions.getOwnUserData(userId);
-      console.log(userInfo)
       let usersExhibits = userInfo?.exhibits
       setExhibitData(usersExhibits);
       setLoading(false)
-      console.log(usersExhibits)
     }
   };
-  
+
   async function onSubmitData() {
     let userId = AppStore.user?.id
     let values = form.getFieldsValue(['username', 'user_bio'])
@@ -89,18 +87,26 @@ export default (props: Props) => {
           defaultActiveKey={'1'}
           onTabClick={onTabClick}
           centered>
-            <TabPane className="dashboard-module-menu-item" tab="Feed" key="1">
+            <TabPane className="dashboard-module-menu-item" 
+              tab="Feed" 
+              key="1">
               Feed goes here
             </TabPane>
             <TabPane className="dashboard-module-menu-item" tab="Profile" key="2">
               <DashboardProfile/>
               <Divider className="dashboard-module-divider"></Divider>
-              {renderExhibitResults()}
+              <div className="dashboard-exhibit-container">
+                {renderExhibitResults()}
+              </div>
             </TabPane>
-            <TabPane className="dashboard-module-menu-item" tab="Notifications" key="3">
+            <TabPane className="dashboard-module-menu-item" 
+              tab="Notifications" 
+              key="3">
               Notifications coming soon!
             </TabPane>
-            <TabPane className="dashboard-module-menu-item" tab="Settings" key="4">
+            <TabPane className="dashboard-module-menu-item" 
+              tab="Settings" 
+              key="4">
               <Form form={form} className="dashboard-module-menu-item-form">
                 <Form.Item 
                   className="dashboard-module-menu-item-form-item" 

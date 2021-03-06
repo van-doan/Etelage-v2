@@ -49,8 +49,35 @@ export default (props:Props) => {
         setLoading(false)
     }, [])
 
+    const setUserButton = () => {
+        let userId = AppStore.user?.id;
+        if(userData?.id !== AppStore.user?.id) {
+            // This still needs work
+            if(userData?.followers.find(userData => (userData.id === userId))) { 
+                return <div className="follow-btn-container">
+                    <Button className="follow-btn" title="Unfollow" type="ghost" onClick={()=> onUnfollow()}>
+                        Unfollow
+                    </Button>
+                </div>
+            } else {
+                return <div className="follow-btn-container">
+                    <Button 
+                        className="follow-btn"
+                        title="Follow" 
+                        type="ghost" 
+                        onClick={()=> onFollow()}>
+                            Follow
+                    </Button>
+                </div>
+            } 
+        } else {
+            return null;
+        }
+    }
+
     useEffect(() => {
         getUserData()
+        setUserButton()
     }, [getUserData])
     
     function renderUserExhibits() {
@@ -120,7 +147,7 @@ export default (props:Props) => {
                         <h4>Exhibits</h4>
                     </div>
                     <div className="user-module-profile-stats-num">
-                        <h5>3</h5>
+                        <h5>{userData?.exhibits.length}</h5>
                     </div>
                 </Col>
                 <Col className="user-module-profile-stats-col">
@@ -128,7 +155,7 @@ export default (props:Props) => {
                         <h4>Followers</h4>
                     </div>
                     <div className="user-module-profile-stats-num">
-                        <h5>10.5m</h5>
+                        <h5>{userData?.followers.length}</h5>
                     </div>
                 </Col>
                 <Col className="user-module-profile-stats-col">
@@ -136,7 +163,7 @@ export default (props:Props) => {
                         <h4>Following</h4>
                     </div>
                     <div className="user-module-profile-stats-num">
-                        <h5>0</h5>
+                        <h5>{userData?.followees.length}</h5>
                     </div>
                 </Col>
             </Row>

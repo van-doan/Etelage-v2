@@ -26,7 +26,7 @@ export default (props:Props) => {
     }
     
     return(
-        <div>
+        <Col className="dashboard-master-exhibits">
             <Row className="dashboard-module-profile-exhibits">
                 <Col className="dashboard-module-profile-exhibits-gallery"> 
                     <Input type="image" className="dashboard-module-profile-exhibits-gallery-img" style={{display: handleHidden()}} src={getExhibitImage()}/>
@@ -36,6 +36,6 @@ export default (props:Props) => {
                     </div>
                 </Col>
             </Row>
-        </div>
+        </Col>
     )
 }
