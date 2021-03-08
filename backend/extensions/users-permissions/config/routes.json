@@ -1,0 +1,19 @@
+{
+    "routes": [ 
+        {
+            "method": "PUT",
+            "path": "/users/unfollow/:userId",
+            "handler": "User.unfollow",
+            "config": {
+                "policies": [],
+                "prefix": "",
+                "description": "description",
+                "tag": {
+                  "plugin": "users-permissions",
+                  "name": "User",
+                  "actionType": "find"
+                }
+            }
+        }
+    ]
+}

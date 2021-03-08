@@ -17,29 +17,36 @@ interface Props extends RouteComponentProps<{userId:string}>{
 }
 
 export default (props:Props) => {
+    let followers = UserActions.getUserFollowers
     const [loading, setLoading] = useState(false)
     const [userData, setUserData] = useState<TUser | undefined>();
     const [following, setFollowing] = useState(false)
+    const [followerCount, setFollowerCount] = useState(followers.length)
     
+
+    // Follow User
     async function onFollow(){
         let userId = props.match.params.userId
         console.log('After button click, this is the user id', userId)
         await UserActions.followUser(parseInt(userId), AppStore.user?.id)
         let success = () => {message.success(`You are now following ${userData?.username}`, 3)}
+        setFollowerCount(followerCount + 1)
         success();
         return setFollowing(true)
     }
 
+    // Unfollow User
     async function onUnfollow(){
         let userId = props.match.params.userId
         console.log('After button click, this is the user id', userId)
         await UserActions.unfollowUser(parseInt(userId))
         let success = () => {message.success(`You have unfollowed ${userData?.username}`, 3)}
+        setFollowerCount(followerCount - 1)
         success(); 
         return setFollowing(false)
     }
     
-
+    // Get User Data (the page you're viewing)
     const getUserData = useCallback(async () => {
         setLoading(true);
         let userId = props.match.params.userId
@@ -49,11 +56,26 @@ export default (props:Props) => {
         setLoading(false)
     }, [])
 
+    // Set User Button based on if you're following or not following
     const setUserButton = () => {
-        let userId = AppStore.user?.id;
+        let authenticatedUserId = AppStore.user?.id;
+        let visitingUserId = parseInt(props.match.params.userId)
+        let authenticatedUserFollowees = AppStore.user?.followees
+
+        const foundUserFollowees = () =>{ 
+            if (authenticatedUserFollowees?.find(user => user.id === visitingUserId)) {
+                setFollowing(true)
+                // console.log('User Found');
+            } else {
+                setFollowing(false)
+                // console.log('User was not found');
+            }
+        }  
+        foundUserFollowees();
+        
         if(userData?.id !== AppStore.user?.id) {
             // This still needs work
-            if(userData?.followers.find(userData => (userData.id === userId))) { 
+            if(userData?.followers.find(userData => (userData.id === authenticatedUserId))) { 
                 return <div className="follow-btn-container">
                     <Button className="follow-btn" title="Unfollow" type="ghost" onClick={()=> onUnfollow()}>
                         Unfollow
@@ -155,7 +177,7 @@ export default (props:Props) => {
                         <h4>Followers</h4>
                     </div>
                     <div className="user-module-profile-stats-num">
-                        <h5>{userData?.followers.length}</h5>
+                        <h5>{followerCount}</h5>
                     </div>
                 </Col>
                 <Col className="user-module-profile-stats-col">

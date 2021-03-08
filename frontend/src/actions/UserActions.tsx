@@ -44,20 +44,14 @@ export default class UserActions {
                 console.error('Could you not follow user at this time', e.message);
                 return undefined
             }
-
         }
-    static async unfollowUser( followeesId: number, followerId?:number) {
+    static async unfollowUser( followeeId:number) {
         try {
-            let followee = {
-                data: {
-                    id: followeesId
-                }
-            }
-            let res = await axios.delete(`http://localhost:1337/users/${followerId}`, followee)
+            let res = await axios.put(`http://localhost:1337/users/unfollow/${followeeId}`)
             console.log('User has been unfollowed')
             return res.data
         } catch (e){
-            console.error('Could you not unfollow user at this time', e.message);
+            console.error('Could not unfollow user at this time', e.message);
             return undefined
         }
     }
