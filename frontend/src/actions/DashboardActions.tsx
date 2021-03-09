@@ -8,7 +8,6 @@ export default class DashboardActions {
     static async getUserData(){
         try {
             let res = await axios.get('http://localhost:1337/users');
-            console.log(res.data)
             return res.data as TUser[];
         } catch (e){
             console.log('Could not get user data', e.message);
@@ -19,7 +18,6 @@ export default class DashboardActions {
     static async getOwnUserData(userId:any){
         try {
             let res = await axios.get(`http://localhost:1337/users/${userId}`);
-            console.log('This logs your own user data', res.data)
             return res.data as TUser;
         } catch (e){
             console.log('Could not retrieve your user data... do you exist?', e.message);

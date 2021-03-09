@@ -13,10 +13,10 @@ export default class UserActions {
         }
     }
 
-    static async getUserFollowers(userId: TUser){
+    static async getUserFollowers(userId: number){
         // A userId needs to be present to retrieve their follower ids
         try{
-            let res = await axios.get(`http://localhost:1337/users/followers`)
+            let res = await axios.get(`http://localhost:1337/users/${userId}/followers`)
             return res.data
             // This data will need to be split since it'll return as a string
         } catch(e) {

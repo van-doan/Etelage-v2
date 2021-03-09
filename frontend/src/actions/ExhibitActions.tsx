@@ -7,7 +7,6 @@ export default class ExhibitActions {
                 `http://localhost:1337/exhibits`
                 );
             let exhibitData = res.data
-            console.log(exhibitData)
         return exhibitData as TExhibit[];
     }
 

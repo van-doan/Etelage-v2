@@ -51,8 +51,7 @@
           @media screen and (max-width: $screen-sm-min) {
             margin-left: 20px;
           }
-        }
-        
+        }        
         &-exhibits {
           
           &-gallery{
@@ -79,8 +78,16 @@
           &-label {
             font-weight:700;
           }
+          .dashboard-module-profile-stats-num {
+            .follow-btn{
+              background-color: transparent;
+              border: none;
+              box-shadow: none;
+              }
+            }
+
+          }
         }
-      }
 
       &-logo {
         padding: 16px 0 0 0;
@@ -128,6 +135,51 @@
         }
       }
     }
+  
+
+// Dashboard Follow Sections
+.dashboard-follow {
+  &-container{
+    .dashboard-follow-title{
+      font-size: 20px;
+      font-family: "Playfair Display", "Times New Roman", Times, serif;
+      margin-bottom: 16px;
+    }
+  }
+}
+
+.dashboard-master {
+  .dashboard-module-profile-follow{
+    @media screen and (max-width: $screen-sm-min){
+      align-items: center !important;
+    }
+  }
+  &-follow {
+    @media screen and (max-width: $screen-sm-min) {
+      display: flex;
+      justify-content: center;
+      margin: 12px;
+      align-items: center;
+    }
+    .follower-name {
+      background: transparent !important;
+      border: none;
+      box-shadow: none;
+      color: #9ED3D2;
+      font-weight: 600;
+    }
+    .follow-page-link {
+      
+    }
+  }
+  &-img {
+    @media screen and (max-width: $screen-sm-min) {
+      width: 44px !important;
+      height: 44px !important;
+      margin-right: 20px;
+    }
+  }
+}
 
 // Ant Design Overrides
 

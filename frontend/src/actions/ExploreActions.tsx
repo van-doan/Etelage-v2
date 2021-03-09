@@ -20,7 +20,6 @@ export default class ExploreActions {
                     }
                 });
                 let data = res.data
-                console.log(data)
             return data as IArtsyArtworkApiResponse;
         } catch (e) {
             console.log('Could not retrieve artwork', e.message);

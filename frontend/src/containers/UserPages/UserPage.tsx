@@ -13,24 +13,32 @@ const { Content } = Layout
 const StrapiDomain = 'http://localhost:1337'
 
 interface Props extends RouteComponentProps<{userId:string}>{
-
 }
 
 export default (props:Props) => {
-    let followers = UserActions.getUserFollowers
     const [loading, setLoading] = useState(false)
     const [userData, setUserData] = useState<TUser | undefined>();
     const [following, setFollowing] = useState(false)
-    const [followerCount, setFollowerCount] = useState(followers.length)
+    const [followerCount, setFollowerCount] = useState<number | undefined>()
     
+    const getFollowers = async () => {
+        let followerId = props.match.params.userId
+        let follower = await UserActions.getUserById(parseInt(followerId));
+        // setFollowerCount(followers.length)
+        let followerCount = follower?.followers.length
+        console.log("This is the user's followers", followerCount)
+        setFollowerCount(followerCount);
+    }
 
     // Follow User
     async function onFollow(){
         let userId = props.match.params.userId
         console.log('After button click, this is the user id', userId)
         await UserActions.followUser(parseInt(userId), AppStore.user?.id)
+        let follower = await UserActions.getUserById(parseInt(userId));
+        let followerCount = follower?.followers.length;
+        setFollowerCount(followerCount);
         let success = () => {message.success(`You are now following ${userData?.username}`, 3)}
-        setFollowerCount(followerCount + 1)
         success();
         return setFollowing(true)
     }
@@ -40,8 +48,10 @@ export default (props:Props) => {
         let userId = props.match.params.userId
         console.log('After button click, this is the user id', userId)
         await UserActions.unfollowUser(parseInt(userId))
+        let follower = await UserActions.getUserById(parseInt(userId));
+        let followerCount = follower?.followers.length;
+        setFollowerCount(followerCount);
         let success = () => {message.success(`You have unfollowed ${userData?.username}`, 3)}
-        setFollowerCount(followerCount - 1)
         success(); 
         return setFollowing(false)
     }
@@ -51,7 +61,7 @@ export default (props:Props) => {
         setLoading(true);
         let userId = props.match.params.userId
         let userInfo = await UserActions.getUserById(parseInt(userId));
-        console.log(userInfo)
+        // console.log(userInfo)
         setUserData(userInfo);
         setLoading(false)
     }, [])
@@ -74,7 +84,6 @@ export default (props:Props) => {
         foundUserFollowees();
         
         if(userData?.id !== AppStore.user?.id) {
-            // This still needs work
             if(userData?.followers.find(userData => (userData.id === authenticatedUserId))) { 
                 return <div className="follow-btn-container">
                     <Button className="follow-btn" title="Unfollow" type="ghost" onClick={()=> onUnfollow()}>
@@ -98,6 +107,7 @@ export default (props:Props) => {
     }
 
     useEffect(() => {
+        getFollowers()
         getUserData()
         setUserButton()
     }, [getUserData])

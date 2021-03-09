@@ -1,19 +1,33 @@
 import React, {useState, useEffect} from 'react';
-import { Layout, Tabs, Upload, Button, Input, Form, Divider, message } from 'antd';
-import {UploadOutlined} from '@ant-design/icons';
+import { 
+  Layout,
+  Avatar,
+  Image, 
+  Row, 
+  Col, 
+  Tabs, 
+  Upload, 
+  Button, 
+  Input, 
+  Form, 
+  Divider, 
+  message } from 'antd';
+import {UploadOutlined, UserOutlined} from '@ant-design/icons';
 
 import AppStore from "../../stores/App/AppStore";
 import DashboardActions from "../../actions/DashboardActions"
-import ExhibitActions from '../../actions/ExhibitActions';
-
-import DashboardProfile from './DashboardProfile';
-import DashboardProfileExhibits from './DashboardProfileExhibits';
 import { TExhibit } from '../../stores/App/Types'
+
+// Dashboard Components located under the User Info
+import DashExhibits from './DashExhibits';
+import DashFollowers from './DashFollowers';
+import DashFollowing from './DashFollowing';
 
 import './styles.scss'
 
 const { TextArea } = Input;
 const { TabPane } = Tabs;
+const StrapiDomain = 'http://localhost:1337'
 
 interface Props {
   userId: any,
@@ -28,14 +42,15 @@ export default (props: Props) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false)
   const [exhibitData, setExhibitData] = useState<TExhibit[] | undefined>();
+  const [followersActive, setFollowersActive] = useState(false)
+  const [followingActive, setFollowingActive] = useState(false)
+  const [exhibitsActive, setExhibitsActive] = useState(true)
   
   // Form Functions
   const success = () => {message.success('Your profile has been updated!', 3)}
-  
   const onReset = () => {
     form.resetFields();
   };
-  
   const normFile = (e:any) => {
     console.log('Upload event:', e);
     if (Array.isArray(e)) {
@@ -43,7 +58,16 @@ export default (props: Props) => {
     }
     return e && e.fileList;
   };
+    // User Edit Functions
+    async function onSubmitData() {
+      let userId = AppStore.user?.id
+      let values = form.getFieldsValue(['username', 'user_bio'])
+      await DashboardActions.editUserData(userId, values)
+      success()
+      return window.location.reload()
+    };
   
+  // Tab Functions
   async function onTabClick(key:string) {
     if(key === '2'){
       setLoading(true)
@@ -55,24 +79,81 @@ export default (props: Props) => {
     }
   };
 
-  async function onSubmitData() {
-    let userId = AppStore.user?.id
-    let values = form.getFieldsValue(['username', 'user_bio'])
-    await DashboardActions.editUserData(userId, values)
-    success()
-    return window.location.reload()
-  };
+  function onExhibitSelect() {
+    if(followingActive){
+      setFollowingActive(false)
+    } 
+    if (followersActive){
+      setFollowersActive(false)
+    }
+    setExhibitsActive(true)
+  }
+
+  function onFollowersSelect() {
+    if(followingActive){
+      setFollowingActive(false)
+    } 
+    if (exhibitsActive){
+      setExhibitsActive(false)
+    }
+    setFollowersActive(true)
+  }
+
+  function onFollowingSelect() {
+    if(followersActive){
+      setFollowersActive(false)
+    } 
+    if (exhibitsActive){
+      setExhibitsActive(false)
+    }
+    setFollowingActive(true)
+  }
+
+  // Static Rendering Functions
+  function renderUserAvatar () {
+    if (AppStore.user?.profile_img.url) {
+        return <Avatar size={64} className="dashboard-module-profile-img" 
+        src={<Image 
+        preview={false}
+        src={`${StrapiDomain}${AppStore.user?.profile_img.url}`}/>}/>
+    } else if (!AppStore.user?.profile_img.url) {
+        return <Avatar size={64} className="dashboard-module-profile-img" icon={UserOutlined}/>
+    }
+  }
+
+
+  // Dynamic Rendering Functions
+  function renderFollowersList () {
+    if(loading) {
+      return <div className="user-list-loading" style={{textAlign: 'center', margin: '12px 0'}}>Loading...</div>
+    } else {
+      return AppStore.user?.followers.map((follower, index) => (
+        <DashFollowers key={index} data={follower}/>
+      ))
+    }
+  }
+
+  function renderFollowingList () { 
+    if(loading) {
+      return <div className="user-list-loading" style={{textAlign: 'center', margin: '12px 0'}}>Loading...</div>
+    } else {
+      return AppStore.user?.followees.map((followee, index) => (
+        <DashFollowing key={index} data={followee}/>
+      ))
+    }
+  }
 
   function renderExhibitResults () {
     if(loading) {
       return <div className="exhibits-loading" style={{textAlign: 'center', margin: '12px 0'}}>Loading...</div>
     } else if (exhibitData) {
       return exhibitData.map((exhibit, index) => (
-        <DashboardProfileExhibits key={index} data={exhibit} />
+        <DashExhibits key={index} data={exhibit} />
       ))
     }
   };
 
+  // Dashboard - Tabs (Window Breakpoints)
   useEffect(() => {
     const handleWindowResize = () => setWidth(window.innerWidth);
     window.addEventListener('resize', handleWindowResize);
@@ -93,10 +174,56 @@ export default (props: Props) => {
               Feed goes here
             </TabPane>
             <TabPane className="dashboard-module-menu-item" tab="Profile" key="2">
-              <DashboardProfile/>
+              {/* User Profile's Information (username, bio, exhibit #,  follower #, following #) */}
+              <Row className="dashboard-module-profile">
+                  <div className="dashboard-module-profile-section">
+                      <div className="dashboard-module-profile-section-left">
+                          {renderUserAvatar()}
+                          <div className="dashboard-module-profile-info">
+                              <span className="username">{AppStore.user?.username}</span>
+                              <br/>
+                              <span>{AppStore.user?.user_bio}</span>
+                          </div>
+                      </div>
+                  </div>
+              </Row>
+              <Row className="dashboard-module-profile-section-stats">
+                  <Col className="dashboard-module-profile-stats-col">
+                      <div className="dashboard-module-profile-stats-title">
+                          <h4>Exhibits</h4>
+                      </div>
+                      <div className="dashboard-module-profile-stats-num">
+                      <Button className="follow-btn" onClick={onExhibitSelect}><h5>{AppStore.user?.exhibits.length}</h5></Button>
+                      </div>
+                  </Col>
+                  <Col className="dashboard-module-profile-stats-col">
+                      <div className="dashboard-module-profile-stats-title">
+                          <h4>Followers</h4>
+                      </div>
+                      <div className="dashboard-module-profile-stats-num">
+                          <Button className="follow-btn" onClick={onFollowersSelect}><h5>{AppStore.user?.followers.length}</h5></Button>
+                      </div>
+                  </Col>
+                  <Col className="dashboard-module-profile-stats-col">
+                      <div className="dashboard-module-profile-stats-title">
+                          <h4>Following</h4>
+                      </div>
+                      <div className="dashboard-module-profile-stats-num">
+                          <Button className="follow-btn" onClick={onFollowingSelect}><h5>{AppStore.user?.followees.length}</h5></Button>
+                      </div>
+                  </Col>
+              </Row>
               <Divider className="dashboard-module-divider"></Divider>
-              <div className="dashboard-exhibit-container">
+              <div className="dashboard-exhibit-container" style={exhibitsActive ? {display: 'grid'} : {display: 'none'}}>
                 {renderExhibitResults()}
+              </div>
+              <div className="dashboard-follow-container" style={followersActive ? {display: 'grid'} : {display: 'none'}}>
+                <div className="dashboard-follow-title">Followers</div>
+                {renderFollowersList()}
+              </div>
+              <div className="dashboard-follow-container" style={followingActive ? {display: 'grid'} : {display: 'none'}}>
+              <div className="dashboard-follow-title">Following</div>
+                {renderFollowingList()}
               </div>
             </TabPane>
             <TabPane className="dashboard-module-menu-item" 

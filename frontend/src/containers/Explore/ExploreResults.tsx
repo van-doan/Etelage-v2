@@ -38,20 +38,20 @@ export default (props:Props) => {
         e.preventDefault();
         let exhibitId = form.getFieldValue('exhibitSelect')
         let userId = AppStore.user?.id
-        console.log('This is the current id selected', exhibitId)
+        // console.log('This is the current id selected', exhibitId)
         let foundExhibit = props.exhibits?.filter((exhibit) => (exhibit.id === exhibitId)) 
         // ^ This gives us the array of exhibit ids
-            console.log('this returns the foundExhibitId if found in exhibit array', foundExhibit?.[0]);
+            // console.log('this returns the foundExhibitId if found in exhibit array', foundExhibit?.[0]);
         if (typeof foundExhibit?.[0] !== 'undefined') {
             let values = await form.getFieldsValue(['artwork_ids'])
             await ExhibitActions.saveExhibit(values, foundExhibit?.[0])
-            console.log('Updates Exhibit Values', values)
+            // console.log('Updates Exhibit Values', values)
             setShow(false);
             return success();
         } else {
             let values = await form.getFieldsValue(['title','description','artwork_ids', 'user']);
             await ExhibitActions.saveExhibit(values)
-            console.log('New Exhibit Values:', values)
+            // console.log('New Exhibit Values:', values)
             setShow(false);
             return success();
         }

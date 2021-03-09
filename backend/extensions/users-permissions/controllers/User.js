@@ -27,8 +27,6 @@ module.exports = {
     const { id } = ctx.state.user;
     const { userId } = ctx.params;
     const intUserId = parseInt(userId);
-    let i;
-
 
     console.log("This is Strapi's user id:", id)
     console.log("This is the parsed user id:", intUserId)

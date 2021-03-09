@@ -80,7 +80,7 @@ export default () => {
                 <div className='exhibit-section-featured-title'>
                     <h2>Featured Exhibits</h2>
                 </div>
-                The most liked exhibit will be featured here.
+                <span>The most liked exhibit will be featured here.</span>
             </Content>
             <Divider className='exhibit-section-divider'/>
                 <div className='exhibit-section-all-title'>

@@ -52,6 +52,12 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        &-title > h2 {
+          font-family: "Playfair Display", "Times New Roman", Times, serif;
+        }
+      }
+      &-featured > span {
+        font-family: "Playfair Display", "Times New Roman", Times, serif;
       }
       &-all {
         display: flex;
@@ -61,6 +67,10 @@
 
         &-title {
           text-align: center;
+        }
+        &-title > h2 {
+            font-family: "Playfair Display", "Times New Roman", Times, serif;
+            font-weight: 600;
         }
 
         @media screen and (max-width: $screen-sm-min) {

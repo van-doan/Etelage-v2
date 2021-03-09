@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Row, Col, Input} from 'antd'
 import { TExhibit } from '../../stores/App/Types'
 import './styles.scss'
@@ -7,11 +7,9 @@ interface Props {
     data: TExhibit,
 }
 
-
 export default (props:Props) => {
     const handleHidden = () => {
         let url = props.data.artwork_ids
-        console.log(url);
         if(url === null){
             return 'none'
         }
