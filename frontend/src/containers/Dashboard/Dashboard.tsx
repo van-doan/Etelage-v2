@@ -15,15 +15,18 @@ import {
 import {UploadOutlined, UserOutlined} from '@ant-design/icons';
 
 import AppStore from "../../stores/App/AppStore";
-import DashboardActions from "../../actions/DashboardActions"
-import { TExhibit } from '../../stores/App/Types'
+import { TExhibit, TUser } from '../../stores/App/Types'
 
 // Dashboard Components located under the User Info
+import DashboardActions from "../../actions/DashboardActions"
 import DashExhibits from './DashExhibits';
 import DashFollowers from './DashFollowers';
 import DashFollowing from './DashFollowing';
+import DashFeed from './DashFeed';
 
 import './styles.scss'
+import ExhibitActions from '../../actions/ExhibitActions';
+
 
 const { TextArea } = Input;
 const { TabPane } = Tabs;
@@ -41,7 +44,9 @@ export default (props: Props) => {
   const {file, userId} = props;
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false)
+  const [followingUserData, setFollowingUserData] = useState<TUser[] | null>();
   const [exhibitData, setExhibitData] = useState<TExhibit[] | undefined>();
+  const [followingExhibitData, setFollowingExhibitData] = useState<TExhibit[] | undefined>();
   const [followersActive, setFollowersActive] = useState(false)
   const [followingActive, setFollowingActive] = useState(false)
   const [exhibitsActive, setExhibitsActive] = useState(true)
@@ -72,42 +77,65 @@ export default (props: Props) => {
     if(key === '2'){
       setLoading(true)
       let userId = AppStore.user?.id
-      let userInfo = await DashboardActions.getOwnUserData(userId);
+      let userInfo = await DashboardActions.getUserData(userId);
       let usersExhibits = userInfo?.exhibits
       setExhibitData(usersExhibits);
       setLoading(false)
     }
   };
 
-  function onExhibitSelect() {
-    if(followingActive){
-      setFollowingActive(false)
-    } 
-    if (followersActive){
-      setFollowersActive(false)
-    }
-    setExhibitsActive(true)
+  const onTabLoad = async () => {
+      setLoading(true)
+      let myUserId = AppStore.user?.id
+      // Here I'm getting my own id
+      // I'm able to access who I follow
+      // I want to load their exhibits - not mine
+      let myUserInfo = await DashboardActions.getUserData(myUserId);
+      // ^ This is getting my own data
+      await myUserInfo?.followees.map( (user) => {
+        DashboardActions.getUserData(user.id)
+        .then( 
+          (user) => {
+          let followeeExhibits = user?.exhibits
+          console.log("This is the followee's exhibits", followeeExhibits)
+          setFollowingExhibitData(followeeExhibits)
+          }
+        )
+      })
+      console.log("This is the followees within my data", myUserInfo?.followees)
+      setLoading(false)
   }
+  
+  // User Stats Selection
+    function onExhibitSelect() {
+      if(followingActive){
+        setFollowingActive(false)
+      } 
+      if (followersActive){
+        setFollowersActive(false)
+      }
+      setExhibitsActive(true)
+    }
 
-  function onFollowersSelect() {
-    if(followingActive){
-      setFollowingActive(false)
-    } 
-    if (exhibitsActive){
-      setExhibitsActive(false)
+    function onFollowersSelect() {
+      if(followingActive){
+        setFollowingActive(false)
+      } 
+      if (exhibitsActive){
+        setExhibitsActive(false)
+      }
+      setFollowersActive(true)
     }
-    setFollowersActive(true)
-  }
 
-  function onFollowingSelect() {
-    if(followersActive){
-      setFollowersActive(false)
-    } 
-    if (exhibitsActive){
-      setExhibitsActive(false)
+    function onFollowingSelect() {
+      if(followersActive){
+        setFollowersActive(false)
+      } 
+      if (exhibitsActive){
+        setExhibitsActive(false)
+      }
+      setFollowingActive(true)
     }
-    setFollowingActive(true)
-  }
 
   // Static Rendering Functions
   function renderUserAvatar () {
@@ -123,6 +151,26 @@ export default (props: Props) => {
 
 
   // Dynamic Rendering Functions
+  function renderFeedResults() {
+    if (loading) {
+      return <div className="exhibits-loading" style={{textAlign: 'center', margin: '12px 0'}}>Loading...</div>
+    } else if (followingExhibitData) {
+      return followingExhibitData.map((exhibit, index) => (
+        <DashFeed key={index} data={exhibit} />
+      )) 
+    }
+  }
+
+  function renderExhibitResults () {
+    if(loading) {
+      return <div className="exhibits-loading" style={{textAlign: 'center', margin: '12px 0'}}>Loading...</div>
+    } else if (exhibitData) {
+      return exhibitData.map((exhibit, index) => (
+        <DashExhibits key={index} data={exhibit} />
+      ))
+    }
+  };
+
   function renderFollowersList () {
     if(loading) {
       return <div className="user-list-loading" style={{textAlign: 'center', margin: '12px 0'}}>Loading...</div>
@@ -143,18 +191,9 @@ export default (props: Props) => {
     }
   }
 
-  function renderExhibitResults () {
-    if(loading) {
-      return <div className="exhibits-loading" style={{textAlign: 'center', margin: '12px 0'}}>Loading...</div>
-    } else if (exhibitData) {
-      return exhibitData.map((exhibit, index) => (
-        <DashExhibits key={index} data={exhibit} />
-      ))
-    }
-  };
-
   // Dashboard - Tabs (Window Breakpoints)
   useEffect(() => {
+    onTabLoad();
     const handleWindowResize = () => setWidth(window.innerWidth);
     window.addEventListener('resize', handleWindowResize);
     return () => window.removeEventListener('resize', handleWindowResize);
@@ -168,10 +207,10 @@ export default (props: Props) => {
           defaultActiveKey={'1'}
           onTabClick={onTabClick}
           centered>
-            <TabPane className="dashboard-module-menu-item" 
+            <TabPane className="dashboard-module-menu-item dash-feed-module" 
               tab="Feed" 
               key="1">
-              Feed goes here
+              {renderFeedResults()}
             </TabPane>
             <TabPane className="dashboard-module-menu-item" tab="Profile" key="2">
               {/* User Profile's Information (username, bio, exhibit #,  follower #, following #) */}

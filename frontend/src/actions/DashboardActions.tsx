@@ -5,17 +5,17 @@ import {TUser} from "../stores/App/Types";
 
 export default class DashboardActions {
 
-    static async getUserData(){
-        try {
-            let res = await axios.get('http://localhost:1337/users');
-            return res.data as TUser[];
-        } catch (e){
-            console.log('Could not get user data', e.message);
-            return undefined;
-        }
-    }
+    // static async getUserData(){
+    //     try {
+    //         let res = await axios.get('http://localhost:1337/users');
+    //         return res.data as TUser[];
+    //     } catch (e){
+    //         console.log('Could not get user data', e.message);
+    //         return undefined;
+    //     }
+    // }
     
-    static async getOwnUserData(userId:any){
+    static async getUserData(userId:any){
         try {
             let res = await axios.get(`http://localhost:1337/users/${userId}`);
             return res.data as TUser;
