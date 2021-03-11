@@ -77,14 +77,20 @@ export default class UserActions {
             }
         } 
     }
-    static async unlikeExhibit(userId:number){
-        try {
-            let res = await axios.put(`http://localhost:1337/users/${userId}`);
-            console.log('Exhibit has been unliked')
-            return res.data
-        } catch (e) {
-            console.log('Could not unlike exhibit at this time', e.message);
-            return undefined
+    static async unlikeExhibit(userId:number, exhibitId: number){
+        if (userId) {
+            try {
+                if (exhibitId !== undefined){
+                    let res = await axios.put(`http://localhost:1337/users/unlike/${exhibitId}`);
+                    console.log('Exhibit has been unliked')
+                    return res.data
+                } else {
+                    console.error('The exhibit you unliked does not exist or may have been deleted!')
+                }
+            } catch (e) {
+                console.log('Could not unlike exhibit at this time', e.message);
+                return undefined
+            }
         }
     }
 

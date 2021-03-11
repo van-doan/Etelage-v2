@@ -14,6 +14,21 @@
                   "actionType": "find"
                 }
             }
+        },
+        {
+            "method": "PUT",
+            "path": "/users/unlike/:exhibitId",
+            "handler": "User.unlike",
+            "config": {
+                "policies": [],
+                "prefix": "",
+                "description": "description",
+                "tag": {
+                  "plugin": "users-permissions",
+                  "name": "User",
+                  "actionType": "find"
+                }
+            }
         }
     ]
 }
