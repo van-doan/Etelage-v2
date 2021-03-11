@@ -17,17 +17,19 @@
     "artwork_ids": {
       "type": "text"
     },
-    "exhibit_likes": {
-      "type": "integer",
-      "default": 0
-    },
     "description": {
       "type": "text"
     },
     "user": {
-      "via": "exhibits",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "exhibits"
+    },
+    "exhibit_likes": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "likes",
+      "dominant": true
     }
   }
 }

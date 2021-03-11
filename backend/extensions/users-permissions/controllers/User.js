@@ -29,6 +29,7 @@ module.exports = {
     const intUserId = parseInt(userId);
 
     console.log("This is Strapi's user id:", id)
+    console.log("this is the ctx params", ctx.params)
     console.log("This is the parsed user id:", intUserId)
     let user = await strapi.plugins['users-permissions'].services.user.fetch({
       id,
@@ -38,5 +39,17 @@ module.exports = {
     let updateUserFollowees = await strapi.plugins['users-permissions'].services.user.edit({ id }, {followees: currentFollowees})
 
     return sanitizeUser(updateUserFollowees);
+  },
+  unlike: async ctx => {
+    const { id } = ctx.state.user;
+    const { exhibits } = ctx.params;
+    const intExhibitId = parseInt(exhibits);
+
+    let user = await strapi.plugins['users-permissions'].services.user.fetch({
+      id,
+    })
+    let likedExhibits = user.likes.filter(like => like.id !== intExhibitId)
+    let updateUserLikes = await strapi.plugins['users-permissions'].services.user.edit({ id }, {likes: [likedExhibits]})
+    return updateUserLikes;
   }
 }

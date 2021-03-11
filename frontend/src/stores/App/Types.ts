@@ -13,6 +13,7 @@ export interface TUser {
     exhibits: TExhibit[],
     followees: TUser[],
     followers: TUser[],
+    likes: TExhibit[],
 }
 
 export interface TStrapiMediaFile {
@@ -55,7 +56,7 @@ export interface TExhibit {
     title: string,
     description: string,
     artwork_ids: string,
-    exhibit_likes: number,
+    exhibit_likes: TUser,
     user: TUser,
     published_at: string,
 }

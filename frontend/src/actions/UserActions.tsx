@@ -1,3 +1,4 @@
+import { ConsoleSqlOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { userInfo } from 'os';
 import { TUser } from '../stores/App/Types'
@@ -55,4 +56,36 @@ export default class UserActions {
             return undefined
         }
     }
+    static async likeExhibit(user:TUser, userId:number, exhibitId?:number ){
+        if (userId) {
+            try {
+                if (exhibitId !== undefined){
+                    // let userExistingLikes = user.likes
+                    // console.log('This is the user likes as is', userExistingLikes)
+                    // let exhibitIds = userExistingLikes.map(exhibit => ({id: exhibit.id}))
+                    // console.log('This is the user exhibit Ids after mapping', exhibitIds)
+                    // let newUserLikes = exhibitIds.push({id: exhibitId});
+                    let res = await axios.put(`http://localhost:1337/users/${userId}`, {likes: exhibitId});
+                    // console.log('This is the liked data', res.data)
+                    return res.data;
+                } else {
+                    console.error('The exhibit you liked does not exist or may have been deleted!')
+                }
+            } catch (e){
+                console.error('Could not like exhibit at this time', e.message);
+                return undefined
+            }
+        } 
+    }
+    static async unlikeExhibit(userId:number){
+        try {
+            let res = await axios.put(`http://localhost:1337/users/${userId}`);
+            console.log('Exhibit has been unliked')
+            return res.data
+        } catch (e) {
+            console.log('Could not unlike exhibit at this time', e.message);
+            return undefined
+        }
+    }
+
 }

@@ -72,8 +72,8 @@
       "type": "text"
     },
     "exhibits": {
-      "collection": "exhibits",
-      "via": "user"
+      "via": "user",
+      "collection": "exhibits"
     },
     "comments": {
       "collection": "comments",
@@ -89,6 +89,10 @@
       "plugin": "users-permissions",
       "collection": "user",
       "via": "followees"
+    },
+    "likes": {
+      "via": "exhibit_likes",
+      "collection": "exhibits"
     }
   }
 }

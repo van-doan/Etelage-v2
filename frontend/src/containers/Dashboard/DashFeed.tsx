@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {Row, Col, Input, Button, Avatar, Image, Divider} from 'antd'
 import { TExhibit, TUser } from '../../stores/App/Types'
-import { HeartOutlined, MessageOutlined } from '@ant-design/icons'
+import { HeartFilled, HeartOutlined, MessageOutlined } from '@ant-design/icons'
 import AppStore from "../../stores/App/AppStore";
 
 import UserActions from "../../actions/UserActions"
+import ExhibitActions from "../../actions/ExhibitActions"
 
 // I want to show Exhibits only from user's I'm following:
     // 1. User Avatar & username
@@ -22,7 +23,7 @@ const StrapiDomain = 'http://localhost:1337'
 
 export default (props: Props) => {
     const [userDataFromExhibit, setUserDataFromExhibit] = useState<TUser | undefined>();
-
+    const [liked, setLike] = useState(false);
 
     const handleHidden = () => {
         let url = props.data.artwork_ids
@@ -39,18 +40,41 @@ export default (props: Props) => {
         } 
     }
 
-    // function seeData () {
-    //     let exhibitData = props.data
+    // See Component Data
+    function seeData () {
+        let exhibitData = props.data
 
-    //     console.log("This is the exhibit data", exhibitData)
-    
-    //     let followeeId = props.data.user
-    //     let followee = JSON.stringify(followeeId)
-    //     // let userData = UserActions.getUserById(followeeId)
-    //     let followeeData = UserActions.getUserById(parseInt(followee))
-    //     console.log(followeeData)
-    // }
-    // seeData();
+        console.log("This is the exhibit data", exhibitData)
+    }
+    seeData();
+
+    // Get User Likes
+
+
+    async function likeExhibit(){
+        if(AppStore.user){
+            let user = AppStore.user
+            let userId = AppStore.user.id
+            let exhibitId = props.data.id
+            let exhibitLiked = await UserActions.likeExhibit(user, userId, exhibitId);
+            console.log("This is the exhibit liked", exhibitLiked)
+            setLike(true)
+        } else {
+            console.log("You must be logged in to like user's exhibits")
+        }
+    }
+
+    async function unlikeExhibit(){
+        if(AppStore.user){
+            let userId = AppStore.user.id
+            let exhibitLiked = await UserActions.unlikeExhibit(userId);
+            console.log("This is the exhibit liked", exhibitLiked)
+            setLike(false)
+        } else {
+            console.log("You must be logged in to unlike user's exhibits")
+        }
+    }
+
 
     async function getUserFromExhibit(){
         let followee = props.data.user
@@ -60,12 +84,29 @@ export default (props: Props) => {
         return setUserDataFromExhibit(followeeData);
     }
 
-    // I need the exhibit's user id to get their info (username and avatar)
-    // When the page loads, I will need to get the exhibit's user id
-    // // Once I have the user id, I need to fetch the user's data for each exhibit
-    // If the exhibit user id === the fetched user's id, retrieve username and avatar
+    async function getUserLikes() {
+        let userLikes = AppStore.user?.likes
+        let exhibitId = props.data.id
+        if(userLikes?.find(exhibit => exhibit.id === exhibitId)) {
+            setLike(true)
+            return <Button 
+                    icon={<HeartFilled/>} 
+                    className="heart-icon" 
+                    onClick={unlikeExhibit} 
+                    />
+        } else {
+            setLike(false)
+            return <Button 
+                    icon={<HeartOutlined/>} 
+                    className="heart-icon" 
+                    onClick={likeExhibit}
+                    />
+            
+        }
+    }
 
     useEffect(()=> {
+        getUserLikes();
         getUserFromExhibit();
     }, [])
 
@@ -89,7 +130,20 @@ export default (props: Props) => {
                         <Input type="image" className="dashboard-module-profile-exhibits-gallery-img" style={{display: handleHidden()}} src={getExhibitImage()}/>
                         <Col>
                             <Row className="dash-feed-user-exhibits-icons" style={{display: handleHidden()}}>
-                                <Button icon={<HeartOutlined/>} className="heart-icon" />
+                                {liked ? (
+                                    <Button 
+                                        icon={<HeartFilled/>} 
+                                        className="heart-icon" 
+                                        onClick={unlikeExhibit} 
+                                    />
+                                ) : (
+                                    <Button 
+                                        icon={<HeartOutlined/>} 
+                                        className="heart-icon" 
+                                        onClick={likeExhibit}
+                                    />
+                                )}
+
                                 <Button icon={<MessageOutlined/>} className="message-icon" />
                             </Row>
                             <Row className="dash-feed-user-exhibits-desc">
