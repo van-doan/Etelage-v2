@@ -30,6 +30,16 @@ export default class ExhibitActions {
         }
     }
 
+    static async getExhibitData(exhibitId:number){
+        try {
+            let res = await axios.get(`http://localhost:1337/exhibits/${exhibitId}`);
+            return res.data as TExhibit;
+        } catch (e) {
+            console.log('Could not load exhibit data at this time', e.message);
+            return undefined;
+        }
+    }
+
     static async saveExhibit(values: { id:number, title: string, description: string, artwork_ids: string, user: TUser}, exhibit?:any ){
         if (exhibit) {
             try {

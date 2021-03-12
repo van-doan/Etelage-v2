@@ -276,6 +276,18 @@
               @media screen and (max-width: $screen-sm-min) {
                 margin: 0px 0 14px 4px;
               }
+              &-likes {
+                @media screen and (min-width: $screen-sm-min){
+                  margin: 0px 0px 4px 4px;
+                  font-size: 14px;
+                  font-weight: 700;
+                }
+                @media screen and (max-width: $screen-sm-min) {
+                  margin: 0px 0px 4px 4px;
+                  font-size: 14px;
+                  font-weight: 700;
+                }
+              }
               &-username {
                 @media screen and (min-width: $screen-sm-min) {
                   margin-right: 10px;

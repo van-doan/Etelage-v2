@@ -25,7 +25,7 @@
       "model": "user",
       "via": "exhibits"
     },
-    "exhibit_likes": {
+    "exhibitLikes": {
       "plugin": "users-permissions",
       "collection": "user",
       "via": "likes",

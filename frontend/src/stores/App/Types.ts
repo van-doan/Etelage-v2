@@ -56,7 +56,7 @@ export interface TExhibit {
     title: string,
     description: string,
     artwork_ids: string,
-    exhibit_likes: TUser,
+    exhibitLikes: TUser[],
     user: TUser,
     published_at: string,
 }

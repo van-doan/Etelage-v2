@@ -91,7 +91,7 @@
       "via": "followees"
     },
     "likes": {
-      "via": "exhibit_likes",
+      "via": "exhibitLikes",
       "collection": "exhibits"
     }
   }

@@ -7,13 +7,6 @@ import AppStore from "../../stores/App/AppStore";
 import UserActions from "../../actions/UserActions"
 import ExhibitActions from "../../actions/ExhibitActions"
 
-// I want to show Exhibits only from user's I'm following:
-    // 1. User Avatar & username
-    // 2. Exhibit w/thumbnail
-    // 3. Like & Comment
-    // 4. Exhibit Name & Exhibit Description
-    // 5. Ability to add comment
-
 interface Props {
     data: TExhibit,
 }
@@ -24,6 +17,7 @@ const StrapiDomain = 'http://localhost:1337'
 export default (props: Props) => {
     const [userDataFromExhibit, setUserDataFromExhibit] = useState<TUser | undefined>();
     const [liked, setLike] = useState(false);
+    const [exhibitLikes, setExhibitLikes] = useState<string | null>();
 
     const handleHidden = () => {
         let url = props.data.artwork_ids
@@ -43,12 +37,8 @@ export default (props: Props) => {
     // See Component Data
     function seeData () {
         let exhibitData = props.data
-
     }
     seeData();
-
-    // Get User Likes
-
 
     async function likeExhibit(){
         if(AppStore.user){
@@ -80,8 +70,18 @@ export default (props: Props) => {
         let followee = props.data.user
         let followeeId = JSON.stringify(followee)
         let followeeData = await UserActions.getUserById(parseInt(followeeId))
-        console.log(followeeData)
         return setUserDataFromExhibit(followeeData);
+    }
+
+    async function getExhibitLikes(){
+        if(props.data.id){
+            let exhibitId = props.data.id;
+            let exhibitData = await ExhibitActions.getExhibitData(exhibitId);
+            let exhibitLikes = exhibitData?.exhibitLikes.map(user => user.id)
+            let exhibitLikesLength = exhibitLikes?.length
+            let likes = JSON.stringify(exhibitLikesLength)
+            return setExhibitLikes(likes)
+        } 
     }
 
     async function getUserLikes() {
@@ -106,6 +106,7 @@ export default (props: Props) => {
     }
 
     useEffect(()=> {
+        getExhibitLikes();
         getUserLikes();
         getUserFromExhibit();
     }, [])
@@ -145,6 +146,18 @@ export default (props: Props) => {
                                 )}
 
                                 <Button icon={<MessageOutlined/>} className="message-icon" />
+                            </Row>
+                            <Row className= "dash-feed-user-exhibits-likes">
+                                {/* This will eventually be a href link to show users who liked */}
+                                { props.data.id ? (
+                                    <span className="dash-feed-user-exhibits-desc-likes">
+                                        {exhibitLikes} likes
+                                    </span>
+                                ): (
+                                    <span className="dash-feed-user-exhibits-desc-likes">
+                                        0 likes
+                                    </span>
+                                )}
                             </Row>
                             <Row className="dash-feed-user-exhibits-desc">
                                 <span className="dash-feed-user-exhibits-desc-username" style={{display: handleHidden()}}>{userDataFromExhibit?.username}</span>
