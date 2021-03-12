@@ -52,14 +52,10 @@ export default (props: Props) => {
 
     async function likeExhibit(){
         if(AppStore.user){
-            let user = AppStore.user
             let userId = AppStore.user.id
-            let userLikes = JSON.stringify(AppStore.user.likes.map(exhibit => (exhibit.id)))
-            // Still needs work - basically needs to send a list of object (exhibit ids) to add to a user's likes
             let exhibitId = props.data.id
             console.log('This is the "exhibitId" aka props.data.id', exhibitId)
-            console.log('This is the userLikes', userLikes)
-            let exhibitLiked = await UserActions.likeExhibit(user, userId, exhibitId);
+            let exhibitLiked = await UserActions.likeExhibit(userId, exhibitId);
             console.log("This is the exhibit liked", exhibitLiked)
             setLike(true)
         } else {

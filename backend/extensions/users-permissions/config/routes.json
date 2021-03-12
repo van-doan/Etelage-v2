@@ -29,6 +29,21 @@
                   "actionType": "find"
                 }
             }
+        },
+        {
+            "method": "PUT",
+            "path": "/users/like/:exhibitId",
+            "handler": "User.like",
+            "config": {
+                "policies": [],
+                "prefix": "",
+                "description": "description",
+                "tag": {
+                  "plugin": "users-permissions",
+                  "name": "User",
+                  "actionType": "find"
+                }
+            }
         }
     ]
 }

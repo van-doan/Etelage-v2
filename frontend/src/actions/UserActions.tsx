@@ -56,27 +56,23 @@ export default class UserActions {
             return undefined
         }
     }
-    static async likeExhibit(user:TUser, userId:number, exhibitId?:number ){
-        if (userId) {
+    static async likeExhibit(userId:number, exhibitId?:number){
+        if(userId){
             try {
                 if (exhibitId !== undefined){
-                    // let userExistingLikes = user.likes
-                    // console.log('This is the user likes as is', userExistingLikes)
-                    // let exhibitIds = userExistingLikes.map(exhibit => ({id: exhibit.id}))
-                    // console.log('This is the user exhibit Ids after mapping', exhibitIds)
-                    // let newUserLikes = exhibitIds.push({id: exhibitId});
-                    let res = await axios.put(`http://localhost:1337/users/${userId}`, {likes: exhibitId});
-                    // console.log('This is the liked data', res.data)
-                    return res.data;
-                } else {
-                    console.error('The exhibit you liked does not exist or may have been deleted!')
-                }
+                        let res = await axios.put(`http://localhost:1337/users/like/${exhibitId}`);
+                        // console.log('This is the liked data', res.data)
+                        return res.data;
+                    } else {
+                        console.error('The exhibit you liked does not exist or may have been deleted!')
+                    }
             } catch (e){
-                console.error('Could not like exhibit at this time', e.message);
-                return undefined
+                    console.error('Could not like exhibit at this time', e.message);
+                    return undefined
             }
-        } 
+        }
     }
+    
     static async unlikeExhibit(userId:number, exhibitId: number){
         if (userId) {
             try {

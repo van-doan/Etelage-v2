@@ -42,14 +42,28 @@ module.exports = {
   },
   unlike: async ctx => {
     const { id } = ctx.state.user;
-    const { exhibits } = ctx.params;
-    const intExhibitId = parseInt(exhibits);
+    const { exhibitId } = ctx.params;
+    const intExhibitId = parseInt(exhibitId);
 
     let user = await strapi.plugins['users-permissions'].services.user.fetch({
       id,
     })
-    let likedExhibits = user.likes.filter(like => like.id !== intExhibitId)
-    let updateUserLikes = await strapi.plugins['users-permissions'].services.user.edit({ id }, {likes: [likedExhibits]})
+    
+    let filteredLikes = user.likes.filter(like => like.id !== intExhibitId)
+    let updateUserLikes = await strapi.plugins['users-permissions'].services.user.edit({ id }, {likes: filteredLikes})
+    return updateUserLikes;
+  },
+  like: async ctx => {
+    const { id } = ctx.state.user;
+    const { exhibitId } = ctx.params;
+    const intExhibitId = parseInt(exhibitId)
+
+    let user = await strapi.plugins['users-permissions'].services.user.fetch({
+      id,
+    })
+    user.likes.push(intExhibitId)
+    // let likedExhibits = existingLikes.push(intExhibitId)
+    let updateUserLikes = await strapi.plugins['users-permissions'].services.user.edit({ id }, {likes: user.likes})
     return updateUserLikes;
   }
 }
