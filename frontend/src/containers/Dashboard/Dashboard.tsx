@@ -87,22 +87,16 @@ export default (props: Props) => {
   const onTabLoad = async () => {
       setLoading(true)
       let myUserId = AppStore.user?.id
-      // Here I'm getting my own id
-      // I'm able to access who I follow
-      // I want to load their exhibits - not mine
       let myUserInfo = await DashboardActions.getUserData(myUserId);
-      // ^ This is getting my own data
       await myUserInfo?.followees.map( (user) => {
         DashboardActions.getUserData(user.id)
         .then( 
           (user) => {
           let followeeExhibits = user?.exhibits
-          console.log("This is the followee's exhibits", followeeExhibits)
           setFollowingExhibitData(followeeExhibits)
           }
         )
       })
-      console.log("This is the followees within my data", myUserInfo?.followees)
       setLoading(false)
   }
   

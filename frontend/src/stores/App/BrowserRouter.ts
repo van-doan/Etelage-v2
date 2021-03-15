@@ -51,6 +51,7 @@ export class BrowserRoutes {
     static EXHIBITS = 'exhibits';
     static EXPLORE = 'explore';
     static USERS = 'users';
+    static COMMENTS = 'comments';
 
     static get debugger(){
         return `${BrowserRoutes.BASE}/${BrowserRoutes.DEBUGGER}`;
@@ -66,6 +67,9 @@ export class BrowserRoutes {
     }
     static get explore(){
         return `${BrowserRoutes.BASE}/${BrowserRoutes.EXPLORE}`;
+    }
+    static get comments(){
+        return `${BrowserRoutes.BASE}/${BrowserRoutes.COMMENTS}`;
     }
     static get users(){
         return `${BrowserRoutes.BASE}/${BrowserRoutes.USERS}`;

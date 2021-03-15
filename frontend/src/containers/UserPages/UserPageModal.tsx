@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import {Row, 
-    Col, 
-    Input, 
-    Button, 
-    Avatar, 
-    Image, 
-    Divider,
-    message, 
-    Form} from 'antd'
+import { Row, Col, Divider, Avatar, Button, Image, message, Form, Input } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import './styles.scss'
+
 import { TExhibit, TUser, TComments } from '../../stores/App/Types'
 import { HeartFilled, HeartOutlined, MessageOutlined } from '@ant-design/icons'
 import AppStore from "../../stores/App/AppStore";
@@ -15,14 +10,14 @@ import AppStore from "../../stores/App/AppStore";
 import UserActions from "../../actions/UserActions"
 import ExhibitActions from "../../actions/ExhibitActions"
 
+const moment = require('moment')
+const StrapiDomain = 'http://localhost:1337'
+
 interface Props {
     data: TExhibit,
 }
 
-const moment = require('moment')
-const StrapiDomain = 'http://localhost:1337'
-
-export default (props: Props) => {
+export default (props:Props) => {
     const [form] = Form.useForm();
     const [userDataFromExhibit, setUserDataFromExhibit] = useState<TUser | undefined>();
     const [liked, setLike] = useState(false);
@@ -54,11 +49,8 @@ export default (props: Props) => {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                    Exhibit Likes Functionality                                             //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    // function onLikesSelect () {
-    //     setLikesActive(true);
-    // }
-                                
+
+    // Get image src for exhibit
     async function likeExhibit(){
         let userId = AppStore.user?.id
         let exhibitId = props.data.id
@@ -110,22 +102,10 @@ export default (props: Props) => {
             
         }
     }
-
-    // async function getUsersWhoLiked(){
-    //     if(props.data.id){
-    //         let exhibitId = props.data.id;
-    //         let exhibitData = await ExhibitActions.getExhibitData(exhibitId);
-    //         let exhibitLikes = exhibitData?.exhibitLikes.map(user => user.username)
-    //         console.log(exhibitLikes)
-    //     } 
-    // }
-    // getUsersWhoLiked()
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                     Comments Functionality                                                 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    const handleShow = () => setShowComment(true)
+const handleShow = () => setShowComment(true)
     
     async function addComment() {
         if(props.data.id){
@@ -187,8 +167,8 @@ export default (props: Props) => {
         getUserLikes();
         getUserFromExhibit();
     }, [])
-
-    return (
+    
+    return(
         <Col className="dash-feed-master">
             <Row className="dash-feed-master-container">
                 <Col className="dash-feed-user"> 
@@ -236,11 +216,14 @@ export default (props: Props) => {
                                     </span>
                                 )}
                             </Row>
-                            <Row className="dash-feed-user-exhibits-desc">
-                                <span className="dash-feed-user-exhibits-desc-username" style={{display: handleHidden()}}>{userDataFromExhibit?.username}</span>
+                            <Col className="dash-feed-user-exhibits-desc">
+                                <Row><span className="dash-feed-user-exhibits-desc-username" style={{display: handleHidden()}}>{userDataFromExhibit?.username}</span>
                                 <span className="dash-feed-user-exhibits-desc-title" style={{display: handleHidden()}}>{props.data.title}</span>
-                                <span className="dash-feed-user-exhibits-desc-exhibitDesc" style={{display: handleHidden()}}>{props.data.description}</span>
-                            </Row>
+                                </Row>
+                                <Row>
+                                    <span className="dash-feed-user-exhibits-desc-exhibitDesc" style={{display: handleHidden()}}>{props.data.description}</span>
+                                </Row>
+                            </Col>
                             {comment ? ( commentData?.map(comment =>
                             <Row className="dash-feed-user-exhibits-userComments">
                                 <Avatar size={18}

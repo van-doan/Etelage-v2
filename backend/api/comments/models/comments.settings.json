@@ -14,17 +14,20 @@
     "content": {
       "type": "string"
     },
-    "exhibitId": {
-      "model": "exhibits"
+    "exhibit_ids": {
+      "collection": "exhibits",
+      "via": "comments",
+      "dominant": true
     },
     "comment_likes": {
       "type": "integer",
       "default": 0
     },
-    "user": {
-      "via": "comments",
+    "users": {
       "plugin": "users-permissions",
-      "model": "user"
+      "collection": "user",
+      "via": "comments",
+      "dominant": true
     }
   }
 }

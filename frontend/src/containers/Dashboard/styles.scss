@@ -237,6 +237,25 @@
             
             &-exhibits {
               
+              &-userComments {
+                @media screen and (min-width: $screen-sm-min) {
+                  margin: 0px 0 14px 4px;
+                  align-items: center;
+                }
+                @media screen and (max-width: $screen-sm-min) {
+                  margin: 0px 0 14px 4px;
+                }  
+                span {
+                  @media screen and (min-width: $screen-sm-min) {
+                    margin-right: 10px;
+                    font-size: 13px;
+                  }
+                  @media screen and (max-width: $screen-sm-min) {
+                    margin-right: 10px;
+                    font-size: 13px;
+                  } 
+              }
+            }
               &-icons {
     
                 .heart-icon, .message-icon {
@@ -334,21 +353,54 @@
                 font-size: 13px;
                 color: grey;
                 font-style: italic;
+                padding: 0;
+                background: transparent;
+                border: none;
+                box-shadow: none;
                 }
                 @media screen and (max-width: $screen-sm-min) {
                   margin-left: 10px;
                   font-size: 11px;
                   color: grey;
                   font-style: italic;
+                  padding: 0;
+                  background: transparent;
+                  border: none;
+                  box-shadow: none;
+                }
+              }
+            }
+            &-comment-form{
+              margin-top: 8px;
+              .comment-field{
+                border-right: none;
+                border-top-left-radius: 15px;
+                border-bottom-left-radius: 15px;
+                border-top-right-radius: 0px;
+                border-bottom-right-radius: 0px;
+              }
+              .btn-container{
+                flex: 0 1 auto;
+                .comment-btn{
+                  color: #33c4b8;
+                  font-size: 11px;
+                  background: #FFF;
+                  border: 1px solid #d9d9d9;
+                  border-left: none;
+                  box-shadow: none;
+                  border-top-left-radius: 0;
+                  border-bottom-left-radius: 0;
+                  border-top-right-radius: 15px;
+                  border-bottom-right-radius: 15px;
                 }
               }
             }
             &-date {
               font-size: 12px;
-              margin: 10px 0 0 6px;
+              margin: 4px 0 0 6px;
               justify-content: flex-start;
               @media screen and (max-width: $screen-sm-min) {
-                margin: 14px 0 0 8px;
+                margin: 0px 0 0 8px;
                 font-size: 10px;
               }
             }

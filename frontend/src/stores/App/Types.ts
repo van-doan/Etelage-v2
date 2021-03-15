@@ -13,6 +13,7 @@ export interface TUser {
     exhibits: TExhibit[],
     followees: TUser[],
     followers: TUser[],
+    comments: TComments[],
     likes: TExhibit[],
 }
 
@@ -59,6 +60,15 @@ export interface TExhibit {
     exhibitLikes: TUser[],
     user: TUser,
     published_at: string,
+    comments: TComments[],
+}
+
+export interface TComments {
+    id: number,
+    content: string,
+    exhibit_ids: TExhibit[],
+    comment_likes: number,
+    users: TUser[],
 }
 
 export interface TSignupValues {

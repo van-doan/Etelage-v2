@@ -1,7 +1,5 @@
-import { ConsoleSqlOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import { userInfo } from 'os';
-import { TUser } from '../stores/App/Types'
+import { TExhibit, TUser, TComments } from '../stores/App/Types'
 
 export default class UserActions {
     static async getUserById(userId:number){
@@ -10,6 +8,16 @@ export default class UserActions {
             return res.data as TUser
         } catch (e) {
             console.log('Could not load user information', e.message);
+            return undefined;
+        }
+    }
+
+    static async getUsers(){
+        try {
+            let res = await axios.get(`http://localhost:1337/users`)
+            return res.data as TUser[]
+        } catch (e) {
+            console.log('Could not load all users', e.message);
             return undefined;
         }
     }
@@ -56,7 +64,7 @@ export default class UserActions {
             return undefined
         }
     }
-    static async likeExhibit(userId:number, exhibitId?:number){
+    static async likeExhibit(userId?:number, exhibitId?:number){
         if(userId){
             try {
                 if (exhibitId !== undefined){
@@ -73,7 +81,7 @@ export default class UserActions {
         }
     }
     
-    static async unlikeExhibit(userId:number, exhibitId: number){
+    static async unlikeExhibit(exhibitId?: number, userId?:number){
         if (userId) {
             try {
                 if (exhibitId !== undefined){
@@ -90,4 +98,31 @@ export default class UserActions {
         }
     }
 
+    static async getExhibitComments(){
+        try {
+            let res = await axios.get(`http://localhost:1337/comments`)
+            return res.data as TComments[];
+        } catch (e){
+            console.log('Could not get comments for this exhibit at this time', e.message)
+        }
+    }
+
+    static async getCommentById(foundCommentId:number){
+        try {
+            let res = await axios.get(`http://localhost:1337/comments/${foundCommentId}`)
+            return res.data as TComments;
+        } catch (e){
+            console.log('Could not get comments for this exhibit at this time', e.message)
+        }
+    }
+
+    static async addComment(values:{content: string, exhibit_ids?:TExhibit, users?:TUser}){
+        try {
+            let res = await axios.post(`http://localhost:1337/comments`, values) 
+            console.log(res.data)          
+            return res.data as TComments              
+        } catch (e) {
+            console.log('Could not add comment at this time', e.message)
+        }
+    }
 }

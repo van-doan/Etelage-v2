@@ -1,15 +1,15 @@
 import React, {useEffect, useState, useCallback} from 'react'
-import {Row, Col, Layout, Avatar, Image, Divider, Input, Button, message} from 'antd'
+import {Row, Col, Layout, Avatar, Image, Divider, Input, Button, message, Modal} from 'antd'
 import { RouteComponentProps } from 'react-router-dom'
 import AppStore from '../../stores/App/AppStore'
 
-import { TUser } from '../../stores/App/Types'
+import { TUser, TExhibit } from '../../stores/App/Types'
 import UserActions from '../../actions/UserActions'
+import DashboardActions from '../../actions/DashboardActions'
 
 import './styles.scss'
+import UserPageModal from './UserPageModal'
 
-const moment = require('moment')
-const { Content } = Layout
 const StrapiDomain = 'http://localhost:1337'
 
 interface Props extends RouteComponentProps<{userId:string}>{
@@ -18,8 +18,10 @@ interface Props extends RouteComponentProps<{userId:string}>{
 export default (props:Props) => {
     const [loading, setLoading] = useState(false)
     const [userData, setUserData] = useState<TUser | undefined>();
+    const [exhibitData, setExhibitData] = useState<TExhibit[] | undefined>();
     const [following, setFollowing] = useState(false)
     const [followerCount, setFollowerCount] = useState<number | undefined>()
+    const [visible, setVisible] = useState(false)
     
     const getFollowers = async () => {
         let followerId = props.match.params.userId
@@ -105,6 +107,27 @@ export default (props:Props) => {
             return null;
         }
     }
+    // On Modal Click 
+
+    async function onModalLoad(){
+        setLoading(true)
+        let userId = props.match.params.userId
+        let userInfo = await DashboardActions.getUserData(userId);
+        let usersExhibits = userInfo?.exhibits
+        setExhibitData(usersExhibits);
+        setVisible(true)
+        setLoading(false)
+    }
+    // Pass User/Exhibit/Comment Data to Modal
+    function renderModalData() {
+        if (loading) {
+          return <div className="exhibits-loading" style={{textAlign: 'center', margin: '40px 0', fontFamily: '"Playfair Display", "Times New Roman", Times, serif'}}>LOADING...</div>
+        } else if (exhibitData) {
+          return exhibitData.map((exhibit, index) => (
+            <UserPageModal key={index} data={exhibit} />
+          )) 
+        }
+      }
 
     useEffect(() => {
         getFollowers()
@@ -114,17 +137,11 @@ export default (props:Props) => {
     
     function renderUserExhibits() {
         if(loading) {
-            return <div className="exhibits-loading" style={{textAlign: 'center', margin: '20px 0'}}>Exhibits Loading...</div>
+            return <div className="exhibits-loading" style={{textAlign: 'center', margin: '40px 0', fontFamily: '"Playfair Display", "Times New Roman", Times, serif'}}>LOADING...</div>
         } else {
             return userData?.exhibits.map((exhibit) => (
                 <div className="user-section-all-content">
-                    <Input type="image" className="user-section-all-image" src={exhibit.artwork_ids}/>
-                    <h2 className="user-section-all-label">
-                        {exhibit.title} 
-                    </h2>
-                    <h4 className="user-section-all-label">
-                        {moment(exhibit.published_at).format('MM/DD/YY')}
-                    </h4>
+                    <Input type="image" className="user-section-all-image" src={exhibit.artwork_ids} onClick={onModalLoad}/>
                 </div>
             ))
         }
@@ -199,17 +216,29 @@ export default (props:Props) => {
                     </div>
                 </Col>
             </Row>
-            <Divider />
+            <Divider className="user-module-profile-divider" />
             <Row className="user-module-profile-section-exhibits">
                 <Col className="user-module-profile-exhibits-col">
-                    <div className="user-module-profile-exhibits-title">
+                    {/* <div className="user-module-profile-exhibits-title">
                         <h2 className="user-module-profile-header">{userData?.username}'s Exhibits</h2>
-                    </div>
+                    </div> */}
                     <div className="user-module-profile-exhibits-num">
                         {renderUserExhibits()}
                     </div>
                 </Col>
             </Row>
+            <Modal
+                centered
+                visible={visible}
+                width={'100%'}
+                destroyOnClose={true}
+                keyboard={true}
+                maskClosable={true}
+                onCancel={()=> setVisible(false)}
+                footer={null}
+                >
+                    {renderModalData()}
+            </Modal>
             </div>
     )
 }

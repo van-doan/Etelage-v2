@@ -79,15 +79,31 @@
     .user-section-all{
             &-content {
                 margin: 15px;
-            @media screen and (max-width: $screen-sm-min) {
                 padding: 25px;
+            @media screen and (max-width: $screen-sm-min) {
+                padding: 0px;
+                margin: 0px;
+                margin-inline-end: auto;
             }
-            &-image {
-                height: 300px;
-                width: 300px;
-                object-fit: cover;
+            .user-section-all-image {
+                @media screen and (min-width: $screen-sm-min) {
+                    height: 300px;
+                    width: 300px;
+                    object-fit: cover;
+                }
+                @media screen and (max-width: $screen-sm-min) {
+                    height: 125px;
+                    width: 125px;
+                    object-fit: cover;
+                }
             }
         }
+    }
+}
+
+.user-module-profile-divider{
+    @media screen and (max-width: $screen-sm-min) {
+        margin-bottom: 0px !important;
     }
 }
 

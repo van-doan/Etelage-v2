@@ -75,10 +75,6 @@
       "via": "user",
       "collection": "exhibits"
     },
-    "comments": {
-      "collection": "comments",
-      "via": "user"
-    },
     "followees": {
       "plugin": "users-permissions",
       "collection": "user",
@@ -93,6 +89,10 @@
     "likes": {
       "via": "exhibitLikes",
       "collection": "exhibits"
+    },
+    "comments": {
+      "via": "users",
+      "collection": "comments"
     }
   }
 }
