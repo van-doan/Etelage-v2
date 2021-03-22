@@ -9,6 +9,7 @@ import Exhibits from "../../../containers/Exhibit/Exhibit";
 import ExhibitById from "../../../containers/Exhibit/ExhibitById";
 import Explore from "../../../containers/Explore/Explore";
 import UserPages from "../../../containers/UserPages/UserPage";
+import StaticDisplay from "../../../components/3D/StaticDisplay/Containers/StaticDisplay";
 
 export const AppRoutesObject = {
     'Home': {
@@ -39,6 +40,11 @@ export const AppRoutesObject = {
     'Exhibit by Id': {
         render: <Route key={5} exact path={BrowserRoutes.exhibitsByIdParam} component={ExhibitById}/>,
         path: BrowserRoutes.exhibitsByIdParam,
+        icon: <LayoutOutlined/>
+    },
+    'Static Display': {
+        render: <Route key={6} exact path={BrowserRoutes.static_container} component={StaticDisplay}/>,
+        path: BrowserRoutes.static_container,
         icon: <LayoutOutlined/>
     },
 };

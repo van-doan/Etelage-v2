@@ -10,8 +10,6 @@
   @media screen and (max-width: $screen-sm-min) {
     display: block;
     @include pad-box(0 12px);
-    border-bottom-style: double;
-    border-bottom-color: grey;
   }
 
   .content {
@@ -26,6 +24,7 @@
 
     .app-header-right {
       @include flex(row, flex-start, center);
+      z-index: 50;
 
       .icon {
         display: flex;
@@ -146,8 +145,10 @@
 
     .app-header-left {
       @include flex(row, flex-start, center);
+      z-index: 50;
       @media screen and (max-width: $screen-sm-min) {
         margin-bottom: 20px;
+        z-index: 50;
       }
       .logo {
         @include flex(row, flex-start, center);

@@ -309,12 +309,12 @@
       "name": "lambert2SG",
       "pbrMetallicRoughness": {
         "baseColorFactor": [
-          0,
-          0,
-          0,
+          0.529,
+          0.8047,
+          0.7372,
           1
         ],
-        "metallicFactor": 0,
+        "metallicFactor": 0.9,
         "roughnessFactor": 1
       }
     }

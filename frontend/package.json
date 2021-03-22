@@ -36,6 +36,10 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-spring": "^8.0.27",
+    "react-three": "^0.9.7",
+    "react-three-fiber": "^5.3.19",
+    "three": "^0.126.1",
     "typescript": "~3.8.0",
     "yup": "^0.29.3"
   },
@@ -60,5 +64,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/three": "^0.126.0"
   }
 }
