@@ -20,6 +20,10 @@ interface Props {
 interface State {
 }
 
+// This is where the 3D bust will be implemented
+// When statue's head is clicked, show form / change zIndex to be behind form 
+// when submitted for login or register, change state back to closed bust and route to next page
+
 class Auth extends Component<Props, State> {
 
     state: State = {};

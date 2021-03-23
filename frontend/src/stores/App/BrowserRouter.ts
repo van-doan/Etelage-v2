@@ -53,6 +53,7 @@ export class BrowserRoutes {
     static USERS = 'users';
     static COMMENTS = 'comments';
     static STATIC_CONTAINER = 'static_container';
+    static LOGIN_DISPLAY = 'login_display';
 
     static get debugger(){
         return `${BrowserRoutes.BASE}/${BrowserRoutes.DEBUGGER}`;
@@ -74,6 +75,9 @@ export class BrowserRoutes {
     }
     static get static_container(){
         return `${BrowserRoutes.BASE}/${BrowserRoutes.STATIC_CONTAINER}`;
+    }
+    static get login_display(){
+        return `${BrowserRoutes.BASE}/${BrowserRoutes.LOGIN_DISPLAY}`;
     }
     static get users(){
         return `${BrowserRoutes.BASE}/${BrowserRoutes.USERS}`;

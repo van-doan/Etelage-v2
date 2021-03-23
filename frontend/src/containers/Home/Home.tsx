@@ -1,8 +1,8 @@
 import React, {Suspense} from 'react';
 import { Canvas } from 'react-three-fiber'
 
-import StaticContainer from '../../components/3D/StaticDisplay/Containers/StaticContainer'
-import StatueContainer from '../../components/3D/StaticDisplay/Containers/StatueContainer';
+import StaticContainer from '../../components/3D/StaticDisplay/Home/StaticContainer'
+import StatueContainer from '../../components/3D/StaticDisplay/Home/StatueContainer';
 
 import './styles.scss';
 
