@@ -87,6 +87,7 @@ export default (props:Props) => {
         closable={true}
         getContainer={false}
         forceRender={true}
+        onCancel={handleClose}
         >
             <Divider>Add to Your Exhibit</Divider>
           <h3 className="modal-art-title">{props.data.title}</h3>

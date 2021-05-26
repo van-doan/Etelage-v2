@@ -9,8 +9,8 @@ import Exhibits from "../../../containers/Exhibit/Exhibit";
 import ExhibitById from "../../../containers/Exhibit/ExhibitById";
 import Explore from "../../../containers/Explore/Explore";
 import UserPages from "../../../containers/UserPages/UserPage";
-import StaticDisplay from "../../3D/StaticDisplay/Home/StaticDisplay";
-import LoginDisplay from "../../3D/StaticDisplay/Login/LoginDisplay";
+import StaticDisplay from "../../3D/StaticDisplay/Exhibit-Options/Option-1/Option1Display";
+import NotFound from "../../../containers/404/404";
 
 export const AppRoutesObject = {
     'Home': {
@@ -49,8 +49,8 @@ export const AppRoutesObject = {
         icon: <LayoutOutlined/>
     },
     'Login Display': {
-        render: <Route key={7} exact path={BrowserRoutes.login_display} component={LoginDisplay}/>,
-        path: BrowserRoutes.login_display,
+        render: <Route key={7} component={NotFound}/>,
+        path: BrowserRoutes.not_found,
         icon: <LayoutOutlined/>
     },
 };
